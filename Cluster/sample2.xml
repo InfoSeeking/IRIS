@@ -1,0 +1,33 @@
+<parameters>
+<requestType>cluster</requestType>
+<numClusters>3</numClusters>
+	<docList>
+		<doc>
+			<url>http://www.westegg.com/bacon/duke.html</url>
+		</doc>
+		<doc>
+			<url>http://www.westegg.com/bacon/truth.html</url>
+		</doc>
+		<doc>
+			<url>http://www.westegg.com/bacon/death.html</url>
+		</doc>
+		<doc>
+			<url>http://www.westegg.com/bacon/adversity.html</url>
+		</doc>
+		<doc>
+			<url>http://www.westegg.com/bacon/revenge.html</url>
+		</doc>
+		<doc>
+			<url>http://www.westegg.com/bacon/simulation.html</url>
+		</doc>
+		<doc>
+			<url>http://www.westegg.com/bacon/parents.html</url>
+		</doc>
+		<doc>
+			<url>http://www.westegg.com/bacon/parents.html</url>
+		</doc>
+		<doc>
+			<url>http://www.westegg.com/bacon/marriage.html</url>
+		</doc>
+	</docList>
+</parameters>

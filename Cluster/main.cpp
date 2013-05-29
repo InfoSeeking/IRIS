@@ -8,14 +8,17 @@
 #include <vector>
 #include "string"
 #include <time.h>
-
+#include <string.h>
 
 
 using namespace std;
 
-int cluster()
+int cluster(string bin, string od)
 {
-system("rm -r ~/Documents/C++/Cluster/cluster");
+  cout << "Removing old data\n";
+  string cmd = "rm -r " + od + "cluster";
+  cout << cmd << "\n";
+  system((const char *)cmd.c_str());
 /*************************************************************/
   //declaration
   time_t ID;
@@ -25,7 +28,7 @@ system("rm -r ~/Documents/C++/Cluster/cluster");
   string Parts;
   int count=0;
   string::iterator it;
-  TiXmlDocument *doc=new TiXmlDocument("sample.xml");
+  TiXmlDocument *doc=new TiXmlDocument("sample2.xml");
   doc->LoadFile();
   TiXmlElement *root = doc->RootElement();
   TiXmlElement *ele= root->FirstChildElement();
@@ -48,25 +51,14 @@ system("rm -r ~/Documents/C++/Cluster/cluster");
 //retrieve HTML
 	 for (vector<string>::iterator iter=url.begin(); iter != url.end();iter++)
     {
-		      count++;
+		    count++;
 			  stringstream ss;
 			  string line;
-              ofstream myfile ("test.php");
-              if (myfile.is_open())
-              {
-                //TODO clean this by making a seperate php file and calling it with an argument for the url
-                  myfile << "<?php\n";
-                  myfile << "include 'htmlparser.php';\n";
-                  myfile << "$html = file_get_html('"<<*iter<<"');\n";
-                  myfile << "foreach($html->find('title') as $element);\n";
-                  myfile << "$f = fopen('./txt/"<<count<<".txt', 'w');\n";
-                  myfile << "fwrite($f, $element);\n";
-                  myfile << "fwrite($f, $html->plaintext);\n\n\n";
-                  myfile << "fclose($f);\n";
-                  myfile << "?>";
-                  myfile.close();
-              }
-              system("php test.php");
+        char tmp_cmd[50];
+        sprintf(tmp_cmd, "php -f fetch_html_as_text.php %d ",count);
+        cmd =  tmp_cmd + (*iter);
+        cout << cmd << "\n";
+        system((const char *)cmd.c_str());
      }
 /*************************************************************/
 
@@ -87,10 +79,13 @@ system("rm -r ~/Documents/C++/Cluster/cluster");
         docu <<"documents.txt\n";
        }
         docu.close();
-        system("BuildIndex buildindex.param");//install lemur
+        cmd = bin + "BuildIndex buildindex.param";
+        system((const char *)cmd.c_str());//install lemur
 /*************************************************************/
 //create cluster parameter file& do cluster
-  system("rm -r ~/Documents/C++/Cluster/cluster.param");
+  cmd = "rm -r " + od + "cluster.param";
+  cout << cmd << "\n";
+  system((const char *)cmd.c_str());
   ofstream clusterparam ("cluster.param");
   if (clusterparam.is_open())
   {
@@ -101,9 +96,11 @@ system("rm -r ~/Documents/C++/Cluster/cluster");
     clusterparam << "</parameters>\n";
     clusterparam.close();
   }
-  //TODO change this to reflect my directory
+
   //system("~/Documents/C++/Cluster/OfflineCluster cluster.param > cluster.txt");
-  system("~/Documents/lemur-4.12/cluster/src/OfflineCluster cluster.param > cluster.txt");
+  cmd = bin + "OfflineCluster cluster.param > cluster.txt";
+  cout << cmd << "\n";
+  system((const char *)cmd.c_str());
     //need edit this place where cluster function lies
 /*************************************************************/
 
@@ -143,6 +140,48 @@ system("rm -r ~/Documents/C++/Cluster/cluster");
      return 0;
 }
 
-int main(){
-     cluster();
+void help(char *err){
+  if(err != 0){
+    cout << err;
+  }
+  cout << "Arguments: \n-o <output directory>\t directory where cluster data is stored\n";
+  cout << "-b <bin directory>\t directory where OfflineCluster and other executables are located\n";
+}
+
+int main(int argc, const char **argv){
+  //get arguments for directory
+  string bin_directory;
+  string output_directory;
+
+  if(argc != 5){
+  help("Invalid arguments\n");
+    return 1;
+  }
+  else{
+    for(int i = 1; i < 5; i++){
+      if(strcmp(argv[i],"-o") == 0){
+        //next argument is output directory
+        if(i < 4){
+          i++;
+          output_directory = argv[i];
+        }
+        else{
+          help("Invalid arguments\n");
+        }
+      }
+      else if(strcmp(argv[i],"-b") == 0){
+        //next argument is indri directory
+        if(i < 4){
+          i++;
+          bin_directory = argv[i];
+        }
+        else{
+          help("Invalid arguments\n");
+        }
+      }
+    }
+  }
+
+  cluster(bin_directory, output_directory);
+  return 0;
 }

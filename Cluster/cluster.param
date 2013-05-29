@@ -1,5 +1,5 @@
 <parameters>
 <index>cluster</index>
 <docMode>max</docMode>
-<numParts>2</numParts>
+<numParts>3</numParts>
 </parameters>
