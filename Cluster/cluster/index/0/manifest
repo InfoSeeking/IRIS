@@ -3,10 +3,10 @@
 	<corpus>
 		<document-base>1</document-base>
 		<frequent-terms>0</frequent-terms>
-		<maximum-document>10</maximum-document>
-		<total-documents>9</total-documents>
-		<total-terms>2352</total-terms>
-		<unique-terms>1156</unique-terms>
+		<maximum-document>8</maximum-document>
+		<total-documents>7</total-documents>
+		<total-terms>6888</total-terms>
+		<unique-terms>497</unique-terms>
 	</corpus>
 	<fields></fields>
 	<indri-distribution>Indri development release 2.12</indri-distribution>

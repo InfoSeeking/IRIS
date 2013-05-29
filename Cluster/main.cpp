@@ -13,7 +13,7 @@
 
 using namespace std;
 
-int cluster(string bin, string od)
+int cluster(string in, string bin, string od)
 {
   cout << "Removing old data\n";
   string cmd = "rm -r " + od + "cluster";
@@ -28,7 +28,7 @@ int cluster(string bin, string od)
   string Parts;
   int count=0;
   string::iterator it;
-  TiXmlDocument *doc=new TiXmlDocument("sample2.xml");
+  TiXmlDocument *doc=new TiXmlDocument((const char *)in.c_str());
   doc->LoadFile();
   TiXmlElement *root = doc->RootElement();
   TiXmlElement *ele= root->FirstChildElement();
@@ -41,25 +41,26 @@ int cluster(string bin, string od)
 /*************************************************************/
 
 /*************************************************************/
-//retrieve URL
+//retrieve URL (eventually this may be document id's)
 	while(ele)
 	{
-     TiXmlElement *temp=ele->FirstChildElement();
-     url.push_back(temp->GetText());
-	 ele=ele->NextSiblingElement();
+    TiXmlElement *temp=ele->FirstChildElement();
+    url.push_back(temp->GetText());
+    ele=ele->NextSiblingElement();
 	}
 //retrieve HTML
-	 for (vector<string>::iterator iter=url.begin(); iter != url.end();iter++)
-    {
-		    count++;
-			  stringstream ss;
-			  string line;
-        char tmp_cmd[50];
-        sprintf(tmp_cmd, "php -f fetch_html_as_text.php %d ",count);
-        cmd =  tmp_cmd + (*iter);
-        cout << cmd << "\n";
-        system((const char *)cmd.c_str());
-     }
+ for (vector<string>::iterator iter=url.begin(); iter != url.end();iter++)
+  {
+	    count++;
+		  stringstream ss;
+		  string line;
+      char tmp_cmd[50];
+      sprintf(tmp_cmd, "php -f fetch_html_as_text.php doc_%d ",count);
+      cmd =  tmp_cmd + (*iter);
+      cout << cmd << "\n";
+      system((const char *)cmd.c_str());
+   }
+   cout << "Fetched html documents are now in txt directory\n";
 /*************************************************************/
 
 
@@ -69,10 +70,10 @@ int cluster(string bin, string od)
        ofstream myfile ("files.list");
        if (myfile.is_open())
         {
-           for (int i=1;i<=count;i++){myfile <<"./txt/"<<i<<".txt\n";}
+           for (int i=1;i<=count;i++){myfile <<"./txt/doc_"<<i<<".txt\n";}
            myfile.close();
         }
-       system("perl txttotrec.pl files.list");//need
+       system("perl txttotrec.pl files.list");//convert to trec filetype
 
        ofstream docu ("documents.list");
        if (docu.is_open()){
@@ -145,23 +146,24 @@ void help(char *err){
     cout << err;
   }
   cout << "Arguments: \n-o <output directory>\t directory where cluster data is stored\n";
-  cout << "-b <bin directory>\t directory where OfflineCluster and other executables are located\n";
+  cout << "-i <input file>\t input xml file\n-b <bin directory>\t directory where OfflineCluster and other executables are located\n";
 }
 
 int main(int argc, const char **argv){
   //get arguments for directory
+  string input_file;
   string bin_directory;
   string output_directory;
 
-  if(argc != 5){
+  if(argc != 7){
   help("Invalid arguments\n");
     return 1;
   }
   else{
-    for(int i = 1; i < 5; i++){
+    for(int i = 1; i < argc; i++){
       if(strcmp(argv[i],"-o") == 0){
         //next argument is output directory
-        if(i < 4){
+        if(i < argc-1){
           i++;
           output_directory = argv[i];
         }
@@ -170,10 +172,20 @@ int main(int argc, const char **argv){
         }
       }
       else if(strcmp(argv[i],"-b") == 0){
-        //next argument is indri directory
-        if(i < 4){
+        //next argument is bin directory
+        if(i < argc-1){
           i++;
           bin_directory = argv[i];
+        }
+        else{
+          help("Invalid arguments\n");
+        }
+      }
+      else if(strcmp(argv[i],"-i") == 0){
+        //next argument is input file
+        if(i < argc-1){
+          i++;
+          input_file = argv[i];
         }
         else{
           help("Invalid arguments\n");
@@ -182,6 +194,6 @@ int main(int argc, const char **argv){
     }
   }
 
-  cluster(bin_directory, output_directory);
+  cluster(input_file, bin_directory, output_directory);
   return 0;
 }
