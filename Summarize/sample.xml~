@@ -1,0 +1,10 @@
+<parameters>
+	<request>summarize</request>
+	<maxWords>50</maxWords>
+	<individualSummaries>TRUE</individualSummaries>
+	<docList>
+		<doc>
+			<url>http://politicalticker.blogs.cnn.com/2012/09/07/obama-calls-jobs-report-not-good-enough/</url>
+		</doc>
+	</docList>
+</parameters>

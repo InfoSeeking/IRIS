@@ -1,0 +1,105 @@
+[<p class="mndType-more">
+<span class="mnText"><a class="mnLabel" href="http://online.wsj.com/home-page?mod=WSJ_topnav_home_main">Home</a></span>
+</p>, <p class="mndType-more">
+<span class="mnText"><a class="mnLabel" href="http://online.wsj.com/public/page/news-global-world.html?mod=WSJ_topnav_world_main">World</a></span>
+<span class="mnIndicator">
+<a class="mnExpand _exp" data-dropdownindex="wsjmn_dropdown2-0" href="#" style="opacity:1">» More</a>
+</span>
+</p>, <p class="mndType-more">
+<span class="mnText"><a class="mnLabel" href="http://online.wsj.com/public/page/news-global-world.html?mod=WSJ_topnav_world_main">World</a></span>
+<span class="mnIndicator"><a class="mnExpand" href="#">» More</a></span>
+</p>, <p class="mndType-more">
+<span class="mnText"><a class="mnLabel" href="http://online.wsj.com/public/page/news-world-business.html?mod=WSJ_topnav_us_main">U.S.</a></span>
+<span class="mnIndicator">
+<a class="mnExpand _exp" data-dropdownindex="wsjmn_dropdown3-0" href="#" style="opacity:1">» More</a>
+</span>
+</p>, <p class="mndType-more">
+<span class="mnText"><a class="mnLabel" href="http://online.wsj.com/public/page/news-world-business.html?mod=WSJ_topnav_us_main">U.S.</a></span>
+<span class="mnIndicator"><a class="mnExpand" href="#">» More</a></span>
+</p>, <p class="mndType-more">
+<span class="mnText"><a class="mnLabel" href="http://online.wsj.com/public/page/new-york-main.html?mod=WSJ_topnav_newyork_main">New York</a></span>
+<span class="mnIndicator">
+<a class="mnExpand _exp" data-dropdownindex="wsjmn_dropdown4-0" href="#" style="opacity:1">» More</a>
+</span>
+</p>, <p class="mndType-more">
+<span class="mnText"><a class="mnLabel" href="http://online.wsj.com/public/page/new-york-main.html?mod=WSJ_topnav_newyork_main">New York</a></span>
+<span class="mnIndicator"><a class="mnExpand" href="#">» More</a></span>
+</p>, <p class="mndType-more">
+<span class="mnText"><a class="mnLabel" href="http://online.wsj.com/public/page/news-business-us.html?mod=WSJ_topnav_business_main">Business</a></span>
+<span class="mnIndicator">
+<a class="mnExpand _exp" data-dropdownindex="wsjmn_dropdown5-0" href="#" style="opacity:1">» More</a>
+</span>
+</p>, <p class="mndType-more">
+<span class="mnText"><a class="mnLabel" href="http://online.wsj.com/public/page/news-business-us.html?mod=WSJ_topnav_business_main">Business</a></span>
+<span class="mnIndicator"><a class="mnExpand" href="#">» More</a></span>
+</p>, <p class="mndType-more">
+<span class="mnText"><a class="mnLabel" href="http://online.wsj.com/public/page/news-tech-technology.html?mod=WSJ_topnav_tech_main">Tech</a></span>
+<span class="mnIndicator">
+<a class="mnExpand _exp" data-dropdownindex="wsjmn_dropdown6-0" href="#" style="opacity:1">» More</a>
+</span>
+</p>, <p class="mndType-more">
+<span class="mnText"><a class="mnLabel" href="http://online.wsj.com/public/page/news-tech-technology.html?mod=WSJ_topnav_tech_main">Tech</a></span>
+<span class="mnIndicator"><a class="mnExpand" href="#">» More</a></span>
+</p>, <p class="mndType-more">
+<span class="mnText"><a class="mnLabel" href="http://online.wsj.com/public/page/news-financial-markets-stock.html?mod=WSJ_topnav_markets_main">Markets</a></span>
+<span class="mnIndicator">
+<a class="mnExpand _exp" data-dropdownindex="wsjmn_dropdown7-0" href="#" style="opacity:1">» More</a>
+</span>
+</p>, <p class="mndType-more">
+<span class="mnText"><a class="mnLabel" href="http://online.wsj.com/public/page/news-financial-markets-stock.html?mod=WSJ_topnav_markets_main">Markets</a></span>
+<span class="mnIndicator"><a class="mnExpand" href="#">» More</a></span>
+</p>, <p class="mndType-more">
+<span class="mnText"><a class="mnLabel" href="http://online.wsj.com/mdc/page/marketsdata.html?mod=WSJ_topnav_marketdata_main">Market Data</a></span>
+</p>, <p class="mndType-more">
+<span class="mnText"><a class="mnLabel" href="http://online.wsj.com/public/page/news-opinion-commentary.html?mod=WSJ_topnav_opinion_main">Opinion</a></span>
+<span class="mnIndicator">
+<a class="mnExpand _exp" data-dropdownindex="wsjmn_dropdown9-0" href="#" style="opacity:1">» More</a>
+</span>
+</p>, <p class="mndType-more">
+<span class="mnText"><a class="mnLabel" href="http://online.wsj.com/public/page/news-opinion-commentary.html?mod=WSJ_topnav_opinion_main">Opinion</a></span>
+<span class="mnIndicator"><a class="mnExpand" href="#">» More</a></span>
+</p>, <p class="mndType-more">
+<span class="mnText"><a class="mnLabel" href="http://online.wsj.com/public/page/news-lifestyle-arts-entertainment.html?mod=WSJ_topnav_lifeculture_main">Life &amp; Culture</a></span>
+<span class="mnIndicator">
+<a class="mnExpand _exp" data-dropdownindex="wsjmn_dropdown10-0" href="#" style="opacity:1">» More</a>
+</span>
+</p>, <p class="mndType-more">
+<span class="mnText"><a class="mnLabel" href="http://online.wsj.com/public/page/news-lifestyle-arts-entertainment.html?mod=WSJ_topnav_lifeculture_main">Life &amp; Culture</a></span>
+<span class="mnIndicator"><a class="mnExpand" href="#">» More</a></span>
+</p>, <p class="mndType-more">
+<span class="mnText"><a class="mnLabel" href="http://online.wsj.com/public/page/news-real-estate-homes.html?mod=WSJ_topnav_realestate_main">Real Estate</a></span>
+<span class="mnIndicator">
+<a class="mnExpand _exp" data-dropdownindex="wsjmn_dropdown11-0" href="#" style="opacity:1">» More</a>
+</span>
+</p>, <p class="mndType-more">
+<span class="mnText"><a class="mnLabel" href="http://online.wsj.com/public/page/news-real-estate-homes.html?mod=WSJ_topnav_realestate_main">Real Estate</a></span>
+<span class="mnIndicator"><a class="mnExpand" href="#">» More</a></span>
+</p>, <p class="mndType-more">
+<span class="mnText"><a class="mnLabel" href="http://online.wsj.com/public/page/news-career-jobs.html?mod=WSJ_topnav_careers_main">Careers</a></span>
+<span class="mnIndicator">
+<a class="mnExpand _exp" data-dropdownindex="wsjmn_dropdown12-0" href="#" style="opacity:1">» More</a>
+</span>
+</p>, <p class="mndType-more">
+<span class="mnText"><a class="mnLabel" href="http://online.wsj.com/public/page/news-career-jobs.html?mod=WSJ_topnav_careers_main">Careers</a></span>
+<span class="mnIndicator"><a class="mnExpand" href="#">» More</a></span>
+</p>, <p>
+Dow Jones Reprints: This copy is for your personal, non-commercial use only. To order presentation-ready copies for distribution to your colleagues, clients or customers, use the Order Reprints tool at the bottom of any article or visit
+<a class="firstLink" href="http://www.djreprints.com" target="_blank">www.djreprints.com</a>
+</p>, <p>
+Dow Jones Reprints: This copy is for your personal, non-commercial use only. To order presentation-ready copies for distribution to your colleagues, clients or customers, use the Order Reprints tool at the bottom of any article or visit
+<a class="firstLink" href="http://www.djreprints.com" target="_blank">www.djreprints.com</a>
+</p>, <p> SAN FRANCISCO—Apple Inc. appeared to have sold out of its initial inventory of the iPhone 5 just an hour after it began accepting preorders Friday, suggesting strong consumer interest. </p>, <p> The Cupertino, Calif., company's website began accepting preorders shortly after midnight Pacific time. Within an hour, however, the company's website indicated that shipping times had slipped from an expected delivery on the device's launch date, Sept. 21. Those who preordered were told the iPhone 5 would be available to ship in two weeks. </p>, <p> Natalie Kerris, a spokeswoman for Apple, said the response so far from customers had been "incredible." "We've been ...</p>, <p>Copyright 2012 Dow Jones &amp; Company, Inc. All Rights Reserved</p>, <p>This copy is for your personal, non-commercial use only. Distribution and use of this material are governed by our <a href="http://online.wsj.com/public/page/subscriber_agreement.html">Subscriber Agreement</a> and by copyright law. For non-personal use or to order multiple copies, please contact Dow Jones Reprints at 1-800-843-0008 or visit</p>, <p><a href="http://www.djreprints.com">www.djreprints.com</a></p>, <p>A smart pedometer can help your lazybones get—and stay—on track.</p>, <p><small>Subscriber Content</small> <em>Read Preview</em></p>, <p>A clever new notebook seamlessly transforms the handwritten to the digital.</p>, <p><small>Subscriber Content</small> <em>Read Preview</em></p>, <p>In shrinking the iconic iPad, Apple has pulled off an impressive feat, writes Walt Mossberg.</p>, <p>As more people share their opinions with casual acquaintances and strangers on social-media sites, the sarcasm disconnect is growing.</p>, <p><small>Subscriber Content</small> <em>Read Preview</em></p>, <p><small>Subscriber Content</small> <em>Read Preview</em></p>, <p><small>Subscriber Content</small> <em>Read Preview</em></p>, <p><small>Subscriber Content</small> <em>Read Preview</em></p>, <p> SAN FRANCISCO—Apple Inc. appeared to have sold out of its initial inventory of the iPhone 5 just an hour after it began accepting preorders Friday, suggesting strong consumer interest. </p>, <p> The Cupertino, Calif., company's website began accepting preorders shortly after midnight Pacific time. Within an hour, however, the company's website indicated that shipping times had slipped from an expected delivery on the device's launch date, Sept. 21. Those who preordered were told the iPhone 5 would be available to ship in two weeks. </p>, <p> Natalie Kerris, a spokeswoman for Apple, said the response so far from customers had been "incredible." "We've been ...</p>, <p class="tbType-saveThis"><span class="tbText"><a class="mjQuickSave" href="#">Save This</a></span> <span class="tbIndicator"><a class="mjDropdown" href="#">↓ More</a></span></p>, <p>facebook</p>, <p>Twitter</p>, <p>LinkedIn</p>, <p>StumbleUpon</p>, <p>Viadeo</p>, <p>Orkut</p>, <p>Fark</p>, <p>Reddit</p>, <p>del.icio.us</p>, <p>MySpace</p>, <p>Real-time U.S. stock quotes reflect trades reported through Nasdaq only; comprehensive U.S. stock quotes reflect trading in all markets and are delayed at least 15 minutes. All quote volume is comprehensive and reflects trading in all markets, delayed at least 15 minutes.  International stock quotes are delayed as per exchange requirements.</p>, <p>
+<a href="/community/groups/religion-diversity-tolerance-governance/topics/do-we-need-religion-have">Do we need religion to have ethics? Is it possible that a world without religion can be, on the whole, a better place to live?</a>
+</p>, <p>
+<a href="/community/groups/libertarians-938/topics/you-voting-for">Who are you voting for?</a>
+</p>, <p>
+<a href="/community/groups/question-day-229/topics/should-voters-have-show-identification">Should voters have to show identification?</a>
+</p>, <p>
+<a href="/community/groups/question-day-229/topics/whats-best-thing-government-can">What’s the best thing government can do to help small business?</a>
+</p>, <p>
+<a href="/community/groups/question-day-229/topics/do-you-think-about-decision">What do you think about the decision to run the NYC Marathon this weekend?</a>
+</p>, <p>The latest news and analysis delivered to your in-box. Check the boxes below to sign up.</p>, <p class="error">
+						The email address <strong>null</strong> is already associated with another account. Please enter a different email address:
+				  	</p>, <p>Thank you <strong><span class="userLoginName"></span></strong>!<br/>You will receive <span class="displayNames"></span> in your inbox.</p>, <p>The latest news and analysis delivered to your in-box. Check the boxes below to sign up.</p>, <p class="error">
+						The email address <strong>null</strong> is already associated with another account. Please enter a different email address:
+				  	</p>, <p>Thank you <strong><span class="userLoginName"></span></strong>!<br/>You will receive <span class="displayNames"></span> in your inbox.</p>, <p>We discuss technology policy, hardware and software. </p>, <p>When videogamers grow up, but are still gamers. How much do we spend -- in cash and time? Plus, share your reviews of games, give parental tips and more.</p>, <p>Discuss mobile business and technology solutions.</p>, <p class="module_caption">Answers allows you to tap the knowledge of Community members. Answer a question below or <a href="/community/answer">ask a question</a>.</p>, <p class="alertMessage alertType-post " id="errorAnsDefault" style="display:none">Please fill out the answer field.</p>, <p class="alertMessage alertType-post" id="errorAnsComplyPolicy" style="display:none">The language you used does not comply with community standards. Please re-enter.</p>]

@@ -1,0 +1,91 @@
+# depslib dependency file v1.0
+315504000 source:/home/think_different/Documents/C++/Cluster/tinystr.cpp
+	"tinystr.h"
+
+315504000 /home/think_different/Documents/C++/Cluster/tinystr.h
+	<assert.h>
+	<string.h>
+
+315504000 source:/home/think_different/Documents/C++/Cluster/tinyxml.cpp
+	<ctype.h>
+	<sstream>
+	<iostream>
+	"tinyxml.h"
+
+315504000 /home/think_different/Documents/C++/Cluster/tinyxml.h
+	<ctype.h>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<assert.h>
+	<string>
+	<iostream>
+	<sstream>
+	"tinystr.h"
+
+315504000 source:/home/think_different/Documents/C++/Cluster/tinyxmlerror.cpp
+	"tinyxml.h"
+
+315504000 source:/home/think_different/Documents/C++/Cluster/tinyxmlparser.cpp
+	<ctype.h>
+	<stddef.h>
+	"tinyxml.h"
+	<windows.h>
+
+1352654700 source:/home/think_different/Documents/C++/Cluster/main.cpp
+	<stdlib.h>
+	"tinystr.h"
+	"tinyxml.h"
+	"iostream"
+	<sstream>
+	<stdio.h>
+	<fstream>
+	<vector>
+	"string"
+	<time.h>
+
+315504000 source:/home/kevin/CoagmentoMiddleLayer/operators/Cluster/tinystr.cpp
+	"tinystr.h"
+
+315504000 /home/kevin/CoagmentoMiddleLayer/operators/Cluster/tinystr.h
+	<assert.h>
+	<string.h>
+
+315504000 source:/home/kevin/CoagmentoMiddleLayer/operators/Cluster/tinyxml.cpp
+	<ctype.h>
+	<sstream>
+	<iostream>
+	"tinyxml.h"
+
+315504000 /home/kevin/CoagmentoMiddleLayer/operators/Cluster/tinyxml.h
+	<ctype.h>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<assert.h>
+	<string>
+	<iostream>
+	<sstream>
+	"tinystr.h"
+
+315504000 source:/home/kevin/CoagmentoMiddleLayer/operators/Cluster/tinyxmlerror.cpp
+	"tinyxml.h"
+
+315504000 source:/home/kevin/CoagmentoMiddleLayer/operators/Cluster/tinyxmlparser.cpp
+	<ctype.h>
+	<stddef.h>
+	"tinyxml.h"
+	<windows.h>
+
+1369843757 source:/home/kevin/CoagmentoMiddleLayer/operators/Cluster/main.cpp
+	<stdlib.h>
+	"tinystr.h"
+	"tinyxml.h"
+	"iostream"
+	<sstream>
+	<stdio.h>
+	<fstream>
+	<vector>
+	"string"
+	<time.h>
+

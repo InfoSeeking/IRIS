@@ -1,0 +1,20 @@
+<parameters>
+<requestType>cluster</requestType>
+<numClusters>2</numClusters>
+	<docList>
+		<doc>
+			<url>http://online.wsj.com/article/SB10000872396390443524904577650993884618770.html?mod=WSJ_Tech_LEFTTopNews</url>
+		</doc>
+<doc>
+			<url>http://en.wikipedia.org/wiki/Kingdom_of_Mysore</url>
+		</doc>
+<doc>
+			<url>http://en.wikipedia.org/wiki/Wiki</url>
+		</doc>
+<doc>
+			<url>http://en.wikipedia.org/wiki/Vijayanagara_Empire</url>
+		</doc>
+
+               
+	</docList>
+</parameters>
