@@ -1,0 +1,7 @@
+<parameters>
+    <index>summarization</index>
+    <indexType>indri</indexType>
+    <dataFiles>files.list</dataFiles>
+    <docFormat>trec</docFormat>
+    <stopwords>stopwords.param</stopwords>
+</parameters>
