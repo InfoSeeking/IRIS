@@ -1,5 +1,5 @@
 <parameters>
 <index>summarizationIndex</index>
-<summLength>50</summLength>
+<summLength>5</summLength>
 <docID>3</docID>
 </parameters>

@@ -9,9 +9,20 @@
 #include "string"
 using namespace std;
 
+void clean(){
+  //Remove temporary files
+    string cmd;
+    cout << "Cleaning up \n";
+    cmd = "rm -r summarizationIndex txt/* sum.param";
+    cout << cmd << "\n";
+    system((const char *)cmd.c_str());
 
-int summarization(string bin)
+}
+int summarization(string in)
 {
+
+  clean();
+
 /*************************************************************/
 	vector<string> url;
     string request;
@@ -22,8 +33,12 @@ int summarization(string bin)
 /*************************************************************/
 
 /*************************************************************/
-    TiXmlDocument *doc=new TiXmlDocument("sample.xml");
-	doc->LoadFile();
+    TiXmlDocument *doc=new TiXmlDocument((const char *)in.c_str());
+	bool loadedOkay = doc->LoadFile();
+  if(!loadedOkay){
+    cout << "ERROR: xml document invalid\n";
+    return 1;
+  }
     TiXmlElement *root = doc->RootElement();
 	TiXmlElement *ele= root->FirstChildElement();
 	request=ele->GetText();
@@ -43,25 +58,14 @@ int summarization(string bin)
 /*************************************************************/
 	 for (vector<string>::iterator iter=url.begin(); iter != url.end();iter++)
     {
-		      count++;
-			  stringstream ss;
-			  string line;
-              ofstream myfile ("test.php");
-              if (myfile.is_open())
-              {
-                  myfile << "<?php\n";
-                  myfile << "include 'htmlparser.php';\n";
-                  myfile << "$html = file_get_html('"<<*iter<<"');\n";
-                  myfile << "foreach($html->find('title') as $element);\n";
-                  myfile << "$f = fopen('./txt/"<<count<<".txt', 'w');\n";
-                  myfile << "fwrite($f, $html->plaintext);\n";
-                  myfile << "fwrite($f, $element);\n";
-                  myfile << "fclose($f);\n";
-                  myfile << "?>";
-                  myfile.close();
-              }
-              system("php test.php");
-     }
+		  count++;
+      char tmp_cmd[50 + (*iter).length()];
+      sprintf(tmp_cmd, "php -f ../lib/fetch_html_as_text.php doc_%d %s ../summarize/",count, (*iter).c_str());
+      cmd = tmp_cmd;
+      cout << cmd << "\n";
+      system((const char *)cmd.c_str());
+    }
+    cout << "Fetched html documents are now in txt/ directory in plaintext with title element\n";
 /*************************************************************/
 
 /*************************************************************/
@@ -71,7 +75,7 @@ int summarization(string bin)
            for (int i=1;i<=count;i++){myfile <<"./txt/"<<i<<".txt\n";}
            myfile.close();
         }
-       system("perl txttotrec.pl files.list");
+       system("perl ../lib/txttotrec.pl files.list ../summarize");
 
         ofstream docu ("documents.list");
        if (docu.is_open())
@@ -79,17 +83,15 @@ int summarization(string bin)
          docu <<"documents.txt\n";
         }
         docu.close();
-  //remove old index
-  cmd = "rm -r summarizationIndex";
-  cout << cmd << "\n";
+
   system((const char *)cmd.c_str());
-  cmd = bin + "BuildIndex buildindex.param";
+  cmd = "../bin/BuildIndex buildindex.param";
   cout << cmd << "\n";
   system((const char *)cmd.c_str());
 /*************************************************************/
 
 /*************************************************************/
-ofstream summ ("summarization.xml");
+ofstream summ ("output.xml");
 if (summ.is_open()){
     summ << "<parameters>\n";
     summ << "<requestType>summarize</requestType>\n";
@@ -107,7 +109,7 @@ for (int i=1;i<=count;i++){
     myfile.close();
   }
   else cout << "Unable to open file";
-  cmd = bin + "BasicSummApp sum.param > sum.txt";
+  cmd = "../bin/BasicSummApp sum.param > sum.txt";
   cout << cmd << "\n";
   system((const char *)cmd.c_str());
     summ <<"<doc>\n";
@@ -129,18 +131,20 @@ for (int i=1;i<=count;i++){
 
   }
   summ.close();
+  //clean();
+  cout << "Output is in output.xml\n";
+  return 0;
 }
 void help(char *err){
   if(err != 0){
     cout << err;
   }
   cout << "Arguments: \n";
-  cout << "-i <input file>\t\t input xml file\n-o <output directory>\t directory where to put output (default is 'output')\n";
+  cout << "-i <input file>\t\t input xml file\n";
 }
 int main(int argc, const char **argv){
   string input_file;
   bool input_found = false;
-  string bin_directory = "../bin/"; //where BasicSumApp is located
   for(int i = 1; i < argc; i++){
     if(strcmp(argv[i],"-i") == 0){
       //next argument is input file
@@ -161,6 +165,6 @@ int main(int argc, const char **argv){
       help((char *)"Invalid arguments\n");
       return 1;
   }
-  summarization(bin_directory);
+  return summarization(input_file);
 }
 

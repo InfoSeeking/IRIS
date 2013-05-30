@@ -1,7 +1,0 @@
-<parameters>
-    <index>cluster</index>
-    <indexType>indri</indexType>
-    <dataFiles>documents.list</dataFiles>
-    <docFormat>trec</docFormat>
-    <stopwords>stopwords.param</stopwords>
-</parameters>
