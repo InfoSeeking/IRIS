@@ -10,6 +10,7 @@ To add a new controller, add the file to the controllers directory, give it the 
 
 ##Summarization
 ###Request
+```
 <parameters>
 	<requestType>summarize</requestType>
 	<maxSentences>1000</maxSentences>
@@ -26,13 +27,14 @@ To add a new controller, add the file to the controllers directory, give it the 
 		</doc>
 	</docList>
 </parameters>
-
+```
 Here,
-- <maxSentences>: up to how many words to produce in the summary
-- <individualSummaries>: create individual summaries for each document? Here it's set to "TRUE", which means you'd output three summaries (there are three documents).
+- &gt;maxSentences&lt;: up to how many words to produce in the summary
+- &gt;individualSummaries&lt;: create individual summaries for each document? Here it's set to "TRUE", which means you'd output three summaries (there are three documents).
 
 ##Summarization
 ###Response
+```
 <parameters>
 	<requestID>123</requestID>
 	<requestType>summarize</requestType>
@@ -58,8 +60,10 @@ Here,
 	</docList>
 </parameters>
 
+```
 ##Clustering
 ###Request
+```
 <parameters>
 	<requestType>cluster</requestType>
 	<numClusters>3</numClusters>
@@ -85,8 +89,10 @@ Here,
 	</docList>
 </parameters>
 
+```
 ##Clustering
 ###Response
+```
 <parameters>
 	<requestID>123</requestID>
 	<requestType>cluster</requestType>
@@ -128,9 +134,12 @@ Here,
 		</docList>
 	</cluster>
 </parameters>
+```
 
 ##Error
 ###Response
+```
 <parameters>
 	<error>message</error>
 </parameters>
+```
