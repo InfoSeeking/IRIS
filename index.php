@@ -16,6 +16,7 @@ $xml;//simplexml object
 if(!isset($_REQUEST['xmldata'])){//TODO CHANGE TO POST once live
 	die(err("No xml data provided"));
 }
+
 $xmldata = $_REQUEST['xmldata'];
 $xml = new SimpleXMLElement($xmldata);
 $type = $xml->requestType;
@@ -27,7 +28,10 @@ for($i = 0; $i < sizeof($validTypes); $i++){
 		$valid = true;
 	}
 }
+if(!$valid){
+	die(err("Request type not valid. Valid requests are: " . implode($validTypes, ", ")));
+}
 require_once("controllers/" . $type . ".php");
 
-
+clean();
 ?>

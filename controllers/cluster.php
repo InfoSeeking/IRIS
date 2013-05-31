@@ -1,8 +1,8 @@
 <?php
-clean();
-
 //eventually make this an associative array
 $urls = Array();
+$titles = Array();//and this one too
+
 $numOfClusters = intval($xml->numClusters);
 $numOfDocuments = 0;
 $i = 1;//dummy id's
@@ -14,7 +14,7 @@ fclose($TREC_FILE_LIST);
 
 foreach($xml->docList->doc as $doc){
 	array_push($urls, $doc->url);
-	fetch_to_trec($doc->url, $i, $TREC, $FLIST);
+	array_push($titles, strip_tags(fetch_to_trec($doc->url, $i, $TREC, $FLIST)));
 	$i++;
 	$numOfDocuments++;
 }
@@ -37,7 +37,7 @@ $out = Array();
 
 exec($FILE_ROOT . "bin/OfflineCluster output/cluster.param", $out);
 
-$response = "<parameters>\n<requestID>TODO</requestID>\n<requestType>cluster</requestType>\n<clusterList>\n";
+$response = "<parameters>\n<requestID>" . $REQ_ID ."</requestID>\n<requestType>cluster</requestType>\n<clusterList>\n";
 
 //get the document id's of each cluster by parsing the output of the last function (pray to god it works)
 for($i = 0; $i < $numOfClusters; $i++){
@@ -50,7 +50,8 @@ for($i = 0; $i < $numOfClusters; $i++){
 	"<docList>\n";
         for($j = 0; $j < sizeof($ids); $j++){
         	$response .= "<doc><docID>" . $ids[$j] ."</docID>";
-        	$response .= "<url>TODO</url>";
+        	//$response .= "<url>TODO</url>";
+        	$response .= "<title>" . $titles[$j] . "</title>";
            	$response .= "</doc>";
         }
       $response .= "</cluster>";

@@ -15,4 +15,6 @@ if($STATE=="live"){
 	$cmd_extra = " 1>/dev/null 2>&1";
 }
 
+$REQ_ID = (string)time();
+
 ?>
