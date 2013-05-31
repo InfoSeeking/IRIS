@@ -28,4 +28,29 @@ function fetch_to_trec($url, $doc_id, $TREC){
 function clean(){
 	system("rm -r output/clusterIndex output/summarizationIndex output/cluster.param output/sum.param output/trec_file.list output/trec.txt txt/*");
 }
+
+/*
+$docIds		an array of document ids
+returns an associative array document id => document url
+*/
+function getUrlArray($docIds){
+	global $cxn;
+	$respArr = Array();
+	$query = "SELECT `url`, `pageID` FROM pages WHERE `pageID` IN (";
+	$first = true;
+	foreach($docIds as $val){
+		if($first)
+			$first = false;
+		else
+			$query .= ",";
+		$query .= intval($val);
+	}
+	$query .= ")";
+
+	$results = mysqli_query($cxn, $query) or die(err("Could not get page url's from database"));
+	while($row = mysqli_fetch_assoc($results)){
+		$respArr[$row['pageID']] = $row['url'];
+	}
+	return $respArr;
+}
 ?>

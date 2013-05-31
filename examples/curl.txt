@@ -1,4 +1,10 @@
-#Example cluster
+##Example cluster
 curl http://localhost/CoagmentoMiddleLayer/application/index.php -d "xmldata=<parameters><requestType>cluster</requestType><numClusters>3</numClusters><docList><doc><url>http://www.westegg.com/bacon/duke.html</url></doc><doc><url>http://www.westegg.com/bacon/truth.html</url></doc><doc><url>http://www.westegg.com/bacon/death.html</url></doc><doc><url>http://www.westegg.com/bacon/unity.html</url></doc><doc><url>http://www.westegg.com/bacon/revenge.html</url></doc><doc><url>http://www.westegg.com/bacon/adversity.html</url></doc><doc><url>http://www.westegg.com/bacon/simulation.html</url></doc></docList></parameters>"
-#Example summarization
+##Example summarization
 curl http://localhost/CoagmentoMiddleLayer/application/index.php -d "xmldata=<parameters><requestType>summarize</requestType><maxSentences>5</maxSentences><individualSummaries>TRUE</individualSummaries><docList><doc><url>http://www.westegg.com/bacon/seditions.html</url></doc><doc><url>http://www.westegg.com/bacon/atheism.html</url></doc></docList></parameters>"
+
+#Examples using doc_ids (updated)
+##Clustering
+curl http://localhost/CoagmentoMiddleLayer/application/index.php -d "xmldata=<parameters><requestType>cluster</requestType><numClusters>3</numClusters><docList><doc><docID>1</docID></doc><doc><docID>2</docID></doc><doc><docID>3</docID></doc><doc><docID>4</docID></doc><doc><docID>5</docID></doc><doc><docID>6</docID></doc><doc><docID>7</docID></doc></docList></parameters>"
+##Summarization
+curl http://localhost/CoagmentoMiddleLayer/application/index.php -d "xmldata=<parameters><requestType>summarize</requestType><maxSentences>10</maxSentences><individualSummaries>TRUE</individualSummaries><docList><doc><docID>1</docID></doc><doc><docID>2</docID></doc></docList></parameters>"

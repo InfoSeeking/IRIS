@@ -1,11 +1,11 @@
 #Adding a new controller to the API
 To add a new controller, add the file to the controllers directory, give it the same name as the request type. E.G. if you wanted to add a controller for 'keywords' add a file keywords.php to controllers. Then, in index.php, add 'keywords' to the validTypes array. An example input that would access that controller would look like:
-
+```
 <parameters>
 <requestType>keywords</requestType>
 ... (other parameters)
 </parameters>
-
+```
 #Request and Response Format:
 
 ##Summarization
@@ -13,7 +13,7 @@ To add a new controller, add the file to the controllers directory, give it the 
 ```
 <parameters>
 	<requestType>summarize</requestType>
-	<maxSentences>1000</maxSentences>
+	<maxSentences>10</maxSentences>
 	<individualSummaries>TRUE</individualSummaries>
 	<docList>
 		<doc>
@@ -69,7 +69,7 @@ Here,
 	<numClusters>3</numClusters>
 	<docList>
 		<doc>
-			<docID>1<docID>
+			<docID>1</docID>
 		</doc>
 		<doc>
 			<docID>2</docID>
