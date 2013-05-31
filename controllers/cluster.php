@@ -23,9 +23,9 @@ if($numOfClusters > $numOfDocuments){
 	die(err("Number of clusters is more than the number of documents"));
 }
 
-//now build the index`
+//now build the index
 
-system($FILE_ROOT . "bin/BuildIndex output/buildindex.param 2>&1");
+system($FILE_ROOT . "bin/BuildIndex output/buildindex.param" . $cmd_extra);
 //create cluster parameters
 $CPARAM = fopen($FILE_ROOT . "output/cluster.param", "w");
 
@@ -34,7 +34,8 @@ fclose($CPARAM);
 
 //do clustering
 $out = Array();
-exec($FILE_ROOT . "bin/OfflineCluster output/cluster.param 2>&1", $out);
+
+exec($FILE_ROOT . "bin/OfflineCluster output/cluster.param", $out);
 
 $response = "<parameters>\n<requestID>TODO</requestID>\n<requestType>cluster</requestType>\n<clusterList>\n";
 
@@ -58,4 +59,4 @@ for($i = 0; $i < $numOfClusters; $i++){
 
 $response .= "</clusterList></parameters>";
 
-echo $response;
+echo htmlspecialchars($response);

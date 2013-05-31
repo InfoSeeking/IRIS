@@ -19,6 +19,6 @@ function fetch_to_trec($url, $doc_id, $TREC){
 }
 
 function clean(){
-	system("rm -r output/clusterIndex");
+	system("rm -r output/clusterIndex output/summarizationIndex");
 }
 ?>

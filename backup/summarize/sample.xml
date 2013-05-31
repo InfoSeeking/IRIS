@@ -1,5 +1,5 @@
 <parameters>
-	<request>summarize</request>
+	<requestType>summarize</requestType>
 	<maxWords>5</maxWords>
 	<individualSummaries>TRUE</individualSummaries>
 	<docList>
