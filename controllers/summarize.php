@@ -41,4 +41,4 @@ for($i = 0; $i < $numOfDocuments; $i++){
 	$response .= "</doc>";
 }
 
-echo htmlspecialchars($response);
+echo $response;

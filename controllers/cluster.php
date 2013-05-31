@@ -60,4 +60,4 @@ for($i = 0; $i < $numOfClusters; $i++){
 
 $response .= "</clusterList></parameters>";
 
-echo htmlspecialchars($response);
+echo $response;

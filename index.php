@@ -13,7 +13,7 @@ $xml;//simplexml object
 
 
 //get xml data and write to a file
-if(!isset($_REQUEST['xmldata'])){//TODO CHANGE TO POST once live
+if(!isset($_POST['xmldata'])){
 	die(err("No xml data provided"));
 }
 
