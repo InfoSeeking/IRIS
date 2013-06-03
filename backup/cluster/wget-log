@@ -1,11 +1,0 @@
---2012-11-03 23:04:38--  http://www.cnn.com/2012/09/05/politics/fact-check-obama-jobs/index.html
-Resolving www.cnn.com (www.cnn.com)... 157.166.241.10, 157.166.241.11, 157.166.240.11, ...
-Connecting to www.cnn.com (www.cnn.com)|157.166.241.10|:80... connected.
-HTTP request sent, awaiting response... 200 OK
-Length: unspecified [text/html]
-Saving to: `./web/2.html'
-
-    [   <=>                                 ] 238,808      450K/s   in 0.5s    
-
-2012-11-03 23:04:39 (450 KB/s) - `./web/2.html' saved [238808]
-

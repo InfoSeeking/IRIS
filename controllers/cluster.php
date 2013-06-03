@@ -49,7 +49,8 @@ $response = "<parameters>\n<requestID>" . $REQ_ID ."</requestID>\n<requestType>c
 //get the document id's of each cluster by parsing the output of the last function (pray to god it works)
 for($i = 0; $i < $numOfClusters; $i++){
 	//line we need is line 2
-	$line = explode(": ",$out[$i + 1])[1];
+	$arr =  explode(": ",$out[$i + 1]);
+	$line = $arr[1]; //php 5.4 supports this
 	$cids = explode(" ", $line);//cids is cluster ids
 
 	//echo the result

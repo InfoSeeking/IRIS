@@ -1,6 +1,0 @@
-Using kmeans on 7 documents...
-1(1): 1 2 3 4 6 
-2(2): 5 7 
-Using bisecting kmeans on 7 documents...
-1(1): 1 2 3 4 6 
-2(2): 5 7 
