@@ -2,15 +2,21 @@
 require_once("config.php");
 require_once("dbconfig.php");
 require_once("shared_functions.php");
+
 /*
 requests should be made with the request type on the end of the url like so:
 <api url>/<request type>
 and the data should be passed through POST as the xmldata parameter
+
+request files are saved under output/requests
+response files are saved under output/responses
+The files are named with the request id
+
 */
 
 $xmldata;//raw xml data
 $xml;//simplexml object
-
+$response = "";//controller should put response in this variable
 
 //get xml data and write to a file
 if(!isset($_REQUEST['xmldata'])){//change to POST when live
@@ -32,9 +38,27 @@ if(!$valid){
 	die(err("Request type not valid. Valid requests are: " . implode($validTypes, ", ")));
 }
 
+//add this request to the database
+if(add_request($xml)){
+	//it was found in cache!
+	exit($response);
+}
+
+//save this request
+$REQ_FILE = fopen("output/requests/" . $REQ_ID . ".xml", "w");
+fwrite($REQ_FILE, $xmldata);
+fclose($REQ_FILE);
+
+//process
 require_once("controllers/" . $type . ".php");
 
-clean();
+echo $response;
 
+//save response
+$RES_FILE = fopen("output/responses/" . $REQ_ID . ".xml", "w");
+fwrite($RES_FILE, $response);
+fclose($RES_FILE);
+
+clean();
 mysqli_close($cxn);
 ?>

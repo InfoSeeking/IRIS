@@ -27,6 +27,7 @@ To add a new controller, add the file to the controllers directory, give it the 
 		</doc>
 	</docList>
 </parameters>
+
 ```
 Here,
 - &lt;maxSentences&gt;: up to how many words to produce in the summary
@@ -143,3 +144,49 @@ Here,
 	<error>message</error>
 </parameters>
 ```
+
+#Low Level Functionality (in progress)
+##Select
+###Request
+```
+<parameters>
+	<requestType>select</requestType>
+	<fields>
+		<field>
+			field name
+		</field>
+		<field>
+			field name
+		</field>
+		...
+	</fields>
+	<table>
+		table name (webpage|annotation|snippet|bookmarks|searches)
+	</table>
+	<where>
+		(<and>|<or>|<not>)
+			<field operator="=|>|<|>=|<=|like|in">
+				field name
+			</field>
+			<field operator="=|>|<|>=|<=|like|in">
+				field name
+			</field>
+			...
+		(</and>|</or>|</not>)
+		...
+	</where>
+	(<orderby type="desc|asc">
+		<field>
+			field name
+		</field>
+	 </orderby>)
+</parameters>
+```
+The field operator allows you to select from predefined fields based on the table (e.g. you can add a field of "url" or "snippetID" if the table value is "snippet").
+The &lt;and&gt;, &lt;or&gt;, and &lt;not&gt; tags wrap fields in the &lt;where&gt; clause for logical connectives.
+
+
+###Some examples
+##Merge
+##Insert
+##Delete

@@ -6,10 +6,10 @@ $titles = Array();//and this one too
 $numOfClusters = intval($xml->numClusters);
 $numOfDocuments = 0;
 
-$TREC = fopen($FILE_ROOT . "output/trec.txt", "w");//TODO make sure that you're not overwriting anything with a unique id or something
+$TREC = fopen($FILE_ROOT . fname("output/trec.txt"), "w");//TODO make sure that you're not overwriting anything with a unique id or something
 
-$TREC_FILE_LIST = fopen($FILE_ROOT . "output/trec_file.list", "w");
-fwrite($TREC_FILE_LIST, $FILE_ROOT . "output/trec.txt");
+$TREC_FILE_LIST = fopen($FILE_ROOT . fname("output/trec_file.list"), "w");
+fwrite($TREC_FILE_LIST, $FILE_ROOT . fname("output/trec.txt"));
 fclose($TREC_FILE_LIST);
 
 foreach($xml->docList->doc as $doc){
@@ -30,18 +30,23 @@ if($numOfClusters > $numOfDocuments){
 }
 
 //now build the index
+$IPARAM = fopen(fname("output/build_index.param"), "w");
+$tmp = "<parameters><index>" . fname("output/index") . "</index><indexType>indri</indexType><dataFiles>" . fname("output/trec_file.list") . "</dataFiles><docFormat>trec</docFormat><stopwords>stopwords.param</stopwords></parameters>";
+fwrite($IPARAM, $tmp);
+fclose($IPARAM);
 
-system($FILE_ROOT . "bin/BuildIndex output/buildindex.param" . $cmd_extra);
+system($FILE_ROOT . "bin/BuildIndex " . fname("output/build_index.param") . $cmd_extra);
+
 //create cluster parameters
-$CPARAM = fopen($FILE_ROOT . "output/cluster.param", "w");
+$CPARAM = fopen($FILE_ROOT . fname("output/cluster.param"), "w");
 
-fwrite($CPARAM, "<parameters>\n<index>output/clusterIndex</index>\n<docMode>max</docMode>\n<numParts>" . $numOfClusters . "</numParts>\n</parameters>\n");
+fwrite($CPARAM, "<parameters>\n<index>" . fname("output/index") . "</index>\n<docMode>max</docMode>\n<numParts>" . $numOfClusters . "</numParts>\n</parameters>\n");
 fclose($CPARAM);
 
 //do clustering
 $out = Array();
 
-exec($FILE_ROOT . "bin/OfflineCluster output/cluster.param", $out);
+exec($FILE_ROOT . "bin/OfflineCluster " . fname("output/cluster.param"), $out);
 
 $response = "<parameters>\n<requestID>" . $REQ_ID ."</requestID>\n<requestType>cluster</requestType>\n<clusterList>\n";
 
@@ -66,5 +71,3 @@ for($i = 0; $i < $numOfClusters; $i++){
 }
 
 $response .= "</clusterList></parameters>";
-
-echo $response;
