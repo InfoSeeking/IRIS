@@ -166,10 +166,20 @@ Here,
 	<where>
 		(<and>|<or>|<not>)
 			<field operator="=|>|<|>=|<=|like|in">
-				field name
+				<name>
+					field name
+				</name>
+				<value>
+					test value
+				</value>
 			</field>
 			<field operator="=|>|<|>=|<=|like|in">
-				field name
+				<name>
+					field name
+				</name>
+				<value>
+					test value
+				</value>
 			</field>
 			...
 		(</and>|</or>|</not>)
@@ -180,13 +190,86 @@ Here,
 			field name
 		</field>
 	 </orderby>)
+	 (<limit>
+	 	number
+	 (</limit)
 </parameters>
 ```
 The field operator allows you to select from predefined fields based on the table (e.g. you can add a field of "url" or "snippetID" if the table value is "snippet").
+
 The &lt;and&gt;, &lt;or&gt;, and &lt;not&gt; tags wrap fields in the &lt;where&gt; clause for logical connectives.
 
-
+###Response
+```
+<parameters>
+	<requestID>number</requestID>
+	<requestType>select</requestType>
+	<resourceList>
+		<resource>
+			<type>table name (webpage|annotation|snippet|bookmarks|searches)</type>
+			<id>id</id>
+			(<fields>
+				...
+			</fields>)
+		</resource>
+		<resource>
+			<type>table name (webpage|annotation|snippet|bookmarks|searches)</type>
+			<id>id</id>
+			(<fields>
+				...
+			</fields>)
+		</resource>
+		...
+	</resourceList>
+</parameters>
+```
 ###Some examples
+Select the url from a pageID of 10 in the webpage table
+
+Request:
+```
+<parameters>
+	<requestType>select</requestType>
+	<fields>
+		<field>
+			url
+		</field>
+		<field>
+			pageID
+		</field>
+	</fields>
+	<table>
+		webpage
+	</table>
+	<where>
+			<field operator="=">
+				<name>
+					pageID
+				</name>
+				<value>
+					10
+				</value>
+			</field>
+	</where>
+</parameters>
+```
+Response:
+```
+<parameters>
+	<requestID>20841</requestID>
+	<requestType>select</requestType>
+	<resourceList>
+		<resource>
+			<type>snippet</type>
+			<id>10</id>
+			<fields>
+				<url>http://www.google.com</url>
+			</fields>
+		</resource>
+		...
+	</resourceList>
+</parameters>
+```
 ##Merge
 ##Insert
 ##Delete
