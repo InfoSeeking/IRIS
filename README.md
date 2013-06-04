@@ -266,10 +266,78 @@ Response:
 				<url>http://www.google.com</url>
 			</fields>
 		</resource>
-		...
 	</resourceList>
 </parameters>
 ```
 ##Merge
+Merge requests can easily merge multiple select responses in various ways
+###Request
+```
+<parameters>
+	<requestType>merge</requestType>
+	<mergeType>union|intersection|difference</mergeType>
+	<resourceLists>
+		<resourceList>
+			<resource>
+				<type>table name (webpage|annotation|snippet|bookmarks|searches)</type>
+				<id>id</id>
+				(<fields>
+					...
+				</fields>)
+			</resource>
+			<resource>
+				<type>table name (webpage|annotation|snippet|bookmarks|searches)</type>
+				<id>id</id>
+				(<fields>
+					...
+				</fields>)
+			</resource>
+			...
+		</resourceList>
+		<resourceList>
+			<resource>
+				<type>table name (webpage|annotation|snippet|bookmarks|searches)</type>
+				<id>id</id>
+				(<fields>
+					...
+				</fields>)
+			</resource>
+			<resource>
+				<type>table name (webpage|annotation|snippet|bookmarks|searches)</type>
+				<id>id</id>
+				(<fields>
+					...
+				</fields>)
+			</resource>
+			...
+		</resourceList>
+		...
+	</resourceLists>
+</parameters>
+```
+###Response
+```
+<parameters>
+	<requestID>number</requestID>
+	<requestType>merge</requestType>
+	<resourceList>
+		<resource>
+			<type>table name (webpage|annotation|snippet|bookmarks|searches)</type>
+			<id>id</id>
+			(<fields>
+				...
+			</fields>)
+		</resource>
+		<resource>
+			<type>table name (webpage|annotation|snippet|bookmarks|searches)</type>
+			<id>id</id>
+			(<fields>
+				...
+			</fields>)
+		</resource>
+		...
+	</resourceList>	
+</parameters>
+```
 ##Insert
 ##Delete
