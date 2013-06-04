@@ -340,4 +340,82 @@ Merge requests can easily merge multiple select responses in various ways
 </parameters>
 ```
 ##Insert
+###Request
+<parameters>
+	<requestType>insert</requestType>
+	<table>table name</table>
+	<fields>
+		<field>
+			<name>
+				field name
+			</name>
+			<value>
+				field value
+			</value>
+		</field>
+		...
+	</fields>
+</parameters>
+###Response
+<parameters>
+	<requestID>number</requestID>
+	<requestType>insert</requestType>
+	<status>success|error</status>
+	<message>error message</message>
+	<resource>
+		<type>table name</type>
+		<id>id</id>
+	</resource>
+</parameters>
+
+##Update
+###Request
+<parameters>
+	<requestType>update</requestType>
+	<resource>
+		<table>table name</table>
+		<id>id</id>
+		<fields>
+			<field>
+				<name>
+					field name
+				</name>
+				<value>
+					field value
+				</value>
+			</field>
+			...
+		</fields>
+	</resource>
+</parameters>
+###Response
+<parameters>
+	<requestID>number</requestID>
+	<requestType>update</requestType>
+	<status>success|error</status>
+	<message>error message</message>
+	<resource>
+		<type>table name</type>
+		<id>id</id>
+	</resource>
+</parameters>
+
 ##Delete
+###Request
+<parameters>
+	<requestType>delete</requestType>
+	<resourceList>
+		<resource>
+			<table>table name</table>
+			<id>id</id>
+		</resource>
+		...
+	</resourceList>
+</parameters>
+###Response
+<parameters>
+	<requestID>number</requestID>
+	<requestType>delete</requestType>
+	<status>success|error</status>
+	<message>error message</message>
+</parameters>
