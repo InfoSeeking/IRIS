@@ -17,12 +17,14 @@ function add_request($xml){
 	//called when request starts, adds request to database and generate's id
 	global $REQ_ID, $cxn, $HOST, $response;
 	//for now only test the request table locally
+	
+	$query = sprintf("INSERT INTO operator_requests (`reqType`) VALUES('%s')", esc($xml->requestType));
+	mysqli_query($cxn, $query) or die(err("Could not insert request into database"));
+	$REQ_ID = mysqli_insert_id($cxn);
+	return false;
+/* cache stuff here
 	if($HOST == "local"){
-		$query = sprintf("INSERT INTO requests (`reqType`) VALUES('%s')", esc($xml->requestType));
-		mysqli_query($cxn, $query) or die(err("Could not insert request into database"));
-		$REQ_ID = mysqli_insert_id($cxn);
-
-		/* add to cache */
+		// add to cache 
 		$ids = Array();
 		$docSum = 0;
 		foreach($xml->docList->doc as $doc){
@@ -58,6 +60,7 @@ function add_request($xml){
 		$REQ_ID = (string)time();
 		return false;
 	}
+	*/
 }
 
 /* gets a relative filename using the REQ_ID */

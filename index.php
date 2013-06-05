@@ -1,4 +1,5 @@
 <?php
+require_once("magic_quotes.php");
 require_once("config.php");
 require_once("dbconfig.php");
 require_once("shared_functions.php");
@@ -24,7 +25,14 @@ if(!isset($_REQUEST['xmldata'])){//change to POST when live
 }
 
 $xmldata = $_REQUEST['xmldata'];
-$xml = new SimpleXMLElement($xmldata);
+$xml = false;
+try{
+	echo $xmldata;
+	$xml = new SimpleXMLElement($xmldata);
+}
+catch(Exception $e){
+	die(err("Xml could not be parsed"));
+}
 $type = $xml->requestType;
 
 $validTypes = array("cluster", "summarize");

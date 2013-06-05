@@ -3,9 +3,10 @@
 
 $ROOT="http://localhost/CoagmentoMiddleLayer/application";
 
-$FILE_ROOT="/home/kevin/public_html/CoagmentoMiddleLayer/application/";
+$FILE_ROOT="";
 
-$STATE="debug"; //valid values are debug,live
+
+$STATE="live"; //valid values are debug,live
 $HOST=""; //valid values are local,live
 
 if($_SERVER["HTTP_HOST"] == "localhost"){
