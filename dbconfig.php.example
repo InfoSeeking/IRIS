@@ -6,3 +6,4 @@ $db = ""
 
 $cxn = mysqli_connect($host, $user, $pass, $db) or die(err("Could not connect to database"));
 
+//when ready to go live, remove the .example off of this filename to make it just dbconfig.php

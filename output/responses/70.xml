@@ -1,0 +1,5 @@
+<parameters>
+<requestID>70</requestID>
+<requestType>cluster</requestType>
+<clusterList>
+<cluster><clusterID>0</clusterID><doc><docID>1</docID><title></title></doc><doc><docID>2</docID><title></title></doc><doc><docID>7</docID><title></title></doc></cluster><cluster><clusterID>1</clusterID><doc><docID>3</docID><title></title></doc><doc><docID>6</docID><title></title></doc></cluster><cluster><clusterID>2</clusterID><doc><docID>4</docID><title></title></doc><doc><docID>5</docID><title></title></doc></cluster></clusterList></parameters>

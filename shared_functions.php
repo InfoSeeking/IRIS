@@ -74,16 +74,24 @@ function fname($fname){
 	return $parts[0] . "_" . $REQ_ID . "." . $parts[1];//fname_id.ext
 }
 
+
 //returns doc_title
 function fetch_to_trec($url, $doc_id, $TREC){
 	global $FILE_ROOT;
-	$html = file_get_html($url);
-	foreach($html->find('title') as $element);
+	$html = file_get_contents($url);
+	$title = "";
+	if(preg_match("/<title>(.*)<\/title>/isUm", $html, $matches)){
+		$title = $matches[1];
+	}
+	else{
+		echo "No match";
+	}
+	$plaintext = strip_tags($html);
 	fwrite($TREC, "<DOC>\n<DOCNO>" . $doc_id ."</DOCNO>\n<TEXT>\n");
-	fwrite($TREC, $element);
-	fwrite($TREC, $html->plaintext);
+	fwrite($TREC, "<title>" . $title . "</title>");
+	fwrite($TREC, $plaintext);
 	fwrite($TREC, "</TEXT>\n</DOC>\n");
-	return $element;
+	return $title;
 }
 
 /* 

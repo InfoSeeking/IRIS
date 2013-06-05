@@ -20,7 +20,7 @@ foreach($xml->docList->doc as $doc){
 $urls = getUrlArray($ids);
 
 foreach($urls as $id => $url){
-	$titles[$id] = strip_tags(fetch_to_trec($url, $id, $TREC));
+	$titles[$id] = fetch_to_trec($url, $id, $TREC);
 }
 
 fclose($TREC);
