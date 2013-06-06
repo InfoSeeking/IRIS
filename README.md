@@ -1,3 +1,11 @@
+#Directory Structure
+bin/ - Lemur executable files (compiled on Ubuntu)
+controllers/ - files which perform specific tasks (e.g. clustering, summarization, etc.)
+library/ - helpful methods shared among all controllers
+storage/ - folder where all of the request/response data is stored, where all of the necessary indexing files are created (and removed)
+config.php - configuration for debugging and file paths
+dbconfig.php.example - configuration file for database (remove the trailing .example to use)
+
 #Adding a new controller to the API
 To add a new controller, add the file to the controllers directory, give it the same name as the request type. E.G. if you wanted to add a controller for 'keywords' add a file keywords.php to controllers. Then, in index.php, add 'keywords' to the validTypes array. An example input that would access that controller would look like:
 ```

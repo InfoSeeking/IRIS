@@ -1,5 +1,4 @@
 <?php
-require_once("htmlparser.php");
 function err($msg){
 	return "<parameters><error><message>$msg</message></error></parameters>";
 }
@@ -7,6 +6,11 @@ function err($msg){
 function esc($str){
 	global $cxn;
 	return mysqli_real_escape_string($cxn, $str);
+}
+
+/* shortened name */
+function pe($class, $property){
+	return property_exists($class, $property);
 }
 /*
 the following function adds the request to the request table to keep a log
@@ -38,7 +42,7 @@ function add_request($xml){
 		$res = mysqli_query($cxn, $query) or die(err("Could not check cache for requests"));
 		if(mysqli_num_rows($res) == 1){
 			$row = mysqli_fetch_assoc($res);
-			$fname = "output/responses/" . $row["reqID"] . ".xml";
+			$fname = $STORAGE . "responses/" . $row["reqID"] . ".xml";
 			//found
 			if(file_exists($fname)){
 				$HANDLE = fopen($fname, "r");
@@ -177,16 +181,18 @@ function fetch_to_trec($url, $doc_id, $TREC){
 The following function removes temporary files that the script uses during processing a request
 */
 function clean(){
+	global $STORAGE;
 	$removeArr = Array(
-		fname("output/trec_file.list"),
-		//fname("output/trec.txt"),
-		fname("output/build_index.param"),
-		fname("output/cluster.param"),
-		fname("output/index"),
-		fname("output/sum.param")
+		fname($STORAGE . "trec_file.list"),
+		fname($STORAGE . "trec.txt"),
+		fname($STORAGE . "build_index.param"),
+		fname($STORAGE . "cluster.param"),
+		fname($STORAGE . "index"),
+		fname($STORAGE . "sum.param")
 		);
 	//If you are trying to get a better understanding of how the system works I suggest commenting out the following system(...) line so the temporary files are not removed
-	system("rm -r " . implode($removeArr, " "));
+	$cmd = "rm -r " . implode($removeArr, " ");
+	system($cmd);
 }
 
 /*

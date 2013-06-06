@@ -1,20 +1,22 @@
 <?php
-require_once("magic_quotes.php");
 require_once("config.php");
 require_once("dbconfig.php");
-require_once("shared_functions.php");
+require_once($CONTROLLER . "controller.php");
+require_once($LIB . "magic_quotes.php");
+require_once($LIB . "shared_functions.php");
 
 /*
 requests should be made with the request type on the end of the url like so:
 <api url>/<request type>
 and the data should be passed through POST as the xmldata parameter
 
-request files are saved under output/requests
-response files are saved under output/responses
+request files are saved under $STORAGE/requests
+response files are saved under $STORAGE/responses
 The files are named with the request id
 
 */
-
+include($CONTROLLER . "cluster.php");
+$cobj = new Cluster();
 $xmldata;//raw xml data
 $xml;//simplexml object
 $response = "";//controller should put response in this variable
@@ -34,7 +36,7 @@ catch(Exception $e){
 }
 $type = $xml->requestType;
 
-$validTypes = array("cluster", "summarize");
+$validTypes = array("cluster", "summarize", "select");
 $valid = false;
 for($i = 0; $i < sizeof($validTypes); $i++){
 	if($validTypes[$i] == $type){
@@ -52,17 +54,25 @@ if(add_request($xml)){
 }
 
 //save this request
-$REQ_FILE = fopen("output/requests/" . $REQ_ID . ".xml", "w");
+$REQ_FILE = fopen($STORAGE . "requests/" . $REQ_ID . ".xml", "w");
 fwrite($REQ_FILE, $xmldata);
 fclose($REQ_FILE);
 
 //process
-require_once("controllers/" . $type . ".php");
-
+require_once($CONTROLLER . $type . ".php");
+$cobj;//controller object
+try{
+	$classname = ucfirst($type);
+	$cobj = new $classname();
+}
+catch(Exception $e){
+	die(err("Class . " . $classname . " does not exist"));
+}
+$response = $cobj->run($xml);
 echo $response;
 
 //save response
-$RES_FILE = fopen("output/responses/" . $REQ_ID . ".xml", "w");
+$RES_FILE = fopen($STORAGE . "responses/" . $REQ_ID . ".xml", "w");
 fwrite($RES_FILE, $response);
 fclose($RES_FILE);
 

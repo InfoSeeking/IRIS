@@ -1,11 +1,11 @@
 <?php
 /* configurable 'constants' you may edit these to reflect your system/development stage */
 
-$ROOT="http://localhost/CoagmentoMiddleLayer/application";
-
+$ROOT="http://localhost/CoagmentoMiddleLayer/application/";
+$STORAGE="storage/"; //storage folder (writable directory)
+$LIB="library/";
+$CONTROLLER="controllers/";
 $FILE_ROOT="";
-
-
 $STATE="live"; //valid values are debug,live
 $HOST=""; //valid values are local,live
 
