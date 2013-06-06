@@ -148,6 +148,10 @@ Here,
 #Low Level Functionality (in progress)
 ##Select
 ###Request
+The field operator allows you to select from predefined fields based on the table (e.g. you can add a field of "url" or "snippetID" if the table value is "snippet").
+Not including the fields list will return no fields, but can still be useful for only retrieving the id's of the resulting resources.
+
+The &lt;and&gt;, &lt;or&gt;, and &lt;not&gt; tags wrap fields in the &lt;where&gt; clause for logical connectives.
 ```
 <parameters>
 	<requestType>select</requestType>
@@ -161,7 +165,7 @@ Here,
 		...
 	</fields>
 	<table>
-		table name (webpage|annotation|snippet|bookmarks|searches)
+		table name (pages|annotation|snippet|bookmarks|searches)
 	</table>
 	<where>
 		(<and>|<or>|<not>)
@@ -195,9 +199,6 @@ Here,
 	 (</limit)
 </parameters>
 ```
-The field operator allows you to select from predefined fields based on the table (e.g. you can add a field of "url" or "snippetID" if the table value is "snippet").
-
-The &lt;and&gt;, &lt;or&gt;, and &lt;not&gt; tags wrap fields in the &lt;where&gt; clause for logical connectives.
 
 ###Response
 ```
@@ -206,14 +207,14 @@ The &lt;and&gt;, &lt;or&gt;, and &lt;not&gt; tags wrap fields in the &lt;where&g
 	<requestType>select</requestType>
 	<resourceList>
 		<resource>
-			<type>table name (webpage|annotation|snippet|bookmarks|searches)</type>
+			<type>table name (pages|annotation|snippet|bookmarks|searches)</type>
 			<id>id</id>
 			(<fields>
 				...
 			</fields>)
 		</resource>
 		<resource>
-			<type>table name (webpage|annotation|snippet|bookmarks|searches)</type>
+			<type>table name (pages|annotation|snippet|bookmarks|searches)</type>
 			<id>id</id>
 			(<fields>
 				...
@@ -223,8 +224,8 @@ The &lt;and&gt;, &lt;or&gt;, and &lt;not&gt; tags wrap fields in the &lt;where&g
 	</resourceList>
 </parameters>
 ```
-###Some examples
-Select the url from a pageID of 10 in the webpage table
+###Select example
+Select the url from a pageID of 10 in the pages table
 
 Request:
 ```
@@ -238,9 +239,7 @@ Request:
 			pageID
 		</field>
 	</fields>
-	<table>
-		webpage
-	</table>
+	<table>pages</table>
 	<where>
 			<field operator="=">
 				<name>
@@ -279,14 +278,14 @@ Merge requests can easily merge multiple select responses in various ways
 	<resourceLists>
 		<resourceList>
 			<resource>
-				<type>table name (webpage|annotation|snippet|bookmarks|searches)</type>
+				<type>table name (pages|annotation|snippet|bookmarks|searches)</type>
 				<id>id</id>
 				(<fields>
 					...
 				</fields>)
 			</resource>
 			<resource>
-				<type>table name (webpage|annotation|snippet|bookmarks|searches)</type>
+				<type>table name (pages|annotation|snippet|bookmarks|searches)</type>
 				<id>id</id>
 				(<fields>
 					...
@@ -296,14 +295,14 @@ Merge requests can easily merge multiple select responses in various ways
 		</resourceList>
 		<resourceList>
 			<resource>
-				<type>table name (webpage|annotation|snippet|bookmarks|searches)</type>
+				<type>table name (pages|annotation|snippet|bookmarks|searches)</type>
 				<id>id</id>
 				(<fields>
 					...
 				</fields>)
 			</resource>
 			<resource>
-				<type>table name (webpage|annotation|snippet|bookmarks|searches)</type>
+				<type>table name (pages|annotation|snippet|bookmarks|searches)</type>
 				<id>id</id>
 				(<fields>
 					...
@@ -322,14 +321,14 @@ Merge requests can easily merge multiple select responses in various ways
 	<requestType>merge</requestType>
 	<resourceList>
 		<resource>
-			<type>table name (webpage|annotation|snippet|bookmarks|searches)</type>
+			<type>table name (pages|annotation|snippet|bookmarks|searches)</type>
 			<id>id</id>
 			(<fields>
 				...
 			</fields>)
 		</resource>
 		<resource>
-			<type>table name (webpage|annotation|snippet|bookmarks|searches)</type>
+			<type>table name (pages|annotation|snippet|bookmarks|searches)</type>
 			<id>id</id>
 			(<fields>
 				...
@@ -376,21 +375,20 @@ Merge requests can easily merge multiple select responses in various ways
 ```
 <parameters>
 	<requestType>update</requestType>
-	<resource>
-		<table>table name</table>
-		<id>id</id>
-		<fields>
-			<field>
-				<name>
-					field name
-				</name>
-				<value>
-					field value
-				</value>
-			</field>
-			...
-		</fields>
-	</resource>
+	<fields>
+		<field>
+			<name>
+				field name
+			</name>
+			<value>
+				field value
+			</value>
+		</field>
+		...
+	</fields>
+	<resourceList>
+		...
+	</resourceList>
 </parameters>
 ```
 ###Response
@@ -400,10 +398,9 @@ Merge requests can easily merge multiple select responses in various ways
 	<requestType>update</requestType>
 	<status>success|error</status>
 	<message>error message</message>
-	<resource>
-		<type>table name</type>
-		<id>id</id>
-	</resource>
+	<resourceList>
+		...
+	</resourceList>
 </parameters>
 ```
 ##Delete
@@ -427,5 +424,139 @@ Merge requests can easily merge multiple select responses in various ways
 	<requestType>delete</requestType>
 	<status>success|error</status>
 	<message>error message</message>
+</parameters>
+```
+##Limit
+The limit request allows you to select a subset of results. The offset is optional and defaults to 0.
+###Request
+```
+<parameters>
+	<requestType>limit</requestType>
+	(<offset>number</offset>)
+	<amount>number</amount>
+	<resourceList>
+		<resource>
+			<table>table name</table>
+			<id>id</id>
+		</resource>
+		...
+	</resourceList>
+</parameters>
+```
+###Response
+<parameters>
+	<requestID>number</requestID>
+	<requestType>limit</requestType>
+	<resourceList>
+		<resource>
+			<table>table name</table>
+			<id>id</id>
+		</resource>
+		...
+	</resourceList>
+</parameters>
+```
+##Pipe
+The pipe command allows you to do a unix-like pipe feeding the output of one command into the input of another. You cannot do this by simply taking the XML output of one and passing it to another command since it needs a bit of reformatting. This allows multiple commands to be easily strung together and called repeatedly without much work of the client.
+###Request
+```
+<parameters>
+	<requestType>pipe</requestType>
+	<commandList>
+		<command>
+			(Any of the input formats for the commands)
+		</command>
+		<command>
+			(This command will get the resourceList input from the previous command, therefore it is unnecessary to include a resourceList in this command.)
+		</command>
+		...
+	</commandList>
+</parameters>
+```
+###Response
+The response will follow the format of the last executed command.
+###Pipe Examples
+####Example 1
+This example calls select on snippets with ids from 10 to 20 and then deletes the results
+
+Notice that the delete command is missing the resourceList since it will be automatically filled by the output of the select statement.
+```
+<parameters>
+	<requestType>pipe</requestType>
+	<commandList>
+		<command>
+			<parameters>
+				<requestType>select</requestType>
+				<table>snippets</table>
+				<where>
+						<and>
+							<field operator=">=">
+								<name>snippetID</name>
+								<value>10</value>
+							</field>
+							<field operator="<=">
+								<name>snippetID</name>
+								<value>20</value>
+							</field>
+						</and>
+				</where>
+			</parameters>
+		</command>
+		<command>
+			<parameters>
+				<requestType>delete</requestType>
+			</parameters>
+		</command>
+	</commandList>
+</parameters>
+```
+####Example 2
+This example merges two select statements and updates the projectID
+```
+<parameters>
+	<requestType>pipe</requestType>
+	<commandList>
+		<command>
+			<parameters>
+				<requestType>select</requestType>
+				<table>snippets</table>
+				<where>
+						<field operator="=">
+							<name>snippetID</name>
+							<value>10</value>
+						</field>
+				</where>
+			</parameters>
+		</command>
+		<command>
+			<parameters>
+				<requestType>select</requestType>
+				<table>pages</table>
+				<where>
+					<field operator="=">
+						<name>pageID</name>
+						<value>13</value>
+					</field>
+				</where>
+			</parameters>
+		</command>
+		<command>
+			<parameters>
+				<requestType>merge</requestType>
+				<mergeType>union</mergeType>
+			</parameters>
+		</command>
+		<command>
+			<parameters>
+				<requestType>update</requestType>
+				<fields>
+					<field>
+						<name>projectID</name>
+						<value>5</value>
+					</field>
+				</fields>
+			</parameters>
+		</command>
+	</commandList>
 </parameters>
 ```

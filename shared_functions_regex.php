@@ -1,4 +1,7 @@
 <?php
+/*
+this version has the html stripping with regular expressions, it does not work on the server because of the backtrace limit
+*/
 require_once("htmlparser.php");
 function err($msg){
 	return "<parameters><error><message>$msg</message></error></parameters>";
@@ -74,81 +77,27 @@ function fname($fname){
 	return $parts[0] . "_" . $REQ_ID . "." . $parts[1];//fname_id.ext
 }
 
-
-/* these strip functions are for removing unnecessary html data */
 function strip_tags_content($text, $tagStr) {
-	$p1 = "@<" . $tagStr . ".*(>)@isUm";
-	$p2 = "@</" . $tagStr . "(>)@iUsm";
-	return slice_out($text, $p1, $p2);
-}
-
-function slice_out($text, $p1, $p2){
-	$offset = 0;
-	$c = 1;
-	while(preg_match($p1, $text, $matches, PREG_OFFSET_CAPTURE)){
-		$start = $matches[0][1];
-
-		if(preg_match($p2, $text, $matches, PREG_OFFSET_CAPTURE, $start)){
-			$end = $matches[1][1] + 1;
-		}
-		else{
-			$end = $start;
-		}
-		unset($matches);
-		$part1 = substr($text, 0, $start);
-		$part2 = substr($text, $end);
-		$text = $part1 . $part2;
-		unset($part1);
-		unset($part2);
-	
-	}
-	return $text;
+	$pattern = "@<(" . $tagStr . ").*>.*</" . $tagStr . ">@isUm";
+ 	return preg_replace($pattern, "", $text);
 }
 
 function strip_cdata($text){
-	$start = TRUE;
-	while($start !== FALSE){
-		$start = strpos($text, "<![CDATA[");
-		if($start === FALSE){
-			break;
-		}
-		$end = strpos($text, "]]>", $start);
-		if($end <= $start){
-			break;
-		}
-		$part1 = substr($text, 0, $start);
-		$part2 = substr($text, $end);
-		$text = $part1 . $part2;
-	}
-	return $text;
+	return preg_replace("@<!\[CDATA\[.*\]\]>@isUm", "", $text);
 }
 
 function getPlainText($html){
-	$start = 0;
-	$end = 0;
-	if(preg_match("@<body.*(>)@iUsm", $html, $matches, PREG_OFFSET_CAPTURE)){
-		$start = $matches[1][1] + 1;
+	if(preg_match("@<body.*>(.+)</body>@ism", $html, $matches)){
+		$bodytxt = $matches[1];
+		$bodytxt = strip_tags_content($bodytxt, "script");
+		$bodytxt = strip_tags_content($bodytxt, "style");
+		$bodytxt = strip_cdata($bodytxt);
+		return strip_tags($bodytxt);
 	}
 	else{
+		echo "HERE";
 		return false;
 	}
-	unset($matches);
-	if(preg_match("@</body(>)@iUsm", $html, $matches, PREG_OFFSET_CAPTURE, $start)){
-		$end = $matches[1][1] + 1;
-	}
-	else{
-		return false;
-	}
-	unset($matches);
-	//echo "Stage 1: Mem usage is: ", memory_get_usage(), "\n";
-	
-	$bodytxt = substr($html, $start, $end - $start);
-	unset($html);
-
-	$bodytxt = strip_tags_content($bodytxt, "script");
-	$bodytxt = strip_tags_content($bodytxt, "style");
-	$bodytxt = strip_cdata($bodytxt);
-	return strip_tags($bodytxt);
 }
 
 //returns doc_title
@@ -179,7 +128,7 @@ The following function removes temporary files that the script uses during proce
 function clean(){
 	$removeArr = Array(
 		fname("output/trec_file.list"),
-		//fname("output/trec.txt"),
+		fname("output/trec.txt"),
 		fname("output/build_index.param"),
 		fname("output/cluster.param"),
 		fname("output/index"),

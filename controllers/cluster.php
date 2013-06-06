@@ -40,7 +40,7 @@ system($FILE_ROOT . "bin/BuildIndex " . fname("output/build_index.param") . $cmd
 //create cluster parameters
 $CPARAM = fopen($FILE_ROOT . fname("output/cluster.param"), "w");
 
-fwrite($CPARAM, "<parameters>\n<index>" . fname("output/index") . "</index>\n<docMode>max</docMode>\n<numParts>" . $numOfClusters . "</numParts>\n</parameters>\n");
+fwrite($CPARAM, "<parameters>\n<index>" . fname("output/index") . "</index>\n<clusterType>centroid</clusterType>\n<numParts>" . $numOfClusters . "</numParts>\n</parameters>\n");
 fclose($CPARAM);
 
 //do clustering
@@ -50,12 +50,18 @@ exec($FILE_ROOT . "bin/OfflineCluster " . fname("output/cluster.param"), $out);
 
 $response = "<parameters>\n<requestID>" . $REQ_ID ."</requestID>\n<requestType>cluster</requestType>\n<clusterList>\n";
 
-
 //get the document id's of each cluster by parsing the output of the last function (pray to god it works)
+$i = 0;
 for($i = 0; $i < $numOfClusters; $i++){
 	//line we need is line 2
 	$arr =  explode(": ",$out[$i + 1]);
 	$line = $arr[1]; //php 5.4 supports this
+	$cids;
+	if($line == ""){
+		//add a blank
+		$response .= "<cluster><clusterID>" . $i . "</clusterID><doc><docID></docID></doc></cluster>";
+		continue;
+	}
 	$cids = explode(" ", $line);//cids is cluster ids
 
 	//echo the result
@@ -69,5 +75,6 @@ for($i = 0; $i < $numOfClusters; $i++){
         }
       $response .= "</cluster>";
 }
+
 
 $response .= "</clusterList></parameters>";
