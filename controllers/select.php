@@ -47,7 +47,6 @@ Example select request:
 	 (</limit)
 </parameters>
 */
-$response = "in progress";
 
 class Select extends Controller{
 	private function getAttr($xml, $at){
@@ -167,6 +166,7 @@ class Select extends Controller{
 		}
 
 		$statement = "SELECT " . $fields . " FROM " . $table . $additional;
+		//echo "<h2>" . $statement . "</h2>";
 		$response = "<parameters><requestID>" . $REQ_ID . "</requestID><requestType>select</requestType><resourceList>";
 		$results = mysqli_query($cxn, $statement) or die(err("Could not run query: " . $statement));
 		while($row = $results->fetch_assoc()){

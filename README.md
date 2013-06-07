@@ -272,12 +272,11 @@ Response:
 </parameters>
 ```
 ##Merge
-Merge requests can easily merge multiple select responses in various ways
+Merge requests can easily merge multiple resource lists
 ###Request
 ```
 <parameters>
 	<requestType>merge</requestType>
-	<mergeType>union|intersection|difference</mergeType>
 	<resourceLists>
 		<resourceList>
 			<resource>
@@ -364,13 +363,8 @@ Merge requests can easily merge multiple select responses in various ways
 ```
 <parameters>
 	<requestID>number</requestID>
+	<insertID>number</insertID>
 	<requestType>insert</requestType>
-	<status>success|error</status>
-	<message>error message</message>
-	<resource>
-		<type>table name</type>
-		<id>id</id>
-	</resource>
 </parameters>
 ```
 ##Update
@@ -378,6 +372,7 @@ Merge requests can easily merge multiple select responses in various ways
 ```
 <parameters>
 	<requestType>update</requestType>
+	<table>table name</table>
 	<fields>
 		<field>
 			<name>
@@ -399,8 +394,6 @@ Merge requests can easily merge multiple select responses in various ways
 <parameters>
 	<requestID>number</requestID>
 	<requestType>update</requestType>
-	<status>success|error</status>
-	<message>error message</message>
 	<resourceList>
 		...
 	</resourceList>
@@ -425,8 +418,6 @@ Merge requests can easily merge multiple select responses in various ways
 <parameters>
 	<requestID>number</requestID>
 	<requestType>delete</requestType>
-	<status>success|error</status>
-	<message>error message</message>
 </parameters>
 ```
 

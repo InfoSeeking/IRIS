@@ -49,6 +49,10 @@ class Summarize extends Controller{
 			$arr = Array();
 			//cannot pass parameter file by absolute path to command line! must use relative path
 			exec($FILE_ROOT . "bin/BasicSummApp " . fname($STORAGE . "sum.param"), $arr);
+			if(strpos($arr[0], "EOS") == 0){
+				//remove the EOS not present stuff
+				$arr[0] = "";
+			}
 			$response .= "<doc><docID>". $id ."</docID>";
 			$response .= "<summarization>" . implode($arr, "\n") . "</summarization>";
 			$response .= "</doc>";

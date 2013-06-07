@@ -1,0 +1,14 @@
+<parameters>
+	<requestType>insert</requestType>
+	<table>pages</table>
+	<fields>
+		<field>
+			<name>
+				url
+			</name>
+			<value>
+				test
+			</value>
+		</field>
+	</fields>
+</parameters>

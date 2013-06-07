@@ -1,0 +1,22 @@
+<parameters>
+	<requestType>merge</requestType>
+	<mergeType>union|intersection|difference</mergeType>
+	<resourceLists>
+		<resourceList>
+			<resource>
+			 res1
+			</resource>
+			<resource>
+				res2
+			</resource>
+		</resourceList>
+		<resourceList>
+			<resource>
+				res3
+			</resource>
+			<resource>
+				res4
+			</resource>
+		</resourceList>
+	</resourceLists>
+</parameters>
