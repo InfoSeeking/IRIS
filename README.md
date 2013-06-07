@@ -216,14 +216,12 @@ The &lt;and&gt;, &lt;or&gt;, and &lt;not&gt; tags wrap fields in the &lt;where&g
 	<resourceList>
 		<resource>
 			<type>table name (pages|annotation|snippet|bookmarks|searches)</type>
-			<id>id</id>
 			(<fields>
 				...
 			</fields>)
 		</resource>
 		<resource>
 			<type>table name (pages|annotation|snippet|bookmarks|searches)</type>
-			<id>id</id>
 			(<fields>
 				...
 			</fields>)
@@ -264,9 +262,15 @@ Response:
 	<resourceList>
 		<resource>
 			<type>snippet</type>
-			<id>10</id>
 			<fields>
-				<url>http://www.google.com</url>
+				<field>
+					<name>pageID</name>
+					<value>10</value>
+				</field>
+				<field>
+					<name>url</name>
+					<value>http://www.google.com</value>
+				</field>
 			</fields>
 		</resource>
 	</resourceList>

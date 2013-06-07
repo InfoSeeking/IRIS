@@ -7,15 +7,16 @@ $LIB="library/";
 $CONTROLLER="controllers/";
 $FILE_ROOT="";
 $STATE="live"; //valid values are debug,live
-$HOST=""; //valid values are local,live
+$HOST="live"; //valid values are local,live
 
+/*
 if($_SERVER["HTTP_HOST"] == "localhost"){
 	$HOST="local";
 }
 else{
 	$HOST="live";
 }
-
+*/
 /* do not edit below this */
 $CMD_EXTRA = " 2>&1";
 if($STATE=="live"){

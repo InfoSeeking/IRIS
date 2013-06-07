@@ -119,8 +119,9 @@ class Select extends Controller{
 		$logicString .= ")";
 		return $logicString;
 	}
+
 	function run($xml){
-		global $FILE_ROOT, $STORAGE, $REQ_ID;
+		global $FILE_ROOT, $STORAGE, $REQ_ID, $cxn;
 		$fields = "*";
 		$table = false;
 		$additional = "";
@@ -166,6 +167,16 @@ class Select extends Controller{
 		}
 
 		$statement = "SELECT " . $fields . " FROM " . $table . $additional;
-		return $statement;
+		$response = "<parameters><requestID>" . $REQ_ID . "</requestID><requestType>select</requestType><resourceList>";
+		$results = mysqli_query($cxn, $statement) or die(err("Could not run query: " . $statement));
+		while($row = $results->fetch_assoc()){
+			$response .= "<resource><type>" . $table . "</type><fields>";
+			foreach($row as $key => $val)
+				$response .= sprintf("<field><name>%s</name><value>%s</value></field>", $key, $val);
+			$response  .= "</fields></resource>";
+		}
+		$response .= "	</resourceList></parameters>";
+		$results->free();
+		return $response;
 	}
 }
