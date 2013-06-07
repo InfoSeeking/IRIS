@@ -12,6 +12,33 @@ function esc($str){
 function pe($class, $property){
 	return property_exists($class, $property);
 }
+
+function cleanLogic($type){
+	$type = trim(strtolower($type));
+	switch($type){
+		case "and":
+		case "or":
+		case "not":
+		return $type;
+		default: 
+		return false;
+	}
+}
+
+function cleanOp($op){
+	$op = trim(strtolower($op));
+	switch($op){
+		case "like":
+		case "in":
+		return $op;
+	}
+	if ($op == "eq") return "=";
+	if ($op == "ne") return "!=";
+	if ($op == "lt") return "<";
+	if ($op == "gt") return ">";
+	if ($op == "lte") return "<=";
+	if ($op == "gte") return ">=";
+}
 /*
 the following function adds the request to the request table to keep a log
 then it checks the request cache to see if this request has been made before
@@ -22,7 +49,7 @@ function add_request($xml){
 	global $REQ_ID, $cxn, $HOST, $response;
 	//for now only test the request table locally
 	
-	$query = sprintf("INSERT INTO operator_requests (`reqType`) VALUES('%s')", esc($xml->requestType));
+	$query = sprintf("INSERT INTO operator_requests (`reqType`, `date`, `time`) VALUES('%s', CURDATE(), CURTIME())", esc($xml->requestType));
 	mysqli_query($cxn, $query) or die(err("Could not insert request into database"));
 	$REQ_ID = mysqli_insert_id($cxn);
 	return false;
@@ -221,5 +248,18 @@ function getUrlArray($docIds){
 		$respArr[$row['pageID']] = $row['url'];
 	}
 	return $respArr;
+}
+
+function table_valid($tbl){
+	switch($tbl){
+		case "pages":
+		case "annotation":
+		case "snippet":
+		case "bookmarks":
+		case "searches":
+			return true;
+		default:
+			return false;
+	}
 }
 ?>

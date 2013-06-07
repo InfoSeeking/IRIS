@@ -176,8 +176,8 @@ The &lt;and&gt;, &lt;or&gt;, and &lt;not&gt; tags wrap fields in the &lt;where&g
 		table name (pages|annotation|snippet|bookmarks|searches)
 	</table>
 	<where>
-		(<and>|<or>|<not>)
-			<field operator="=|>|<|>=|<=|like|in">
+		(<logic type="and|or|not")
+			<field operator="eq|ne|lt|gt|lte|gte|like|in">
 				<name>
 					field name
 				</name>
@@ -185,7 +185,7 @@ The &lt;and&gt;, &lt;or&gt;, and &lt;not&gt; tags wrap fields in the &lt;where&g
 					test value
 				</value>
 			</field>
-			<field operator="=|>|<|>=|<=|like|in">
+			<field operator="eq|ne|lt|gt|lte|gte|like|in">
 				<name>
 					field name
 				</name>
@@ -194,7 +194,7 @@ The &lt;and&gt;, &lt;or&gt;, and &lt;not&gt; tags wrap fields in the &lt;where&g
 				</value>
 			</field>
 			...
-		(</and>|</or>|</not>)
+		(</logic>)
 		...
 	</where>
 	(<orderby type="desc|asc">
@@ -240,16 +240,12 @@ Request:
 <parameters>
 	<requestType>select</requestType>
 	<fields>
-		<field>
-			url
-		</field>
-		<field>
-			pageID
-		</field>
+		<field>url</field>
+		<field>pageID</field>
 	</fields>
 	<table>pages</table>
 	<where>
-			<field operator="=">
+			<field operator="eq">
 				<name>
 					pageID
 				</name>
@@ -434,37 +430,7 @@ Merge requests can easily merge multiple select responses in various ways
 	<message>error message</message>
 </parameters>
 ```
-##Limit
-The limit request allows you to select a subset of results. The offset is optional and defaults to 0.
-###Request
-```
-<parameters>
-	<requestType>limit</requestType>
-	(<offset>number</offset>)
-	<amount>number</amount>
-	<resourceList>
-		<resource>
-			<table>table name</table>
-			<id>id</id>
-		</resource>
-		...
-	</resourceList>
-</parameters>
-```
-###Response
-```
-<parameters>
-	<requestID>number</requestID>
-	<requestType>limit</requestType>
-	<resourceList>
-		<resource>
-			<table>table name</table>
-			<id>id</id>
-		</resource>
-		...
-	</resourceList>
-</parameters>
-```
+
 ##Pipe
 The pipe command allows you to do a unix-like pipe feeding the output of one command into the input of another. You cannot do this by simply taking the XML output of one and passing it to another command since it needs a bit of reformatting. This allows multiple commands to be easily strung together and called repeatedly without much work of the client.
 ###Request
@@ -498,16 +464,16 @@ Notice that the delete command is missing the resourceList since it will be auto
 				<requestType>select</requestType>
 				<table>snippets</table>
 				<where>
-						<and>
-							<field operator=">=">
+						<logic type="and">
+							<field operator="gte">
 								<name>snippetID</name>
 								<value>10</value>
 							</field>
-							<field operator="<=">
+							<field operator="lte">
 								<name>snippetID</name>
 								<value>20</value>
 							</field>
-						</and>
+						</logic>
 				</where>
 			</parameters>
 		</command>
@@ -530,7 +496,7 @@ This example merges two select statements and updates the projectID
 				<requestType>select</requestType>
 				<table>snippets</table>
 				<where>
-						<field operator="=">
+						<field operator="eq">
 							<name>snippetID</name>
 							<value>10</value>
 						</field>
@@ -542,7 +508,7 @@ This example merges two select statements and updates the projectID
 				<requestType>select</requestType>
 				<table>pages</table>
 				<where>
-					<field operator="=">
+					<field operator="eq">
 						<name>pageID</name>
 						<value>13</value>
 					</field>
@@ -567,5 +533,70 @@ This example merges two select statements and updates the projectID
 			</parameters>
 		</command>
 	</commandList>
+</parameters>
+```
+
+##Limit
+The limit request allows you to select a subset of results. The offset is optional and defaults to 0.
+###Request
+```
+<parameters>
+	<requestType>limit</requestType>
+	(<offset>number</offset>)
+	<amount>number</amount>
+	<resourceList>
+		<resource>
+			<table>table name</table>
+			<id>id</id>
+		</resource>
+		...
+	</resourceList>
+</parameters>
+```
+###Response
+```
+<parameters>
+	<requestID>number</requestID>
+	<requestType>limit</requestType>
+	<resourceList>
+		<resource>
+			<table>table name</table>
+			<id>id</id>
+		</resource>
+		...
+	</resourceList>
+</parameters>
+```
+
+##Sort
+Sort a resource list
+###Request
+```
+<parameters>
+	<requestType>sort</requestType>
+	<orderby type="desc|asc">
+		field name
+	</orderby>
+	<resourceList>
+		<resource>
+			<table>table name</table>
+			<id>id</id>
+		</resource>
+		...
+	</resourceList>
+</parameters>
+```
+###Response
+```
+<parameters>
+	<requestID>number</requestID>
+	<requestType>sort</requestType>
+	<resourceList>
+		<resource>
+			<table>table name</table>
+			<id>id</id>
+		</resource>
+		...
+	</resourceList>
 </parameters>
 ```

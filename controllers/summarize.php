@@ -1,8 +1,8 @@
 <?php
 class Summarize extends Controller{
 	function run($xml){
-		global $FILE_ROOT, $STORAGE, $REQ_ID;
-		
+		global $FILE_ROOT, $STORAGE, $REQ_ID, $CMD_EXTRA;
+
 		$ids = Array();
 		$urls = Array();//associative id => url
 		$numOfSentences = intval($xml->maxSentences);
@@ -33,7 +33,7 @@ class Summarize extends Controller{
 		fclose($IPARAM);
 
 		//now build the index
-		system($FILE_ROOT . "bin/BuildIndex " . fname($STORAGE . "build_index.param") . $cmd_extra);
+		system($FILE_ROOT . "bin/BuildIndex " . fname($STORAGE . "build_index.param") . $CMD_EXTRA);
 
 		//now do summarization
 		$response .= "<parameters>\n";
@@ -54,5 +54,6 @@ class Summarize extends Controller{
 			$response .= "</doc>";
 		}
 		$response .= "</docList></parameters>";
+		return $response;
 	}
 }

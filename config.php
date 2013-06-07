@@ -17,9 +17,9 @@ else{
 }
 
 /* do not edit below this */
-$cmd_extra = " 2>&1";
+$CMD_EXTRA = " 2>&1";
 if($STATE=="live"){
-	$cmd_extra = " 1>/dev/null 2>&1";
+	$CMD_EXTRA = " 1>/dev/null 2>&1";
 }
 
 $REQ_ID = "";//to be generated

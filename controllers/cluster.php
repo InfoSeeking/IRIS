@@ -1,7 +1,7 @@
 <?php
 class Cluster extends Controller{
 	function run($xml){
-		global $FILE_ROOT, $STORAGE, $REQ_ID;
+		global $FILE_ROOT, $STORAGE, $REQ_ID, $CMD_EXTRA;
 
 		$ids = Array();
 		$urls = Array();
@@ -39,7 +39,7 @@ class Cluster extends Controller{
 		fwrite($IPARAM, $tmp);
 		fclose($IPARAM);
 
-		system($FILE_ROOT . "bin/BuildIndex " . fname($STORAGE . "build_index.param") . $cmd_extra);
+		system($FILE_ROOT . "bin/BuildIndex " . fname($STORAGE . "build_index.param") . $CMD_EXTRA);
 
 		//create cluster parameters
 		$CPARAM = fopen($FILE_ROOT . fname($STORAGE . "cluster.param"), "w");
