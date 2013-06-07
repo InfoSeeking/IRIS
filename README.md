@@ -41,7 +41,6 @@ Here,
 - &lt;maxSentences&gt;: up to how many words to produce in the summary
 - &lt;individualSummaries&gt;: create individual summaries for each document? Here it's set to "TRUE", which means you'd output three summaries (there are three documents).
 
-##Summarization
 ###Response
 ```
 <parameters>
@@ -99,7 +98,7 @@ Here,
 </parameters>
 
 ```
-##Clustering
+
 ###Response
 ```
 <parameters>
