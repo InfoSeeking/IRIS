@@ -158,7 +158,7 @@ Here,
 The field operator allows you to select from predefined fields based on the table (e.g. you can add a field of "url" or "snippetID" if the table value is "snippet").
 Not including the fields list will return no fields, but can still be useful for only retrieving the id's of the resulting resources.
 
-The &lt;and&gt;, &lt;or&gt;, and &lt;not&gt; tags wrap fields in the &lt;where&gt; clause for logical connectives.
+The &lt;logic&gt; tags wrap fields in the &lt;where&gt; clause for logical connectives.
 ```
 <parameters>
 	<requestType>select</requestType>
@@ -243,12 +243,8 @@ Request:
 	<table>pages</table>
 	<where>
 			<field operator="eq">
-				<name>
-					pageID
-				</name>
-				<value>
-					10
-				</value>
+				<name>pageID</name>
+				<value>10</value>
 			</field>
 	</where>
 </parameters>
