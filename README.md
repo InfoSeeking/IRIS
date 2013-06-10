@@ -534,12 +534,11 @@ Sort a resource list
 <parameters>
 	<requestType>sort</requestType>
 	<table>table name</table>
-	<orderby type="desc|asc">
-		field name
+	<orderby type="desc|asc"> 
+		field name (defaults to id)
 	</orderby>
 	<resourceList>
 		<resource>
-			<table>table name</table>
 			<id>id</id>
 		</resource>
 		...
@@ -554,7 +553,6 @@ Sort a resource list
 	<requestType>sort</requestType>
 	<resourceList>
 		<resource>
-			<table>table name</table>
 			<id>id</id>
 		</resource>
 		...
