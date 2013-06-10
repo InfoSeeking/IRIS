@@ -63,6 +63,7 @@ class Update extends Controller{
 		}
 		$statement .= " WHERE ";
 		$first = true;
+		$resXML = $xml->resourceList->asXML();
 		/* find primary of each resource */
 		foreach($xml->resourceList->resource as $res){
 			if($first){
@@ -80,16 +81,10 @@ class Update extends Controller{
 			}
 			$statement .= "`".esc($primary->name)."`='".esc($primary->value)."'";
 		}
-		return $statement;
-		//This is where I left off on Friday, June 7th 2013 at 3:56PM
-		//This is where I shall begin
-		//...on Monday...
 		
-		/*
-		mysqli_query($cxn, $statement) or die(err("Could not insert into database with query: " . $statement));
-		$id = mysqli_insert_id($cxn);
-		$response = "<parameters><requestID>" . $REQ_ID ."</requestID><insertID>". $id ."</insertID><requestType>insert</requestType></parameters>";
+		mysqli_query($cxn, $statement) or die(err("Could not update database with query: " . $statement));
+		$response = "<parameters><requestID>" . $REQ_ID ."</requestID><requestType>update</requestType>";
+		$response .= $resXML . "</parameters>";
 		return $response;
-		*/
 	}
 }

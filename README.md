@@ -153,6 +153,14 @@ Here,
 ```
 
 #Low Level Functionality (in progress)
+##Some Considerations:
+- Do we want the user to be able to delete/update multiple resource using a where clause or specific resources? I think it is safer to do it with specific resources, so that is how I am proceeding for now
+- If we do both text processing and SQL statments, we will be working with both text and SQL records, which may make piping difficult. A possible solution to this is to create a table for each additional text processing controller I make which we can store results and send the SQL resources back instead of the text so all XML results are in the form of SQL resources. This will require additional tables in the database however.
+
+##Some Extra Notes:
+-The resource element contains fields, however we need to have the primary id as a field to uniquely identify resources. Since not every table has the same id column name (e.g. pages table has pageID) I added a 'type' attribute to the field element which can be set to 'primary' if it is the primary key for that table. This field is required for update or delete where we need to uniquely identify the incoming resources. (However, I am wavering on whether I like this format or not so this could very well change).
+-I also may consider moving the table element to the resources themselves in case some controllers take multiple types... not sure yet though
+
 ##Select
 ###Request
 The field operator allows you to select from predefined fields based on the table (e.g. you can add a field of "url" or "snippetID" if the table value is "snippet").

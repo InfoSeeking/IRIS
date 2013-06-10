@@ -5,6 +5,7 @@ require_once($CONTROLLER . "controller.php");
 require_once($LIB . "magic_quotes.php");
 require_once($LIB . "shared_functions.php");
 
+header("Access-Control-Allow-Origin: *");
 /*
 requests should be made with the request type on the end of the url like so:
 <api url>/<request type>
