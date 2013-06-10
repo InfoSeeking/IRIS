@@ -158,9 +158,14 @@ Here,
 - If we do both text processing and SQL statments, we will be working with both text and SQL records, which may make piping difficult. A possible solution to this is to create a table for each additional text processing controller I make which we can store results and send the SQL resources back instead of the text so all XML results are in the form of SQL resources. This will require additional tables in the database however.
 
 ##Some Extra Notes:
--The resource element contains fields, however we need to have the primary id as a field to uniquely identify resources. Since not every table has the same id column name (e.g. pages table has pageID) I added a 'type' attribute to the field element which can be set to 'primary' if it is the primary key for that table. This field is required for update or delete where we need to uniquely identify the incoming resources. (However, I am wavering on whether I like this format or not so this could very well change).
--I also may consider moving the table element to the resources themselves in case some controllers take multiple types... not sure yet though
-
+- The resource element contains fields, however we need to have the primary id as a field to uniquely identify resources. Since not every table has the same id column name (e.g. pages table has pageID) I added a 'type' attribute to the field element which can be set to 'primary' if it is the primary key for that table. This field is required for update or delete where we need to uniquely identify the incoming resources. (However, I am wavering on whether I like this format or not so this could very well change).
+- I also may consider moving the table element to the resources themselves in case some controllers take multiple types... not sure yet though
+##Format of resource:
+```
+<resource>
+	<table>(table)</table>
+	<id>(number)</id>
+	(<fields>)
 ##Select
 ###Request
 The field operator allows you to select from predefined fields based on the table (e.g. you can add a field of "url" or "snippetID" if the table value is "snippet").
@@ -221,18 +226,6 @@ The &lt;logic&gt; tags wrap fields in the &lt;where&gt; clause for logical conne
 	<requestID>number</requestID>
 	<requestType>select</requestType>
 	<resourceList>
-		<resource>
-			<type>table name (pages|annotation|snippet|bookmarks|searches)</type>
-			(<fields>
-				...
-			</fields>)
-		</resource>
-		<resource>
-			<type>table name (pages|annotation|snippet|bookmarks|searches)</type>
-			(<fields>
-				...
-			</fields>)
-		</resource>
 		...
 	</resourceList>
 </parameters>
@@ -287,37 +280,9 @@ Merge requests can easily merge multiple resource lists
 	<requestType>merge</requestType>
 	<resourceLists>
 		<resourceList>
-			<resource>
-				<type>table name (pages|annotation|snippet|bookmarks|searches)</type>
-				<id>id</id>
-				(<fields>
-					...
-				</fields>)
-			</resource>
-			<resource>
-				<type>table name (pages|annotation|snippet|bookmarks|searches)</type>
-				<id>id</id>
-				(<fields>
-					...
-				</fields>)
-			</resource>
 			...
 		</resourceList>
 		<resourceList>
-			<resource>
-				<type>table name (pages|annotation|snippet|bookmarks|searches)</type>
-				<id>id</id>
-				(<fields>
-					...
-				</fields>)
-			</resource>
-			<resource>
-				<type>table name (pages|annotation|snippet|bookmarks|searches)</type>
-				<id>id</id>
-				(<fields>
-					...
-				</fields>)
-			</resource>
 			...
 		</resourceList>
 		...
@@ -412,11 +377,8 @@ Merge requests can easily merge multiple resource lists
 ```
 <parameters>
 	<requestType>delete</requestType>
+	<table>table name</table>
 	<resourceList>
-		<resource>
-			<table>table name</table>
-			<id>id</id>
-		</resource>
 		...
 	</resourceList>
 </parameters>

@@ -49,17 +49,9 @@ Example select request:
 */
 
 class Select extends Controller{
-	private function getAttr($xml, $at){
-		foreach($xml->attributes() as $name => $val){
-			if($name == $at){
-				return $val;
-			}
-		}
-		return false;
-	}
 	private function parseLogicField($field){
 		//get attribute
-		$op = cleanOp($this->getAttr($field, "operator"));
+		$op = cleanOp(parent::getAttr($field, "operator"));
 		if(!$op){
 			die(err("Missing operator attribute on field tag"));
 		}
@@ -100,7 +92,7 @@ class Select extends Controller{
 			}
 
 			if($si->key() == "logic"){
-				$c = cleanLogic($this->getAttr($si->current(), "type"));
+				$c = cleanLogic(parent::getAttr($si->current(), "type"));
 				if(!$c){
 					die(err("Missing/Invalid type attribute on logic tag, must be and/or/not"));
 				}
@@ -153,7 +145,7 @@ class Select extends Controller{
 			if(!pe($xml->orderby, "field")){
 				die(err("Orderby element missing field element"));
 			}
-			$type = esc(strtolower(trim($this->getAttr($xml->orderby, "type"))));
+			$type = esc(strtolower(trim(parent::getAttr($xml->orderby, "type"))));
 			if(!$type){
 				$type = "asc";
 			}
@@ -166,7 +158,6 @@ class Select extends Controller{
 		}
 
 		$statement = "SELECT " . $fields . " FROM " . $table . $additional;
-		//echo "<h2>" . $statement . "</h2>";
 		$response = "<parameters><requestID>" . $REQ_ID . "</requestID><requestType>select</requestType><resourceList>";
 		$results = mysqli_query($cxn, $statement) or die(err("Could not run query: " . $statement));
 		while($row = $results->fetch_assoc()){

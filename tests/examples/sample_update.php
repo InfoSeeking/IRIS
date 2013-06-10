@@ -13,12 +13,7 @@
 	</fields>
 	<resourceList>
 		<resource>
-			<fields>
-				<field type="primary">
-					<name>pageID</name>
-					<value>10</value>
-				</field>
-			</fields>
+			<id>10</id>
 		</resource>
 	</resourceList>
 </parameters>

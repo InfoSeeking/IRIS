@@ -35,19 +35,12 @@
 */
 
 class Update extends Controller{
-	private function getAttr($xml, $at){
-		foreach($xml->attributes() as $name => $val){
-			if($name == $at){
-				return $val;
-			}
-		}
-		return false;
-	}
+
 	function run($xml){
 		global $FILE_ROOT, $STORAGE, $REQ_ID, $cxn;
 		if(!pe($xml, "table")) die(err("Table element not found"));
 		if(!pe($xml, "fields")) die(err("No fields found"));
-		$table = $xml->table;
+		$table = (string)$xml->table;
 		$statement = sprintf("UPDATE %s SET", esc($table));
 
 		$first = true;
@@ -65,6 +58,11 @@ class Update extends Controller{
 		$first = true;
 		$resXML = $xml->resourceList->asXML();
 		/* find primary of each resource */
+		$idField = parent::getIdField($table);
+		if(!$idField){
+			die(err("Table " . $table . " does not exist"));
+		}
+
 		foreach($xml->resourceList->resource as $res){
 			if($first){
 				$first = false;
@@ -72,14 +70,15 @@ class Update extends Controller{
 			else{
 				$statement .= " OR ";
 			}
-			$primary = false;
-			foreach($res->fields->field as $field){
-				if($this->getAttr($field, "type") == "primary"){
-					$primary = $field;
-					break;
-				}
+			$id;
+			if(pe($res, "id")){
+				$id = $res->id;
 			}
-			$statement .= "`".esc($primary->name)."`='".esc($primary->value)."'";
+			else{
+				die(err("Resource does not have required id field"));
+			}
+
+			$statement .= "`".esc($idField)."`='".esc($id)."'";
 		}
 		
 		mysqli_query($cxn, $statement) or die(err("Could not update database with query: " . $statement));
