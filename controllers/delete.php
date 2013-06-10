@@ -37,7 +37,7 @@ class Delete extends Controller{
 		if(mysqli_affected_rows($cxn) == 0){
 			die(err("Nothing was deleted"));
 		}
-		$response = "<parameters><requestID>" . $REQ_ID ."</requestID><requestType>delete</requestType>";
+		$response = "<parameters><table>" . $table . "</table><requestID>" . $REQ_ID ."</requestID><requestType>delete</requestType>";
 		$response .= $resXML . "</parameters>";
 		return $response;
 		

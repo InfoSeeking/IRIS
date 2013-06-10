@@ -41,7 +41,7 @@ class Insert extends Controller{
 		$statement .= $names . ") VALUES(" . $values . ")";
 		mysqli_query($cxn, $statement) or die(err("Could not insert into database with query: " . $statement));
 		$id = mysqli_insert_id($cxn);
-		$response = "<parameters><requestID>" . $REQ_ID ."</requestID><insertID>". $id ."</insertID><requestType>insert</requestType></parameters>";
+		$response = "<parameters><requestID><table>" . $table . "</table>" . $REQ_ID ."</requestID><insertID>". $id ."</insertID><requestType>insert</requestType></parameters>";
 		return $response;
 		
 	}

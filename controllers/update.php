@@ -82,7 +82,7 @@ class Update extends Controller{
 		}
 		
 		mysqli_query($cxn, $statement) or die(err("Could not update database with query: " . $statement));
-		$response = "<parameters><requestID>" . $REQ_ID ."</requestID><requestType>update</requestType>";
+		$response = "<parameters><table>" . $table . "</table><requestID>" . $REQ_ID ."</requestID><requestType>update</requestType>";
 		$response .= $resXML . "</parameters>";
 		return $response;
 	}

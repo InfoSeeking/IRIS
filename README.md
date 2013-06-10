@@ -159,11 +159,10 @@ Here,
 
 ##Some Extra Notes:
 - The resource element contains fields, however we need to have the primary id as a field to uniquely identify resources. Since not every table has the same id column name (e.g. pages table has pageID) I added a 'type' attribute to the field element which can be set to 'primary' if it is the primary key for that table. This field is required for update or delete where we need to uniquely identify the incoming resources. (However, I am wavering on whether I like this format or not so this could very well change).
-- I also may consider moving the table element to the resources themselves in case some controllers take multiple types... not sure yet though
+- A request must have resources of all of the same type, which is why the table element is required
 ##Format of resource:
 ```
 <resource>
-	<table>(table)</table>
 	<id>(number)</id>
 	(<fields>)
 ##Select
@@ -224,6 +223,7 @@ The &lt;logic&gt; tags wrap fields in the &lt;where&gt; clause for logical conne
 ```
 <parameters>
 	<requestID>number</requestID>
+	<table>table name</table>
 	<requestType>select</requestType>
 	<resourceList>
 		...
@@ -278,6 +278,7 @@ Merge requests can easily merge multiple resource lists
 ```
 <parameters>
 	<requestType>merge</requestType>
+	<table>table name</table>
 	<resourceLists>
 		<resourceList>
 			...
@@ -294,21 +295,8 @@ Merge requests can easily merge multiple resource lists
 <parameters>
 	<requestID>number</requestID>
 	<requestType>merge</requestType>
+	<table>table name</table>
 	<resourceList>
-		<resource>
-			<type>table name (pages|annotation|snippet|bookmarks|searches)</type>
-			<id>id</id>
-			(<fields>
-				...
-			</fields>)
-		</resource>
-		<resource>
-			<type>table name (pages|annotation|snippet|bookmarks|searches)</type>
-			<id>id</id>
-			(<fields>
-				...
-			</fields>)
-		</resource>
 		...
 	</resourceList>	
 </parameters>
@@ -336,6 +324,7 @@ Merge requests can easily merge multiple resource lists
 ```
 <parameters>
 	<requestID>number</requestID>
+	<table>table name</table>
 	<insertID>number</insertID>
 	<requestType>insert</requestType>
 </parameters>
@@ -366,6 +355,7 @@ Merge requests can easily merge multiple resource lists
 ```
 <parameters>
 	<requestID>number</requestID>
+	<table>table name</table>
 	<requestType>update</requestType>
 	<resourceList>
 		...
@@ -386,6 +376,7 @@ Merge requests can easily merge multiple resource lists
 ###Response
 ```
 <parameters>
+<table>table name</table>
 	<requestID>number</requestID>
 	<requestType>delete</requestType>
 </parameters>
@@ -446,7 +437,7 @@ Notice that the delete command is missing the resourceList since it will be auto
 </parameters>
 ```
 ####Example 2
-This example merges two select statements and updates the projectID
+This contrived example merges two select statements and updates the projectID
 ```
 <parameters>
 	<requestType>pipe</requestType>
@@ -454,10 +445,10 @@ This example merges two select statements and updates the projectID
 		<command>
 			<parameters>
 				<requestType>select</requestType>
-				<table>snippets</table>
+				<table>pages</table>
 				<where>
 						<field operator="eq">
-							<name>snippetID</name>
+							<name>pageID</name>
 							<value>10</value>
 						</field>
 				</where>
@@ -502,6 +493,7 @@ The limit request allows you to select a subset of results. The offset is option
 ```
 <parameters>
 	<requestType>limit</requestType>
+	<table>table name</table>
 	(<offset>number</offset>)
 	<amount>number</amount>
 	<resourceList>
@@ -517,6 +509,7 @@ The limit request allows you to select a subset of results. The offset is option
 ```
 <parameters>
 	<requestID>number</requestID>
+	<table>table name</table>
 	<requestType>limit</requestType>
 	<resourceList>
 		<resource>
@@ -534,6 +527,7 @@ Sort a resource list
 ```
 <parameters>
 	<requestType>sort</requestType>
+	<table>table name</table>
 	<orderby type="desc|asc">
 		field name
 	</orderby>
@@ -550,6 +544,7 @@ Sort a resource list
 ```
 <parameters>
 	<requestID>number</requestID>
+	<table>table name</table>
 	<requestType>sort</requestType>
 	<resourceList>
 		<resource>

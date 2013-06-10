@@ -37,7 +37,7 @@ catch(Exception $e){
 }
 $type = $xml->requestType;
 
-$validTypes = array("cluster", "summarize", "select", "merge", "insert", "update", "delete");
+$validTypes = array("cluster", "summarize", "select", "merge", "insert", "update", "delete", "limit");
 $valid = false;
 for($i = 0; $i < sizeof($validTypes); $i++){
 	if($validTypes[$i] == $type){

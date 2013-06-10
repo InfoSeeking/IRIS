@@ -158,7 +158,7 @@ class Select extends Controller{
 		}
 
 		$statement = "SELECT " . $fields . " FROM " . $table . $additional;
-		$response = "<parameters><requestID>" . $REQ_ID . "</requestID><requestType>select</requestType><resourceList>";
+		$response = "<parameters><table>" . $table . "</table><requestID>" . $REQ_ID . "</requestID><requestType>select</requestType><resourceList>";
 		$results = mysqli_query($cxn, $statement) or die(err("Could not run query: " . $statement));
 		while($row = $results->fetch_assoc()){
 			$response .= "<resource><type>" . $table . "</type><fields>";

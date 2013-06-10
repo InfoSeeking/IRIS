@@ -1,0 +1,31 @@
+<parameters>
+	<requestType>limit</requestType>
+	<table>pages</table>
+	<amount>2</amount>
+	<resourceList>
+		<resource>
+			<id>10</id>
+		</resource>
+		<resource>
+			<id>11</id>
+		</resource>
+		<resource>
+			<id>12</id>
+		</resource>
+		<resource>
+			<id>13</id>
+		</resource>
+		<resource>
+			<id>14</id>
+		</resource>
+		<resource>
+			<id>15</id>
+		</resource>
+		<resource>
+			<id>16</id>
+		</resource>
+		<resource>
+			<id>17</id>
+		</resource>
+	</resourceList>
+</parameters>
