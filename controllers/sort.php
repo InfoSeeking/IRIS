@@ -35,7 +35,7 @@ class Sort extends Controller{
 	private $flip = 1;
 
 
-	function resSort($a, $b){
+	private function resSort($a, $b){
 		//todo add sorting for other fields
 		if($this->sortField == "id"){
 			return (intval($a->id) - intval($b->id)) * $this->flip;

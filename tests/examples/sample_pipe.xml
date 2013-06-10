@@ -1,0 +1,36 @@
+<parameters>
+	<requestType>pipe</requestType>
+	
+<command>
+	<parameters>
+		<requestType>select</requestType>
+		<table>pages</table>
+		<where>
+				<field operator="eq">
+					<name>pageID</name>
+					<value>11</value>
+				</field>		
+		</where>
+	</parameters>
+</command>
+<command>
+	<parameters>
+		<requestType>select</requestType>
+			<table>pages</table>
+			<where>
+					<field operator="eq">
+						<name>pageID</name>
+						<value>5</value>
+					</field>
+			</where>
+	</parameters>
+</command>
+<command>
+	<parameters>
+		<table>pages</table>
+		<requestType>merge</requestType>
+	</parameters>
+</command>
+	
+</parameters>
+

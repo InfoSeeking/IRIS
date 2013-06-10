@@ -33,8 +33,8 @@ class Merge extends Controller{
 		if(!pe($xml, "table")) die(err("Table element not found"));
 		$table = $xml->table;
 		$response = "<parameters><table>" . $table . "</table><requestID>" . $REQ_ID . "</requestID><requestType>merge</requestType><resourceList>";
-		if(pe($xml, "resourceLists")){
-			foreach($xml->resourceLists->resourceList as $list){
+		if(pe($xml, "resourceList")){
+			foreach($xml->resourceList as $list){
 				foreach($list->resource as $res){
 					$response .= $res->asXML();	
 				}

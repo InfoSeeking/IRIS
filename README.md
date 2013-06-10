@@ -7,7 +7,7 @@
 - dbconfig.php.example - configuration file for database (remove the trailing .example to use)
 
 #Adding a new controller to the API
-To add a new controller, add the file to the controllers directory, give it the same name as the request type. E.G. if you wanted to add a controller for 'keywords' add a file keywords.php to controllers. Then, in index.php, add 'keywords' to the validTypes array. An example input that would access that controller would look like:
+To add a new controller, add the file to the controllers directory, give it the same name as the request type. E.G. if you wanted to add a controller for 'keywords' add a file keywords.php to controllers. Then, in config.php, add 'keywords' to the VALID_REQUEST_TYPES array. An example input that would access that controller would look like:
 ```
 <parameters>
 <requestType>keywords</requestType>
@@ -285,15 +285,13 @@ Merge requests can easily merge multiple resource lists
 <parameters>
 	<requestType>merge</requestType>
 	<table>table name</table>
-	<resourceLists>
-		<resourceList>
-			...
-		</resourceList>
-		<resourceList>
-			...
-		</resourceList>
+	<resourceList>
 		...
-	</resourceLists>
+	</resourceList>
+	<resourceList>
+		...
+	</resourceList>
+	...
 </parameters>
 ```
 ###Response
@@ -394,15 +392,13 @@ The pipe command allows you to do a unix-like pipe feeding the output of one com
 ```
 <parameters>
 	<requestType>pipe</requestType>
-	<commandList>
-		<command>
-			(Any of the input formats for the commands)
-		</command>
-		<command>
-			(This command will get the resourceList input from the previous command, therefore it is unnecessary to include a resourceList in this command.)
-		</command>
-		...
-	</commandList>
+	<command>
+		(Any of the input formats for the commands)
+	</command>
+	<command>
+		(This command will get the resourceList input from the previous command, therefore it is unnecessary to include a resourceList in this command.)
+	</command>
+	...
 </parameters>
 ```
 ###Response
@@ -415,31 +411,29 @@ Notice that the delete command is missing the resourceList since it will be auto
 ```
 <parameters>
 	<requestType>pipe</requestType>
-	<commandList>
-		<command>
-			<parameters>
-				<requestType>select</requestType>
-				<table>snippets</table>
-				<where>
-						<logic type="and">
-							<field operator="gte">
-								<name>snippetID</name>
-								<value>10</value>
-							</field>
-							<field operator="lte">
-								<name>snippetID</name>
-								<value>20</value>
-							</field>
-						</logic>
-				</where>
-			</parameters>
-		</command>
-		<command>
-			<parameters>
-				<requestType>delete</requestType>
-			</parameters>
-		</command>
-	</commandList>
+	<command>
+		<parameters>
+			<requestType>select</requestType>
+			<table>snippets</table>
+			<where>
+					<logic type="and">
+						<field operator="gte">
+							<name>snippetID</name>
+							<value>10</value>
+						</field>
+						<field operator="lte">
+							<name>snippetID</name>
+							<value>20</value>
+						</field>
+					</logic>
+			</where>
+		</parameters>
+	</command>
+	<command>
+		<parameters>
+			<requestType>delete</requestType>
+		</parameters>
+	</command>
 </parameters>
 ```
 ####Example 2
@@ -554,6 +548,35 @@ Sort a resource list
 	<resourceList>
 		<resource>
 			<id>id</id>
+		</resource>
+		...
+	</resourceList>
+</parameters>
+```
+##Extract
+###Request
+```
+<parameters>
+	<requestType>extract</requestType>
+	<numWords>number</numWords>
+	<resourceList>
+		<resource>
+			<table>table name</table>
+			<id>id</id>
+		</resource>
+		...
+	</resourceList>
+</parameters>
+```
+###Response
+```
+<parameters>
+	<requestID>number</requestID>
+	<requestType>extract</requestType>
+	<resourceList>
+		<resource>
+			<id>id</id>
+			<keywords>comma,seperated,keywords</keywords>
 		</resource>
 		...
 	</resourceList>

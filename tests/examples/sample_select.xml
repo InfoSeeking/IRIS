@@ -1,7 +1,7 @@
 <parameters>
 	<requestType>select</requestType>
 	<fields>
-		<field>url</field>
+		<field>*</field>
 		<field>pageID</field>
 	</fields>
 	<table>pages</table>

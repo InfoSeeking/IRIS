@@ -39,6 +39,40 @@ function cleanOp($op){
 	if ($op == "lte") return "<=";
 	if ($op == "gte") return ">=";
 }
+function handleRequest($xml){ 
+	global $CONTROLLER, $VALID_REQUEST_TYPES;
+	
+	$type = $xml->requestType;
+	$valid = false;
+	for($i = 0; $i < sizeof($VALID_REQUEST_TYPES); $i++){
+		if($VALID_REQUEST_TYPES[$i] == $type){
+			$valid = true;
+		}
+	}
+	if(!$valid){
+		die(err("Request type not valid. Valid requests are: " . implode($VALID_REQUEST_TYPES, ", ")));
+	}
+
+	//add this request to the database
+	if(add_request($xml)){
+		//it was found in cache!
+		exit($response);
+	}
+
+	//process
+	require_once($CONTROLLER . $type . ".php");
+	$cobj;//controller object
+	try{
+		$classname = ucfirst($type);
+		$cobj = new $classname();
+	}
+	catch(Exception $e){
+		die(err("Class . " . $classname . " does not exist"));
+	}
+	$response = $cobj->run($xml);
+	return $response;
+}
+
 /*
 the following function adds the request to the request table to keep a log
 then it checks the request cache to see if this request has been made before

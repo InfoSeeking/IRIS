@@ -1,0 +1,47 @@
+<parameters>
+	<requestType>pipe</requestType>
+	<command>
+		<parameters>
+			<requestType>select</requestType>
+			<table>pages</table>
+			<where>
+					<field operator="lte">
+						<name>pageID</name>
+						<value>5</value>
+					</field>		
+			</where>
+		</parameters>
+	</command>
+	<command>
+		<parameters>
+			<requestType>select</requestType>
+				<table>pages</table>
+				<where>
+						<field operator="eq">
+							<name>pageID</name>
+							<value>10</value>
+						</field>
+				</where>
+		</parameters>
+	</command>
+	<command>
+		<parameters>
+			<requestType>merge</requestType>
+			<table>pages</table>
+		</parameters>
+	</command>
+	<command>
+		<parameters>
+			<requestType>sort</requestType>
+			<table>pages</table>
+			<orderby>url</orderby>
+		</parameters>
+	</command>
+	<command>
+		<parameters>
+			<requestType>limit</requestType>
+			<table>pages</table>
+			<amount>3</amount>
+		</parameters>
+	</command>
+</parameters>

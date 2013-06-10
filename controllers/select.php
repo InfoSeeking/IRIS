@@ -126,7 +126,12 @@ class Select extends Controller{
 					$first = false;
 				else
 					$fields .= ",";
-				$fields .= "`" . esc($field) . "`";
+				if($field == "*"){
+					$fields .= "*";
+				}
+				else{
+					$fields .= "`" . esc($field) . "`";
+				}
 			}
 		}
 
@@ -157,15 +162,31 @@ class Select extends Controller{
 			$additional .= " LIMIT " . esc($xml->limit);
 		}
 
-		$statement = "SELECT " . $fields . " FROM " . $table . $additional;
+		$primary = parent::getIdField($table);
+		$statement = "SELECT " . $fields . ",`" . $primary . "` FROM " . $table . $additional;
+
 		$response = "<parameters><table>" . $table . "</table><requestID>" . $REQ_ID . "</requestID><requestType>select</requestType><resourceList>";
 		$results = mysqli_query($cxn, $statement) or die(err("Could not run query: " . $statement));
+		$primaryDone = false;
+		$primaryStr = "";
 		while($row = $results->fetch_assoc()){
-			$response .= "<resource><type>" . $table . "</type><fields>";
-			foreach($row as $key => $val)
-				$response .= sprintf("<field><name>%s</name><value>%s</value></field>", $key, $val);
-			$response  .= "</fields></resource>";
+			$response .= "<resource><fields>";
+			foreach($row as $key => $val){
+				if($key == $primary){
+					if(!$primaryDone){
+						$primaryStr = "<id>" . $val . "</id>";
+						$primaryDone = true;
+					}
+				}
+				else{
+					$response .= sprintf("<field><name>%s</name><value>%s</value></field>", $key, $val);
+				}
+			}
+			$response  .= "</fields>";
+			$response .= $primaryStr . "</resource>";
+			$primaryDone = false;
 		}
+		
 		$response .= "	</resourceList></parameters>";
 		$results->free();
 		return $response;
