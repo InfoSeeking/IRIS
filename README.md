@@ -160,11 +160,17 @@ Here,
 ##Some Extra Notes:
 - The resource element contains fields, however we need to have the primary id as a field to uniquely identify resources. Since not every table has the same id column name (e.g. pages table has pageID) I added a 'type' attribute to the field element which can be set to 'primary' if it is the primary key for that table. This field is required for update or delete where we need to uniquely identify the incoming resources. (However, I am wavering on whether I like this format or not so this could very well change).
 - A request must have resources of all of the same type, which is why the table element is required
+
 ##Format of resource:
 ```
 <resource>
 	<id>(number)</id>
-	(<fields>)
+	(<fields>
+	...
+	</fields>)
+</resource>
+```
+
 ##Select
 ###Request
 The field operator allows you to select from predefined fields based on the table (e.g. you can add a field of "url" or "snippetID" if the table value is "snippet").
