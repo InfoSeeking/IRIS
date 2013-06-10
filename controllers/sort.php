@@ -34,9 +34,31 @@ class Sort extends Controller{
 	private $sortField = "id";
 	private $flip = 1;
 
+
 	function resSort($a, $b){
-		//todo add sorting for other fields.
-		return (intval($a->id) - intval($b->id)) * $this->flip; 
+		//todo add sorting for other fields
+		if($this->sortField == "id"){
+			return (intval($a->id) - intval($b->id)) * $this->flip;
+		}
+		else{
+			//get the field
+			if(pe($a, "fields") || pe($b, "fields")){
+				$af = parent::getFieldVal($a->fields, $this->sortField);
+				$bf = parent::getFieldVal($b->fields, $this->sortField);
+				if($af === false || $bf === false){
+					die(err("Sort field not in resource"));
+				}
+				if(is_numeric($af)){
+					return (intval($af) - intval($bf)) * $this->flip;
+				}
+				else{
+					return strcmp($af, $bf) * $this->flip;
+				}
+			}
+			else{
+				die(err("Sort fields not in resource"));
+			}
+		}
 	}
 	function run($xml){
 		global $FILE_ROOT, $STORAGE, $REQ_ID;

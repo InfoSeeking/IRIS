@@ -26,4 +26,12 @@ class Controller{
 		}
 		return false;
 	}
+	function getFieldVal($fields, $fieldName){
+		foreach($fields->field as $field){
+			if($field->name == $fieldName){
+				return $field->value;
+			}
+		}
+		return false;
+	}
 }
