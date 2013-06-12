@@ -33,25 +33,20 @@ class Extract extends Controller{
 		if(!pe($xml, "table")) die(err("No table found"));
 		if(!pe($xml, "resourceList")) die(err("No resources found"));
 
-		$resOut = "";
-		$table = (string)$xml->table;
-		$amt = intval($xml->amount);
-		$off = 0;
-		$i = 0;
-		if(pe($xml, "offset"))
-			$off = intval($xml->offset);
+		$num_words = 10;
+		if(pe($xml, "numWords")){
+			$num_words = intval($xml->numWords);
+		}
 
 		foreach($xml->resourceList->resource as $res){
-			if($off > 0){
-				$off--;
-				continue;//skip
-			}
-			if($i >= $amt)
-				break;
-			$resOut .= $res->asXML();
-			$i++;
+			$url_arr = getUrlArray(array($res->id));
+			$url = $url_arr["" . $res->id];
+			$plaintext = getPlainText(file_get_contents($url));
+			echo $plaintext;
+			//$res->addChild("keywords", implode(extract_keywords($plaintext, $num_words)));
 		}
-		$response = "<parameters><requestType>limit</requestType><requestID>". $REQ_ID . "</requestID><resourceList>". $resOut . "</resourceList></parameters>";
+
+		$response = "<parameters><requestType>limit</requestType><requestID>". $REQ_ID . "</requestID>" . $xml->resourceList->asXML() . "</parameters>";
 		return $response;
 	}
 }

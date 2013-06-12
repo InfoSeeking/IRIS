@@ -8,7 +8,7 @@ $CONTROLLER="controllers/";
 $FILE_ROOT="";
 $STATE="live"; //valid values are debug,live
 $HOST=""; //valid values are local,live
-$VALID_REQUEST_TYPES = array("cluster", "summarize", "select", "merge", "insert", "update", "delete", "limit", "sort", "pipe");
+$VALID_REQUEST_TYPES = array("cluster", "summarize", "select", "merge", "insert", "update", "delete", "limit", "sort", "pipe", "extract");
 
 if($_SERVER["HTTP_HOST"] == "localhost"){
 	$HOST="local";
