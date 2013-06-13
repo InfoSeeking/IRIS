@@ -70,22 +70,24 @@ void rehash(hashtable *table, int size){
 }
 
 //recursively frees a linked list
-void freeLL(node *n){
+void freeLL(node *n, int freeWords){
     if(n == 0){
         return;
     }
     else{
-        freeLL(n->next);
+        freeLL(n->next, freeWords);
+        if(freeWords){
+            free(n->data);
+        }
         free(n);
-        //free(n->data);
     }
 }
 
-void freeHash(hashtable *table){
+void freeHash(hashtable *table, int freeWords){
     //todo
     int i;
     for(i = 0; i < table->size; i++){
-        freeLL(table->buckets[i]);
+        freeLL(table->buckets[i], freeWords);
     }
     free(table->buckets);
     free(table);

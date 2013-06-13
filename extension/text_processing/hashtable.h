@@ -18,8 +18,8 @@ typedef struct{
 } hashtable;
 
 void rehash(hashtable *table, int size);
-void freeLL(node *n);
-void freeHash(hashtable *table);
+void freeLL(node *n, int freeWords);
+void freeHash(hashtable *table, int freeWords);
 int getHashCode(char *c);
 int addToHash(hashtable *table, char *c);
 keyword * fetchFromHash(hashtable *table, char * c);

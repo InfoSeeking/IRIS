@@ -36,31 +36,25 @@ keyword ** findFrequencies(hashtable *table, double totalWords, int uniqueWords)
 /*
 returns a list of pointers to keyword structs sorted by frequency in descending order
 */
-keyword ** extract_keywords(char * filename, int *num_words){
+keyword ** extract_keywords(char * data, int *num_words){
     hashtable *table = (hashtable *)malloc(sizeof(hashtable));
     double totalWords = 0;
     int uniqueWords = 0;
-    FILE *handle = fopen(filename, "r");
 
     table->buckets = 0;//initialize node pointers to nothing
     rehash(table, 100);
 
-    if(handle == NULL){
-        err("Could not open file");
-        return NULL;
-    }
-
-    char * word = getWord(handle);
+    int index = 0;
+    char * word = getWord(data, &index);
     while(word != NULL){
         totalWords++;
         uniqueWords += addToHash(table, word);
-        word = getWord(handle);
+        word = getWord(data, &index);
     }
 
     keyword ** sorted = findFrequencies(table, totalWords, uniqueWords);
 
     *num_words = (int)uniqueWords;
-    freeHash(table);
-    fclose(handle);
+    freeHash(table, 0);
     return sorted;
 }

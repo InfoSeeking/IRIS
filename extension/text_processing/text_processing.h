@@ -4,5 +4,5 @@
 #include <stdio.h>
 int err(char * message);
 void printHelp();
-char * getWord(FILE *handle);
+char * getWord(char *data, int *index);
 #endif
