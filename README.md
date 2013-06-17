@@ -158,7 +158,7 @@ Here,
 - If we do both text processing and SQL statments, we will be working with both text and SQL records, which may make piping difficult. A possible solution to this is to create a table for each additional text processing controller I make which we can store results and send the SQL resources back instead of the text so all XML results are in the form of SQL resources. This will require additional tables in the database however.
 
 ##Some Extra Notes:
-- The resource element contains fields, however we need to have the primary id as a field to uniquely identify resources. Since not every table has the same id column name (e.g. pages table has pageID) I added a 'type' attribute to the field element which can be set to 'primary' if it is the primary key for that table. This field is required for update or delete where we need to uniquely identify the incoming resources. (However, I am wavering on whether I like this format or not so this could very well change).
+- The resource element has an id element which is the primary key as well as a content element (which at the moment is the plaintext for an html page)
 - A request must have resources of all of the same type, which is why the table element is required
 
 ##Format of resource:
@@ -563,6 +563,9 @@ Sort a resource list
 		<resource>
 			<table>table name</table>
 			<id>id</id>
+			<content>
+				data
+			</content>
 		</resource>
 		...
 	</resourceList>

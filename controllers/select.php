@@ -113,25 +113,14 @@ class Select extends Controller{
 
 	function run($xml){
 		global $FILE_ROOT, $STORAGE, $REQ_ID, $cxn;
-		$fields = "*";
+		$fields = array();
 		$table = false;
 		$additional = "";
 
 		//check if there are fields
 		if(pe($xml, "fields") && pe($xml->fields, "field")){
-			$fields = "";
-			$first = true;
 			foreach($xml->fields->field as $field){
-				if($first)
-					$first = false;
-				else
-					$fields .= ",";
-				if($field == "*"){
-					$fields .= "*";
-				}
-				else{
-					$fields .= "`" . esc($field) . "`";
-				}
+				$fields[] = (string)trim(strtolower($field));
 			}
 		}
 
@@ -163,27 +152,37 @@ class Select extends Controller{
 		}
 
 		$primary = parent::getIdField($table);
-		$statement = "SELECT " . $fields . ",`" . $primary . "` FROM " . $table . $additional;
+		$statement = "SELECT * FROM " . $table . $additional;
 
 		$response = "<parameters><table>" . $table . "</table><requestID>" . $REQ_ID . "</requestID><requestType>select</requestType><resourceList>";
 		$results = mysqli_query($cxn, $statement) or die(err("Could not run query: " . $statement));
 		$primaryDone = false;
 		$primaryStr = "";
+		$urlDone = false;
+		$contentStr = "<content></content>";
 		while($row = $results->fetch_assoc()){
 			$response .= "<resource><fields>";
 			foreach($row as $key => $val){
-				if($key == $primary){
-					if(!$primaryDone){
-						$primaryStr = "<id>" . $val . "</id>";
-						$primaryDone = true;
+				if($key == $primary && !$primaryDone){
+					$primaryStr = "<id>" . $val . "</id>";
+					$primaryDone = true;
+				}
+				else if($key == "url" && !$urlDone){
+					$urlDone = true;
+					//fetch the content for this
+					$html = @file_get_contents($row["url"]);
+					if($html !== FALSE){
+						$contentStr = "<content>" . getPlainText($html) . "</content>";
 					}
 				}
-				else{
+				
+				if(in_array(strtolower($key), $fields)){
 					$response .= sprintf("<field><name>%s</name><value>%s</value></field>", $key, $val);
 				}
+				
 			}
 			$response  .= "</fields>";
-			$response .= $primaryStr . "</resource>";
+			$response .= $primaryStr . $contentStr .  "</resource>";
 			$primaryDone = false;
 		}
 		
