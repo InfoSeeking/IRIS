@@ -73,6 +73,7 @@ class Pipe extends Controller{
 			$rt = (string)$cmd->parameters->requestType;
 			$cmdList[$i] = $rt;
 			$cmdObj = $cmd->parameters;
+			$skipfirst = false;//skip first resource from piping (if used for something else)
 			if($requiresInput[$rt]){
 				if($i == 0 || empty($resLists)){
 					//check if input already supplied
@@ -81,7 +82,18 @@ class Pipe extends Controller{
 					}
 				}
 				else{
-
+					//a bit of an exception
+					if($rt == "rank" || $rt == "query" || $rt == "filter"){
+						if(!pe($cmdObj, "wordList")){
+							//get it from the previous resourceList's first resource's content
+							//remove that resource as well
+							if(sizeof($resLists) == 0){
+								die(err("No wordList provided"));
+							}
+							$wl = $cmdObj->addChild("wordList", $resLists[0]->resource[0]->content);
+							$skipfirst = true;
+						}
+					}
 					//add any previous resourceLists as input
 					$reqStr = (string)$cmd->parameters->asXML();
 					/*
@@ -91,10 +103,23 @@ class Pipe extends Controller{
 					$nextXMLStr = substr($reqStr, 0, strlen($reqStr) - strlen("</parameters>"));
 
 					foreach($resLists as $resList){
-						$nextXMLStr .= $resList->asXML();
+						if(!$skipfirst){
+							$nextXMLStr .= $resList->asXML();
+						}
+						else{
+							$nextXMLStr .= "<resourceList>";
+							foreach($resList as $res){
+								if($skipfirst){
+									$skipfirst = false;
+									continue;
+								}
+								$nextXMLStr .= $res->asXML();
+							}
+							$nextXMLStr .= "</resourceList>";
+						}
 					}
 					$nextXMLStr = $nextXMLStr . "</parameters>";
-
+					//echo $nextXMLStr;
 					try{
 						$cmdObj = new SimpleXMLElement($nextXMLStr);
 					}
@@ -105,7 +130,9 @@ class Pipe extends Controller{
 				}
 				
 			}
-			$output = new SimpleXMLElement(handleRequest($cmdObj));
+			$str = handleRequest($cmdObj);
+			//echo $str;
+			$output = new SimpleXMLElement($str);
 			if(pe($output, "resourceList")){
 				foreach($output->resourceList as $rl){
 					array_push($resLists, $rl);

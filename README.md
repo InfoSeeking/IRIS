@@ -388,6 +388,10 @@ Merge requests can easily merge multiple resource lists
 
 ##Pipe
 The pipe command allows you to do a unix-like pipe feeding the output of one command into the input of another. You cannot do this by simply taking the XML output of one and passing it to another command since it needs a bit of reformatting. This allows multiple commands to be easily strung together and called repeatedly without much work of the client.
+
+Subtle Rules:
+
+If you pipe to rank/filter/query, and do not supply a wordlist element, it will automatically use the content of the first resource of the first resourceList in queue
 ###Request
 ```
 <parameters>
@@ -587,12 +591,12 @@ Sort a resource list
 
 ##Filter
 ###Request
-The stopwords parameter (optional) are the words you wish to remove from the content
+The wordList parameter (optional) are the words you wish to remove from the content
 
 ```
 <parameters>
 	<requestType>filter</requestType>
-	<stopWords>words</stopWords>
+	<wordList>words</wordList>
 	<minLength>number</minLength>
 	<maxLength>number</maxLength>
 	<resourceList>
@@ -625,11 +629,28 @@ Performs simple queries on documents
 ```
 <parameters>
 	<requestType>query</requestType>
-	<wordlist>list of words to check</wordlist>
+	<wordList>list of words to check</wordList>
 	<query>
 		<type>eq|ne|lt|gt</type>
 		<value>value</value>
 	</query>
+	<resourceList>
+		<resource>
+			<id>id</id>
+			<content></content>
+		</resource>
+		...
+	</resourceList>
+</parameters>
+```
+
+##Rank
+Ranks documents based on a supplied list of words. The ranking is based on total number of occurences of the words supplied.
+###Request
+```
+<parameters>
+	<requestType>rank</requestType>
+	<wordList>list of words to check</wordList>
 	<resourceList>
 		<resource>
 			<id>id</id>

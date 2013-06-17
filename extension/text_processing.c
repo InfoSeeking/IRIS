@@ -169,11 +169,16 @@ int main(int argc, char **argv){
                 if(i < upperBound){
                     printf("\t<keyword>\n\t\t<word>%s</word><freq>%f</freq>\n\t</keyword>\n", words[i]->word, words[i]->freq);
                 }
+                
+            }
+            printf("</keywords>\n");
+            printf("<content>");
+            for(i = 0; i < num_words; i++){
+                printf("%s ", words[i]->word);
                 free(words[i]->word);
                 free(words[i]);
             }
-            printf("</keywords>\n");
-            printf("<content>%s</content>\n", mxmlGetOpaque(content));
+            printf("</content>\n");
             free(words);
             printf("</resource>\n");
         }
@@ -188,7 +193,7 @@ int main(int argc, char **argv){
         
         mxml_node_t *node;
         //get parameters
-        node = mxmlFindElement(tree, tree, "stopWords", NULL, NULL, MXML_DESCEND);
+        node = mxmlFindElement(tree, tree, "wordList", NULL, NULL, MXML_DESCEND);
         if(node != NULL){
             stopwords_data = (char *)mxmlGetOpaque(node);
         }
@@ -220,7 +225,7 @@ int main(int argc, char **argv){
         }
     }
     else if(strcmp("query", fn) == 0){
-        char * type;
+        char * type = NULL;
         int val = -1;
         char * words_data = NULL;
         int i;
@@ -231,15 +236,22 @@ int main(int argc, char **argv){
         if(node != NULL){
             words_data = (char *)mxmlGetOpaque(node);
         }
-        node = mxmlFindPath(tree, "query/type");
+        mxml_node_t * qnode = mxmlFindElement(tree, tree, "query", NULL, NULL, MXML_DESCEND);
+        node = mxmlFindElement(tree, qnode, "type", NULL, NULL, MXML_DESCEND);
         if(node != NULL){
             type = (char *)mxmlGetOpaque(node);
         }
-        node = mxmlFindPath(tree, "query/value");
+        else{
+            return err("Query type required");
+        }
+
+        node = mxmlFindElement(tree, qnode, "value", NULL, NULL, MXML_DESCEND);
         if(node != NULL){
             sscanf(mxmlGetOpaque(node), "%d", &val);
         }
-
+        else{
+            return err("Query value required");
+        }
         for(node = mxmlFindElement(tree, tree, "resource", NULL, NULL, MXML_DESCEND); node != NULL; node = mxmlFindElement(node, tree, "resource", NULL, NULL, MXML_DESCEND)){
             mxml_node_t *content = mxmlFindElement(node, node, "content", NULL, NULL, MXML_DESCEND);
             mxml_node_t *id = mxmlFindElement(node, node, "id", NULL, NULL, MXML_DESCEND);
@@ -261,22 +273,14 @@ int main(int argc, char **argv){
         //to do the ranking based on a set of words, we should check the freqencies of each word, sum them and then rank the documents based on that
         char * words_data = NULL;
         int i;
-        //query
-        for(i = 3; i < argc - 1; i++){ //don't check last one
-            if(strcmp(argv[i], "--words") == 0){
-                //get content of stopwords file
-                words_data = readFile(argv[i+1]);
-                if(words_data == NULL){
-                    return err("Could not read words file\n");
-                }
-            }
-            else if(strcmp(argv[i], "--word-list") == 0){
-                //word list included in command line in csv
-                words_data = argv[i+1];
-            }
-        }
+
         //for each document, return the ones which match the query
         mxml_node_t *node;
+        //get parameters
+        node = mxmlFindElement(tree, tree, "wordList", NULL, NULL, MXML_DESCEND);
+        if(node != NULL){
+            words_data = (char *)mxmlGetOpaque(node);
+        }
         //sorted document list by rank
         int num_docs = 5;//num of docs
         rankedDoc *ranked = (rankedDoc *)malloc(sizeof(rankedDoc) * num_docs);
@@ -305,6 +309,7 @@ int main(int argc, char **argv){
                 rankedDoc tmp = ranked[i-1];
                 ranked[i-1] = ranked[i];
                 ranked[i] = tmp;
+                i--;
             }
             cur_doc++;
             if(cur_doc >= num_docs){

@@ -181,9 +181,10 @@ class Select extends Controller{
 				}
 				
 			}
-			$response  .= "</fields>";
+			$response .= "</fields>";
 			$response .= $primaryStr . $contentStr .  "</resource>";
 			$primaryDone = false;
+			$urlDone = false;
 		}
 		
 		$response .= "	</resourceList></parameters>";

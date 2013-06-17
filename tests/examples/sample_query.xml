@@ -1,0 +1,27 @@
+<parameters>
+	<requestType>pipe</requestType>
+	<command>
+		<parameters>
+			<requestType>select</requestType>
+			<table>pages</table>
+			<where>
+					<field operator="lte">
+						<name>pageID</name>
+						<value>9</value>
+					</field>		
+			</where>
+		</parameters>
+	</command>
+	<command>
+		<parameters>
+			<requestType>query</requestType>
+			<table>pages</table>
+			<wordList>anger</wordList>
+			<query>
+				<type>gt</type>
+				<value>0</value>
+			</query>
+		</parameters>
+	</command>
+
+</parameters>

@@ -25,6 +25,12 @@ function cleanLogic($type){
 	}
 }
 
+function fetch_doc($id){
+	//check if cached
+	//otherwise fetch now and add to cache
+	
+}
+
 function cleanOp($op){
 	$op = trim(strtolower($op));
 	switch($op){

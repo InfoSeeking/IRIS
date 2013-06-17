@@ -32,7 +32,7 @@ class Filter extends Controller{
 		exec($cmd, $output);
 		unlink($fname);
 		$extractedResList = implode($output);
-		$response = "<parameters><requestType>filter</requestType><requestID>". $REQ_ID . "</requestID>" . $extractedResList . "</parameters>";
+		$response = "<parameters><requestType>filter</requestType><requestID>". $REQ_ID . "</requestID><resourceList>" . $extractedResList . "</resourceList></parameters>";
 		return $response;
 	}
 }
