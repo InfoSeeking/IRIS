@@ -29,24 +29,22 @@
 
 class Extract extends Controller{
 	function run($xml){
-		global $FILE_ROOT, $STORAGE, $REQ_ID;
+		global $FILE_ROOT, $STORAGE, $REQ_ID, $CMD_EXTRA, $BIN;
 		if(!pe($xml, "table")) die(err("No table found"));
 		if(!pe($xml, "resourceList")) die(err("No resources found"));
-
-		$num_words = 10;
-		if(pe($xml, "numWords")){
-			$num_words = intval($xml->numWords);
-		}
-
-		foreach($xml->resourceList->resource as $res){
-			$url_arr = getUrlArray(array($res->id));
-			$url = $url_arr["" . $res->id];
-			$plaintext = getPlainText(file_get_contents($url));
-			echo $plaintext;
-			//$res->addChild("keywords", implode(extract_keywords($plaintext, $num_words)));
-		}
-
-		$response = "<parameters><requestType>limit</requestType><requestID>". $REQ_ID . "</requestID>" . $xml->resourceList->asXML() . "</parameters>";
+		
+		//write to temporary file
+		$fname = $STORAGE . $REQ_ID . "_extract.xml";
+		$TMP = fopen($fname, "w");
+		fwrite($TMP, $xml->asXML());
+		fclose($TMP);
+		//extract those words
+		$cmd = $BIN . "text_processing extract " . $fname;
+		$output = array();
+		exec($cmd, $output);
+		unlink($fname);
+		$extractedResList = implode($output);
+		$response = "<parameters><requestType>extract</requestType><requestID>". $REQ_ID . "</requestID>" . $extractedResList . "</parameters>";
 		return $response;
 	}
 }

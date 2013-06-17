@@ -1,1 +1,0 @@
-SELECT `url`,`pageID` FROM pages WHERE ((`pageID`>2000 and `pageID`<2500 and not ((`userID`=5 or `result`=TRUE)))) ORDER BY `url` desc LIMIT 10

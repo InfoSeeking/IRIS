@@ -34,13 +34,14 @@ try{
 catch(Exception $e){
 	die(err("Xml could not be parsed"));
 }
-$response = handleRequest($xml);
-echo $response;
-
 //save this request
 $REQ_FILE = fopen($STORAGE . "requests/" . $REQ_ID . ".xml", "w");
 fwrite($REQ_FILE, $xmldata);
 fclose($REQ_FILE);
+
+$response = handleRequest($xml);
+echo $response;
+
 //save response
 $RES_FILE = fopen($STORAGE . "responses/" . $REQ_ID . ".xml", "w");
 fwrite($RES_FILE, $response);

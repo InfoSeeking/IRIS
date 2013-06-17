@@ -4,11 +4,12 @@
 $ROOT="http://localhost/CoagmentoMiddleLayer/application/";
 $STORAGE="storage/"; //storage folder (writable directory)
 $LIB="library/";
+$BIN="bin/";
 $CONTROLLER="controllers/";
 $FILE_ROOT="";
 $STATE="live"; //valid values are debug,live
 $HOST=""; //valid values are local,live
-$VALID_REQUEST_TYPES = array("cluster", "summarize", "select", "merge", "insert", "update", "delete", "limit", "sort", "pipe", "extract");
+$VALID_REQUEST_TYPES = array("cluster", "summarize", "select", "merge", "insert", "update", "delete", "limit", "sort", "pipe", "extract", "filter");
 
 if($_SERVER["HTTP_HOST"] == "localhost"){
 	$HOST="local";

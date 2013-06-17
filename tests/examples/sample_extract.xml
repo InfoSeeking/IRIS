@@ -1,0 +1,23 @@
+<parameters>
+	<requestType>pipe</requestType>
+	<command>
+		<parameters>
+			<requestType>select</requestType>
+			<table>pages</table>
+			<where>
+					<field operator="eq">
+						<name>pageID</name>
+						<value>9</value>
+					</field>		
+			</where>
+		</parameters>
+	</command>
+	<command>
+		<parameters>
+			<requestType>extract</requestType>
+			<table>pages</table>
+			<numWords>10</numWords>
+		</parameters>
+	</command>
+
+</parameters>

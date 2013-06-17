@@ -213,7 +213,9 @@ function getPlainText($html){
 	$bodytxt = strip_tags_content($bodytxt, "script");
 	$bodytxt = strip_tags_content($bodytxt, "style");
 	$bodytxt = strip_cdata($bodytxt);
-	return strip_tags($bodytxt);
+	$bodytxt = trim(strip_tags($bodytxt));
+	$bodytxt = preg_replace("@[^ \w]@"," ", $bodytxt);
+	return $bodytxt;
 }
 
 //returns doc_title

@@ -1,5 +1,0 @@
-<parameters>
-<requestID>93</requestID>
-<requestType>cluster</requestType>
-<clusterList>
-<cluster><clusterID>0</clusterID><doc><docID>1</docID><title>Francis Bacon | Of Fame</title></doc><doc><docID>2</docID><title>Francis Bacon | Of Praise</title></doc></cluster><cluster><clusterID>1</clusterID><doc><docID>3</docID><title>Francis Bacon | Of Beauty</title></doc><doc><docID>6</docID><title>Francis Bacon | Of Youth and Age</title></doc></cluster><cluster><clusterID>2</clusterID><doc><docID>4</docID><title>Francis Bacon | Of Nature in Men</title></doc></cluster><cluster><clusterID>3</clusterID><doc><docID>5</docID><title>Francis Bacon | Of Demformity</title></doc><doc><docID>7</docID><title>Francis Bacon | Of Plantations</title></doc></cluster></clusterList></parameters>

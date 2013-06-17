@@ -561,7 +561,6 @@ Sort a resource list
 	<numWords>number</numWords>
 	<resourceList>
 		<resource>
-			<table>table name</table>
 			<id>id</id>
 			<content>
 				data
@@ -580,6 +579,61 @@ Sort a resource list
 		<resource>
 			<id>id</id>
 			<keywords>comma,seperated,keywords</keywords>
+		</resource>
+		...
+	</resourceList>
+</parameters>
+```
+
+##Filter
+###Request
+The stopwords parameter (optional) are the words you wish to remove from the content
+
+```
+<parameters>
+	<requestType>filter</requestType>
+	<stopWords>words</stopWords>
+	<minLength>number</minLength>
+	<maxLength>number</maxLength>
+	<resourceList>
+		<resource>
+			<id>id</id>
+			<content></content>
+		</resource>
+		...
+	</resourceList>
+</parameters>
+```
+###Response
+```
+<parameters>
+	<requestID>number</requestID>
+	<requestType>filter</requestType>
+	<resourceList>
+		<resource>
+			<id>id</id>
+			<content type="filtered"></content>
+		</resource>
+		...
+	</resourceList>
+</parameters>
+```
+
+##Query
+Performs simple queries on documents
+###Request
+```
+<parameters>
+	<requestType>query</requestType>
+	<wordlist>list of words to check</wordlist>
+	<query>
+		<type>eq|ne|lt|gt</type>
+		<value>value</value>
+	</query>
+	<resourceList>
+		<resource>
+			<id>id</id>
+			<content></content>
 		</resource>
 		...
 	</resourceList>

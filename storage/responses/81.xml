@@ -1,6 +1,0 @@
-<parameters>
-<requestID>81</requestID><requestType>summarize</requestType>
-<docList>
-<doc><docID>1</docID><summarization>EOS not present; using default passage length 10
-francis bacon fame</summarization></doc><doc><docID>2</docID><summarization>EOS not present; using default passage length 10
-francis bacon praise</summarization></doc></docList></parameters>
