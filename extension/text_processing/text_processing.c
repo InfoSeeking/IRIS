@@ -4,12 +4,16 @@
 #include <mxml.h>
 #include "extract.h"
 #include "filter.h"
+#include "query.h"
 #include "hashtable.h"
+#include "rank.h"
 #include "text_processing.h"
 
 /*
 issues:
-still some memory leaks, not sure where
+-still some memory leaks, not sure where
+-this would be a perfect case to use a prefix tree, so I may change this later, this will allow for checking words that start with other words, and would make
+for better efficiency
 */
 int err(char * message){
     fprintf(stderr, "%s", message);
@@ -20,8 +24,11 @@ int err(char * message){
 void printHelp(){
     printf("Usage: ./text_processing <function> <function args...>\n");
     printf("Functions:\n");
-    printf("Extract:\n\textract <input file> <number of words>\n");
-    printf("Filter:\n\tfilter <input file> <stopwords file>\n");
+    printf("Extract:\n\textract <input xml file> <number of words>\n");
+    printf("\tExtract gives the most frequently appeared words, limited to the <number of words> parameter in order of frequency.\n");
+    printf("Filter:\n\tfilter <input xml file> (--stopwords <stopwords file>|--minlength <num>|--maxlength <num>)\n");
+    printf("Query:\n\tquery <input xml file> (--words <words file>, --word-list \"<inline words>\" --match <eq <num>|gt <num>|lt <num>>)\n");
+    printf("Rank:\n\trank <input xml file> (--words <words file>, --word-list \"<inline words>\"\n\n");
 }
 
 char * getWord(char *data, int *index){
@@ -35,7 +42,7 @@ char * getWord(char *data, int *index){
     short endOfFile = 0;
 
     while(1){
-        if(*index + 1 >= data_len){
+        if(*index + 1 > data_len){
            //end of text, still need null character
             if(wordIndex == 0){
                 //no end word
@@ -88,6 +95,9 @@ char * readFile(char * input_file_name){
     char *file_contents;
     long input_file_size;
     FILE *input_file = fopen(input_file_name, "rb");
+    if(input_file == NULL){
+        return NULL;
+    }
     fseek(input_file, 0, SEEK_END);
     input_file_size = ftell(input_file);
     rewind(input_file);
@@ -98,9 +108,16 @@ char * readFile(char * input_file_name){
 }
 
 int main(int argc, char **argv){
+    int index = 0;
     char * fn;
     int num_words; //total unique words in doc
     int word_limit;//user supplied
+    if(argc == 2){
+        if(strcmp(argv[1], "-h") == 0 || strcmp(argv[1], "--help")){
+            printHelp();
+            return 0;
+        }
+    }
     if(argc < 3){ 
         //fname, function, input (possibly others)
         return err("Invalid args\n");
@@ -159,11 +176,27 @@ int main(int argc, char **argv){
         free(words);
     }
     else if(strcmp("filter", fn) == 0){
-        if(argc != 4){
-            return err("Invalid args for filter\n");
-        }
-        //get content of stopwords file
-        char * stopwords_data = readFile(argv[3]);
+        //go through arguments, get constraints
+        int minlength = -1;
+        int maxlength = -1;
+        char * stopwords_data = NULL;
+        int i;
+        for(i = 3; i < argc - 1; i++){ //don't check last one
+            if(strcmp(argv[i], "--stopwords") == 0){
+                //get content of stopwords file
+                stopwords_data = readFile(argv[i+1]);
+                if(stopwords_data == NULL){
+                    return err("Could not read stopwords file\n");
+                }
+            }
+            else if(strcmp(argv[i], "--minlength") == 0){
+                minlength = atoi(argv[i+1]);
+            }
+            else if(strcmp(argv[i], "--maxlength") == 0){
+                maxlength = atoi(argv[i+1]);
+            }
+        }   
+       //return 1;
         //print words that are not in stopwords
         mxml_node_t *node;
         for(node = mxmlFindElement(tree, tree, "resource", NULL, NULL, MXML_DESCEND); node != NULL; node = mxmlFindElement(node, tree, "resource", NULL, NULL, MXML_DESCEND)){
@@ -178,10 +211,125 @@ int main(int argc, char **argv){
             int i;   
             printf("<resource>");
             printf("<id>%s</id>\n<content type=\"filtered\">\n", mxmlGetOpaque(id));
-            filter_words(data, stopwords_data);
+            filter_words(data, stopwords_data, minlength, maxlength);
             printf("</content>\n");
             printf("</resource>\n");
         }
+    }
+    else if(strcmp("query", fn) == 0){
+        char * type;
+        int val = -1;
+        char * words_data = NULL;
+        int i;
+        //query
+        for(i = 3; i < argc - 1; i++){ //don't check last one
+            if(strcmp(argv[i], "--words") == 0){
+                //get content of stopwords file
+                words_data = readFile(argv[i+1]);
+                if(words_data == NULL){
+                    return err("Could not read words file\n");
+                }
+            }
+            else if(strcmp(argv[i], "--word-list") == 0){
+                //word list included in command line in csv
+                words_data = argv[i+1];
+            }
+            else if(strcmp(argv[i], "--match") == 0){
+                type = argv[i+1];
+                if(i+2 < argc){
+                    val = atoi(argv[i+2]);
+                }
+                else{
+                    return err("Please specify a value for the match constraint\n");
+                }
+                i++;
+            }
+        }
+        //for each document, return the ones which match the query
+        mxml_node_t *node;
+        for(node = mxmlFindElement(tree, tree, "resource", NULL, NULL, MXML_DESCEND); node != NULL; node = mxmlFindElement(node, tree, "resource", NULL, NULL, MXML_DESCEND)){
+            mxml_node_t *content = mxmlFindElement(node, node, "content", NULL, NULL, MXML_DESCEND);
+            mxml_node_t *id = mxmlFindElement(node, node, "id", NULL, NULL, MXML_DESCEND);
+
+            if(content == NULL) return err("No content element found in resource");
+            if(id == NULL) return err ("No id element found in resource");
+             
+            char *data = (char *)mxmlGetOpaque(content);
+            if(processQuery(data, words_data, type, val)){
+                printf("<resource>");
+                printf("<id>%s</id>\n<content>\n", mxmlGetOpaque(id));
+                printf("%s\n", data);
+                printf("</content>\n");
+                printf("</resource>\n");
+            }
+        }
+    }
+    else if(strcmp("rank", fn) == 0){
+        //to do the ranking based on a set of words, we should check the freqencies of each word, sum them and then rank the documents based on that
+        char * words_data = NULL;
+        int i;
+        //query
+        for(i = 3; i < argc - 1; i++){ //don't check last one
+            if(strcmp(argv[i], "--words") == 0){
+                //get content of stopwords file
+                words_data = readFile(argv[i+1]);
+                if(words_data == NULL){
+                    return err("Could not read words file\n");
+                }
+            }
+            else if(strcmp(argv[i], "--word-list") == 0){
+                //word list included in command line in csv
+                words_data = argv[i+1];
+            }
+        }
+        //for each document, return the ones which match the query
+        mxml_node_t *node;
+        //sorted document list by rank
+        int num_docs = 5;//num of docs
+        rankedDoc *ranked = (rankedDoc *)malloc(sizeof(rankedDoc) * num_docs);
+        int cur_doc = 0;
+
+        for(node = mxmlFindElement(tree, tree, "resource", NULL, NULL, MXML_DESCEND); node != NULL; node = mxmlFindElement(node, tree, "resource", NULL, NULL, MXML_DESCEND)){
+            mxml_node_t *content = mxmlFindElement(node, node, "content", NULL, NULL, MXML_DESCEND);
+            mxml_node_t *id = mxmlFindElement(node, node, "id", NULL, NULL, MXML_DESCEND);
+
+            if(content == NULL) return err("No content element found in resource");
+            if(id == NULL) return err ("No id element found in resource");
+             
+            char *data = (char *)mxmlGetOpaque(content);
+            //get the sum of the frequencies 
+            double sum = get_sum(data, words_data);
+
+            rankedDoc r;
+            r.rank = sum;
+            r.content = (char *)mxmlGetOpaque(content);
+            r.id = (char *)mxmlGetOpaque(id);
+
+            int i = cur_doc;
+            ranked[i] = r;
+            while(i > 0 && ranked[i-1].rank < ranked[i].rank){
+                //swap
+                rankedDoc tmp = ranked[i-1];
+                ranked[i-1] = ranked[i];
+                ranked[i] = tmp;
+            }
+            cur_doc++;
+            if(cur_doc >= num_docs){
+                //increase size of array
+                num_docs *= 2;
+                ranked = (rankedDoc *)realloc(ranked, sizeof(rankedDoc) * num_docs);
+            }
+        }
+        //print out list
+        for(i = 0; i < cur_doc; i++){
+            printf("<resource>");
+            printf("<rank>%f</rank>", ranked[i].rank);
+            printf("<id>%s</id>\n<content>\n", ranked[i].id);
+            printf("%s\n", ranked[i].content);
+            printf("</content>\n");
+            printf("</resource>\n");
+        }
+        free(ranked);
     }
     mxmlDelete(tree);
     return 0;

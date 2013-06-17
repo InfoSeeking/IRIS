@@ -1,21 +1,27 @@
 COMPILER=gcc
-CCFLAGS=-g 
+CCFLAGS=-g
 all: text_processing
+#at the moment, this requires lmxml to be installed, I will try later to make this portable
+text_processing: text_processing.o extract.o hashtable.o filter.o query.o rank.o
+	$(COMPILER) -o text_processing text_processing.o extract.o hashtable.o filter.o query.o rank.o -lmxml -pthread
 
-text_processing: text_processing.o extract.o hashtable.o filter.o 
-	$(COMPILER) -o text_processing text_processing.o extract.o hashtable.o filter.o -lmxml -pthread
+text_processing.o: text_processing.c
+	$(COMPILER) $(CCFLAGS) -c text_processing.c
 
-text_processing.o: text_processing.c text_processing.h extract.h hashtable.h
-	$(COMPILER) $(CCFLAGS) -c text_processing.c text_processing.h extract.h hashtable.h
+hashtable.o: hashtable.c
+	$(COMPILER) $(CCFLAGS) -c hashtable.c
 
-hashtable.o: hashtable.c hashtable.h extract.h
-	$(COMPILER) $(CCFLAGS) -c hashtable.c hashtable.h extract.h
+extract.o: extract.c
+	$(COMPILER) $(CCFLAGS) -c extract.c
 
-extract.o: extract.c extract.h hashtable.h
-	$(COMPILER) $(CCFLAGS) -c extract.c extract.h hashtable.h
+filter.o: filter.c
+	$(COMPILER) $(CCFLAGS) -c filter.c
 
-filter.o: filter.c filter.h hashtable.h
-	$(COMPILER) $(CCFLAGS) -c filter.c filter.h hashtable.h
+query.o: query.c
+	$(COMPILER) $(CCFLAGS) -c query.c 
+
+rank.o: rank.c
+	$(COMPILER) $(CCFLAGS) -c rank.c
 
 clean:
-	rm -rf text_processing.o extract.o hashtable.o filter.o text_processing *.gch
+	rm -rf text_processing.o extract.o hashtable.o filter.o query.o text_processing *.gch rank.o
