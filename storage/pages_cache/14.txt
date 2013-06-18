@@ -1,0 +1,122 @@
+<html>
+<head>
+<title>Francis Bacon | Of Death</title>
+<meta name="keywords" content="Francis BaconOf Death">
+
+</head>
+<body bgcolor = "#FFFFFF"  LINK="#CC0000" ALINK="#FF3300"
+VLINK="#005555" background="bluelineback.jpg">
+
+<center>
+<table width="580" border="0" cellspacing="0" cellpadding="1">
+<tr>
+	<td colspan="3" align="left">
+		<font size="+2"><b>
+			Of Death
+		</b></font>
+		<br>
+<font size="+1"><b>by <a href="http://www.westegg.com/bacon/">Francis Bacon</a>
+</b></font>
+	</td>
+</tr>
+<tr>
+	<td colspan="3"> &#160 </td>
+</tr>
+<tr>
+	<td colspan="3" align="left" valign="top">
+
+
+  Men fear death, as children fear to go in the dark; and as that
+natural fear in children, is increased with tales, so is the other.
+Certainly, the contemplation of death, as the wages of sin, and
+passage to another world, is holy and religious; but the fear of it,
+as a tribute due unto nature, is weak. Yet in religious meditations,
+there is sometimes mixture of vanity, and of superstition. You shall
+read, in some of the friars' books of mortification, that a man should
+think with himself, what the pain is, if he have but his finger's
+end pressed, or tortured, and thereby imagine, what the pains of death
+are, when the whole body is corrupted, and dissolved; when many
+times death passeth, with less pain than the torture of a limb; for
+the most vital parts, are not the quickest of sense. And by him that
+spake only as a philosopher, and natural man, it was well said,
+Pompa mortis magis terret, quam mors ipsa. Groans, and convulsions,
+and a discolored face, and friends weeping, and blacks, and obsequies,
+and the like, show death terrible. It is worthy the observing, that
+there is no passion in the mind of man, so weak, but it mates, and
+masters, the fear of death; and therefore, death is no such terrible
+enemy, when a man hath so many attendants about him, that can win
+the combat of him. Revenge triumphs over death; love slights it; honor
+aspireth to it; grief flieth to it; fear preoccupateth it; nay, we
+read, after Otho the emperor had slain himself, pity (which is the
+tenderest of affections) provoked many to die, out of mere
+compassion to their sovereign, and as the truest sort of followers.
+Nay, Seneca adds niceness and satiety: Cogita quamdiu eadem feceris;
+mori velle, non tantum fortis aut miser, sed etiam fastidiosus potest.
+A man would die, though he were neither valiant, nor miserable, only
+upon a weariness to do the same thing so oft, over and over. It is
+no less worthy, to observe, how little alteration in good spirits, the
+approaches of death make; for they appear to be the same men, till the
+last instant. Augustus Caesar died in a compliment; Livia, conjugii
+nostri memor, vive et vale. Tiberius in dissimulation; as Tacitus
+saith of him, Jam Tiberium vires et corpus, non dissimulatio,
+deserebant. Vespasian in a jest, sitting upon the stool; Ut puto
+deus fio. Galba with a sentence; Feri, si ex re sit populi Romani;
+holding forth his neck. Septimius Severus in despatch; Adeste si
+quid mihi restat agendum. And the like. Certainly the Stoics
+bestowed too much cost upon death, and by their great preparations,
+made it appear more fearful. Better saith he qui finem vitae
+extremum inter munera ponat naturae. It is as natural to die, as to be
+born; and to a little infant, perhaps, the one is as painful, as the
+other. He that dies in an earnest pursuit, is like one that is wounded
+in hot blood; who, for the time, scarce feels the hurt; and
+therefore a mind fixed, and bent upon somewhat that is good, doth
+avert the dolors of death. But, above all, believe it, the sweetest
+canticle is, Nunc dimittis; when a man hath obtained worthy ends,
+and expectations. Death hath this also; that it openeth the gate to
+good fame, and extinguisheth envy. -Extinctus amabitur idem.
+
+
+
+		<img src="dot.gif" width="100" height="1">
+
+	</td>
+
+        <td valign="top">
+
+
+<script type="text/javascript"><!--
+google_ad_client = "pub-7554518282421848";
+google_ad_width = 120;
+google_ad_height = 600;
+google_ad_format = "120x600_as";
+google_ad_type = "text_image";
+google_ad_channel ="6305178209";
+//--></script>
+<script type="text/javascript"
+  src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+
+
+        </td>
+
+</tr>
+<tr>
+	<td colspan="3"> &#160 </td>
+</tr>
+<tr>
+	<td align="center" colspan="3">
+		<hr width="250" noshade align="center">
+		<font size="-1"> <center>
+			return to <a href="http://www.westegg.com/bacon"><b>francis bacon online</b></a>
+			| <a href="index.search.html">search</a>
+			<br>
+			contact: <a href="http://www.westegg.com/">morgan</a> 
+			at <a href="mailto:morgan@westegg.com">morgan@westegg.com</a>
+			<br>
+			page last modified: thu jan 12 01:37:48 2006
+		</center> </font>
+	</td>
+</tr>
+</table>
+</body>
+</html>

@@ -1,0 +1,127 @@
+<html>
+<head>
+<title>Francis Bacon | To the Duke of Buckingham</title>
+<meta name="keywords" content="Francis BaconTo the Duke of Buckingham">
+
+</head>
+<body bgcolor = "#FFFFFF"  LINK="#CC0000" ALINK="#FF3300"
+VLINK="#005555" background="bluelineback.jpg">
+
+<center>
+<table width="580" border="0" cellspacing="0" cellpadding="1">
+<tr>
+	<td colspan="3" align="left">
+		<font size="+2"><b>
+			To the Duke of Buckingham
+		</b></font>
+		<br>
+<font size="+1"><b>by <a href="http://www.westegg.com/bacon/">Francis Bacon</a>
+</b></font>
+	</td>
+</tr>
+<tr>
+	<td colspan="3"> &#160 </td>
+</tr>
+<tr>
+	<td colspan="3" align="left" valign="top">
+
+<center>
+<font size = 4>TO</font><p>
+
+<font size = 5>THE RIGHT HONORABLE</font><p>
+
+MY VERY GOOD LO.<p>
+
+<font size = 6>THE DUKE OF BUCKINGHAM</font><p>
+
+<font size = 2>HIS GRACE, LO. HIGH ADMIRALL <p>
+
+OF ENGLAND.</font></center><p>
+</center>
+
+
+<blockquote>
+EXCELLENT L<font size = 2>O.</font><p>
+
+<imgno src = "http://darkwing.uoregon.edu/~rbear/gifs/s.jpg" alt
+ = "[S]" align = left>
+SALOMON saies; <i>A good Name is as a precious
+oyntment;</i> And I assure my selfe, such wil
+your Graces Name bee, with Posteritie.  For your
+Fortune, and Merit both, have been Eminent.  And
+you have planted Things, that are like to last.  I doe
+now publish my <i>Essayes;</i> which, of all my other
+workes, have beene most Currant: For that, as it
+seemes, they come home, to Mens Businesse, and
+Bosomes.  I have enlarged them, both in Number,
+and Weight; So that they are indeed a New Worke.
+I thought it therefore agreeable, to my Affection,
+
+and Obligation to your Grace, to prefix your Name
+before them, both in English, and in Latine.  For I
+doe conceive, that the Latine Volume of them,
+(being in the Universall Language) may last, as
+long as Bookes last.  My <i>Instauration,</i> I dedicated to
+the <i>King:</i> My <i>Historie of Henry the Seventh,</i>
+(which I have now also translated into Latine) and
+my <i>Portions</i> of <i>Naturall History,</i> to the Prince:
+And these I dedicate to your <i>Grace;</i> Being of the
+best Fruits, that by the good Encrease, which <i>God</i>
+gives to my Pen and Labours, I could yeeld.
+<i>God</i> leade your <i>Grace</i> by the Hand.  
+
+<p align = right><i>Your Graces most Obliged and<br> 
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;faithfull Servant,
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</i><p>
+
+F<font size = 2>R.</font>  S<font size = 2>T.</font>   ALBAN.<p>
+</font>
+</blockquote>
+
+
+
+
+
+		<img src="dot.gif" width="100" height="1">
+
+	</td>
+
+        <td valign="top">
+
+
+<script type="text/javascript"><!--
+google_ad_client = "pub-7554518282421848";
+google_ad_width = 120;
+google_ad_height = 600;
+google_ad_format = "120x600_as";
+google_ad_type = "text_image";
+google_ad_channel ="6305178209";
+//--></script>
+<script type="text/javascript"
+  src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+
+
+        </td>
+
+</tr>
+<tr>
+	<td colspan="3"> &#160 </td>
+</tr>
+<tr>
+	<td align="center" colspan="3">
+		<hr width="250" noshade align="center">
+		<font size="-1"> <center>
+			return to <a href="http://www.westegg.com/bacon"><b>francis bacon online</b></a>
+			| <a href="index.search.html">search</a>
+			<br>
+			contact: <a href="http://www.westegg.com/">morgan</a> 
+			at <a href="mailto:morgan@westegg.com">morgan@westegg.com</a>
+			<br>
+			page last modified: thu jan 12 01:37:48 2006
+		</center> </font>
+	</td>
+</tr>
+</table>
+</body>
+</html>

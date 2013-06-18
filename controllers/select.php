@@ -170,9 +170,12 @@ class Select extends Controller{
 				else if($key == "url" && !$urlDone){
 					$urlDone = true;
 					//fetch the content for this
-					$html = @file_get_contents($row["url"]);
+					$html = fetch_doc($row[$primary], $row["url"]);
 					if($html !== FALSE){
 						$contentStr = "<content>" . getPlainText($html) . "</content>";
+					}
+					else{
+						die(err("Could not fetch document: " . $row['url']));
 					}
 				}
 				

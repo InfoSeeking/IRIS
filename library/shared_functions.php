@@ -25,10 +25,26 @@ function cleanLogic($type){
 	}
 }
 
-function fetch_doc($id){
+function fetch_doc($id, $url){
 	//check if cached
 	//otherwise fetch now and add to cache
-	
+	global $STORAGE;
+	//check if document id is in cache
+	$fname = $STORAGE."pages_cache/". $id . ".txt";
+	if(file_exists($fname)){
+		$HANDLE = fopen($fname, "r");
+		$html = fread($HANDLE, filesize($fname));
+		fclose($HANDLE);
+		return $html;
+	}
+	else{
+		//fetch the document and add to cache
+		$html = @file_get_contents($url);
+		$HANDLE = fopen($fname, "w");
+		fwrite($HANDLE, $html);
+		fclose($HANDLE);
+		return $html;
+	}
 }
 
 function cleanOp($op){
