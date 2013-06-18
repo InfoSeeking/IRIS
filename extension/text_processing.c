@@ -6,6 +6,7 @@
 #include "filter.h"
 #include "query.h"
 #include "hashtable.h"
+#include "prefixtree.h"
 #include "rank.h"
 #include "text_processing.h"
 
@@ -328,6 +329,26 @@ int main(int argc, char **argv){
             printf("</resource>\n");
         }
         free(ranked);
+    }
+    else if(strcmp("query_tree", fn) == 0){
+        //test using prefix tree
+        pnode ptree = makePTree();
+        addToPrefix(&ptree, "cat");
+        addToPrefix(&ptree, "dog");
+        addToPrefix(&ptree, "catherine");
+        addToPrefix(&ptree, "cat");
+        addToPrefix(&ptree, "cathy");
+        addToPrefix(&ptree, "catherine");
+        addToPrefix(&ptree, "catherine");
+        addToPrefix(&ptree, "catherine");
+        pnode *r = fetchFromPrefix(&ptree, "cat");
+        if(r != NULL){
+            printf("Total: %d\nSubstrings: %d\n", r->count, r->prefixCount);
+        }
+        else{
+            printf("NULL\n");
+        }
+        freeTree(&ptree);
     }
     mxmlDelete(tree);
     return 0;

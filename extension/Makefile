@@ -2,8 +2,8 @@ COMPILER=gcc
 CCFLAGS=-g
 all: text_processing
 #at the moment, this requires lmxml to be installed, I will try later to make this portable
-text_processing: text_processing.o extract.o hashtable.o filter.o query.o rank.o
-	$(COMPILER) -o text_processing text_processing.o extract.o hashtable.o filter.o query.o rank.o -lmxml -pthread
+text_processing: text_processing.o extract.o hashtable.o filter.o query.o rank.o prefixtree.o
+	$(COMPILER) -o text_processing text_processing.o extract.o hashtable.o filter.o query.o rank.o prefixtree.o -lmxml -pthread
 
 text_processing.o: text_processing.c
 	$(COMPILER) $(CCFLAGS) -c text_processing.c
@@ -23,5 +23,8 @@ query.o: query.c
 rank.o: rank.c
 	$(COMPILER) $(CCFLAGS) -c rank.c
 
+prefixtree.o: prefixtree.c
+	$(COMPILER) $(CCFLAGS) -c prefixtree.c
+	
 clean:
-	rm -rf text_processing.o extract.o hashtable.o filter.o query.o text_processing *.gch rank.o
+	rm -rf text_processing.o extract.o hashtable.o filter.o query.o text_processing *.gch rank.o prefixtree.o
