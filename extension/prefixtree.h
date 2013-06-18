@@ -7,9 +7,9 @@ typedef struct pnode_s{
 } pnode;
 
 
-pnode * makePTree();
+pnode makePTree();
 pnode * makeChildren();
 int addToPrefix(pnode *tree, char * word);
-pnode * fetchFromPrefix(pnode *tree, char * word); //fetches total match, returns NULL if no match
+pnode * fetchFromPrefix(pnode *tree, char * word, int useStemming); //fetches total match, returns NULL if no match
 void freeTree(pnode *tree);
 #endif

@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "hashtable.h"
+#include "prefixtree.h"
 #include "text_processing.h"
 
 /*
@@ -9,18 +9,17 @@
     minlength - -1 if not checking
     maxlength - -1 if not checking
 */
-void filter_words(char *input_data, char *stopwords_data, int minlength, int maxlength){
+void filter_words(char *input_data, char *stopwords_data, int minlength, int maxlength, int useStemming){
     int index = 0;
-    hashtable *table = NULL;
+    pnode ptree = makePTree();
+    int hasPTree = 0;
 
     if(stopwords_data != NULL){
+        hasPTree = 1;
         char * word = getWord(stopwords_data, &index);
-        table = (hashtable *)malloc(sizeof(hashtable));
-        //build hash table of stopwords
-        table->buckets = 0;
-        rehash(table, 100);
         while(word != NULL){
-            addToHash(table, word);
+            addToPrefix(&ptree, word);
+            free(word);
             word = getWord(stopwords_data, &index);
         }
     }
@@ -30,7 +29,7 @@ void filter_words(char *input_data, char *stopwords_data, int minlength, int max
     index = 0;
     char * word = getWord(input_data, &index);
     while(word != NULL){
-        if((table == NULL || fetchFromHash(table, word) == NULL) && (minlength == -1 || strlen(word) >= minlength) && (maxlength == -1 || strlen(word) <= maxlength)){
+        if((hasPTree == 0 || fetchFromPrefix(&ptree, word, useStemming) == NULL) && (minlength == -1 || strlen(word) >= minlength) && (maxlength == -1 || strlen(word) <= maxlength)){
             if(first){
                 first = 0;
             }
@@ -42,7 +41,7 @@ void filter_words(char *input_data, char *stopwords_data, int minlength, int max
         free(word);
         word = getWord(input_data, &index);
     }
-    if(table != NULL){
-        freeHash(table, 1);
+    if(hasPTree == 1){
+        freeTree(&ptree);
     }
 }

@@ -65,7 +65,8 @@ int addToPrefix(pnode *root, char * word){
 }
 
 //fetches total match
-pnode * fetchFromPrefix(pnode *root, char * word){
+//if useStemming is equal to 1, it will give the best match it can get if it doesn't find an exact match
+pnode * fetchFromPrefix(pnode *root, char * word, int useStemming){
 	pnode *ptr = root;
 	pnode *prev = NULL;
 	int i;
@@ -81,6 +82,11 @@ pnode * fetchFromPrefix(pnode *root, char * word){
 		index = getIndex(word[i]);
 		prev = ptr;
 		ptr = &(ptr->children[index]);
+		if(useStemming){
+			if(ptr->count > 0){
+				return ptr;
+			}
+		}
 	}
 	return ptr;
 } 

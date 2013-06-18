@@ -2,6 +2,6 @@
 #define EXTRACT_H
 #include "hashtable.h"
 
-short processQuery(char * data, char * words_data, char * type, int val);
+short processQuery(char * data, char * words_data, char * type, int val, int useStemming);
 
 #endif

@@ -1,25 +1,22 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "hashtable.h"
+#include "prefixtree.h"
 #include "text_processing.h"
 
 /* 
 this is a boolean match query, it returns true if the data matches the constraints
 */
-short processQuery(char * data, char * words_data, char * type, int val){
+short processQuery(char * data, char * words_data, char * type, int val, int useStemming){
 	
 	int index = 0;
-    hashtable *table = NULL;
+    pnode ptree = makePTree();
 
     if(data != NULL){
         char * word = getWord(data, &index);
-        table = (hashtable *)malloc(sizeof(hashtable));
-        //build hash table of words, so we can match them
-        table->buckets = 0;
-        rehash(table, 100);
         while(word != NULL){
-            addToHash(table, word);
+            addToPrefix(&ptree, word);
+            free(word);
             word = getWord(data, &index);
         }
     }
@@ -31,41 +28,44 @@ short processQuery(char * data, char * words_data, char * type, int val){
     index = 0;
     char * word = getWord(words_data, &index);
     while(word != NULL){
-    	keyword * kword = fetchFromHash(table, word);
+    	pnode * kword = fetchFromPrefix(&ptree, word, 0);
     	int count = 0;
     	if(kword != NULL){
-    		//keyword is in the table
+    		//keyword is in the table or at least it is a stem for other words
     		count = kword->count;
+            if(useStemming){
+                count = kword->prefixCount;
+            }
     	}
 		if(strcmp(type, "eq") == 0){
 			if(count != val){
-				freeHash(table, 1);
+				freeTree(&ptree);
 				return 0;
 			}
 		}
 		else if(strcmp(type, "ne") == 0){
 			if(count == val){
-				freeHash(table, 1);
+				freeTree(&ptree);
 				return 0;
 			}
 		}
 		else if(strcmp(type, "gt") == 0){
 			if(count <= val){
-				freeHash(table, 1);
+				freeTree(&ptree);
 				return 0;
 			}
 		}
 		else if(strcmp(type, "lt") == 0){
 			if(count >= val){
-				freeHash(table, 1);
+				freeTree(&ptree);
 				return 0;
 			}
 		}
 		//at this point, we are still good, and there is still a possibility to be true
+        free(word);
     	word = getWord(words_data, &index);
-
+        
     }
-    //I WANT TO BE FREE
-    freeHash(table, 1);
+    freeTree(&ptree);
     return 1;
 }

@@ -191,7 +191,8 @@ int main(int argc, char **argv){
         int maxlength = -1;
         char * stopwords_data = NULL;
         int i;
-        
+        int useStemming = 0;
+
         mxml_node_t *node;
         //get parameters
         node = mxmlFindElement(tree, tree, "wordList", NULL, NULL, MXML_DESCEND);
@@ -206,7 +207,14 @@ int main(int argc, char **argv){
         if(node != NULL){
             sscanf(mxmlGetOpaque(node), "%d", &maxlength);
         }
-
+        node = mxmlFindElement(tree, tree, "useStemming", NULL, NULL, MXML_DESCEND);
+        if(node != NULL){
+            char * us = (char *)mxmlGetOpaque(node);
+            if(strcmp(us, "TRUE") == 0 || strcmp(us, "true") == 0){
+                useStemming = 1;
+            }
+        }
+        
         //print words that are not in stopwords
         for(node = mxmlFindElement(tree, tree, "resource", NULL, NULL, MXML_DESCEND); node != NULL; node = mxmlFindElement(node, tree, "resource", NULL, NULL, MXML_DESCEND)){
             mxml_node_t *content = mxmlFindElement(node, node, "content", NULL, NULL, MXML_DESCEND);
@@ -220,7 +228,7 @@ int main(int argc, char **argv){
             int i;   
             printf("<resource>");
             printf("<id>%s</id>\n<content type=\"filtered\">\n", mxmlGetOpaque(id));
-            filter_words(data, stopwords_data, minlength, maxlength);
+            filter_words(data, stopwords_data, minlength, maxlength, useStemming);
             printf("</content>\n");
             printf("</resource>\n");
         }
@@ -230,6 +238,7 @@ int main(int argc, char **argv){
         int val = -1;
         char * words_data = NULL;
         int i;
+        int useStemming = 0;
         //for each document, return the ones which match the query
         mxml_node_t *node;
         //get parameters
@@ -253,6 +262,14 @@ int main(int argc, char **argv){
         else{
             return err("Query value required");
         }
+
+        node = mxmlFindElement(tree, tree, "useStemming", NULL, NULL, MXML_DESCEND);
+        if(node != NULL){
+            char * us = (char *)mxmlGetOpaque(node);
+            if(strcmp(us, "TRUE") == 0 || strcmp(us, "true") == 0){
+                useStemming = 1;
+            }
+        }
         for(node = mxmlFindElement(tree, tree, "resource", NULL, NULL, MXML_DESCEND); node != NULL; node = mxmlFindElement(node, tree, "resource", NULL, NULL, MXML_DESCEND)){
             mxml_node_t *content = mxmlFindElement(node, node, "content", NULL, NULL, MXML_DESCEND);
             mxml_node_t *id = mxmlFindElement(node, node, "id", NULL, NULL, MXML_DESCEND);
@@ -261,7 +278,7 @@ int main(int argc, char **argv){
             if(id == NULL) return err ("No id element found in resource");
              
             char *data = (char *)mxmlGetOpaque(content);
-            if(processQuery(data, words_data, type, val)){
+            if(processQuery(data, words_data, type, val, useStemming)){
                 printf("<resource>");
                 printf("<id>%s</id>\n<content>\n", mxmlGetOpaque(id));
                 printf("%s\n", data);
