@@ -55,7 +55,12 @@ class Select extends Controller{
 		if(!$op){
 			die(err("Missing operator attribute on field tag"));
 		}
-		return sprintf("`%s`%s%s", esc($field->name) , $op , esc($field->value));
+		if(is_numeric($field->value)){
+			return sprintf("`%s`%s%s", esc($field->name) , $op , esc($field->value));
+		}
+		else{
+			return sprintf("`%s`%s'%s'", esc($field->name) , $op , esc($field->value));
+		}
 	}
 	/* initially called with the where node (which can only have one node) */
 	private function parseLogic($root, $connective){
@@ -153,18 +158,19 @@ class Select extends Controller{
 
 		$primary = parent::getIdField($table);
 		$statement = "SELECT * FROM " . $table . $additional;
-
+		echo "<h1>".$statement."</h1>";
 		$response = "<parameters><table>" . $table . "</table><requestID>" . $REQ_ID . "</requestID><requestType>select</requestType><resourceList>";
 		$results = mysqli_query($cxn, $statement) or die(err("Could not run query: " . $statement));
 		$primaryDone = false;
 		$primaryStr = "";
 		$urlDone = false;
-		$contentStr = "<content></content>";
+		$contentStr = "";
+		$fieldsStr = "";
 		while($row = $results->fetch_assoc()){
-			$response .= "<resource><fields>";
+			$response .= "<resource>";
 			foreach($row as $key => $val){
 				if($key == $primary && !$primaryDone){
-					$primaryStr = "<id>" . $val . "</id>";
+					$primaryStr = $val;
 					$primaryDone = true;
 				}
 				else if($key == "url" && !$urlDone){
@@ -172,7 +178,7 @@ class Select extends Controller{
 					//fetch the content for this
 					$html = fetch_doc($row[$primary], $row["url"]);
 					if($html !== FALSE){
-						$contentStr = "<content>" . getPlainText($html) . "</content>";
+						$contentStr = getPlainText($html);
 					}
 					else{
 						die(err("Could not fetch document: " . $row['url']));
@@ -180,12 +186,14 @@ class Select extends Controller{
 				}
 				
 				if(in_array(strtolower($key), $fields)){
-					$response .= sprintf("<field><name>%s</name><value>%s</value></field>", $key, $val);
+					$fieldsStr .= sprintf("<field><name>%s</name><value>%s</value></field>", $key, $val);
 				}
 				
 			}
-			$response .= "</fields>";
-			$response .= $primaryStr . $contentStr .  "</resource>";
+			if($fieldsStr != ""){
+				$response .= "<fields>" . $fieldStr . "</fields>";
+			}
+			$response .= "<id>" . $primaryStr . "</id><content>" . $contentStr . "</content>" . "</resource>";
 			$primaryDone = false;
 			$urlDone = false;
 		}

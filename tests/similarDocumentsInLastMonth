@@ -1,19 +1,20 @@
-<!-- test comment -->
 <parameters>
 	<requestType>pipe</requestType>
 	<command>
+		<!-- select a single page, we want to find the most similar page to this one within a timeframe -->
 		<parameters>
 			<requestType>select</requestType>
 			<table>pages</table>
 			<where>
 					<field operator="eq">
 						<name>pageID</name>
-						<value>14</value>
+						<value>41</value>
 					</field>		
 			</where>
 		</parameters>
 	</command>
 	<command>
+		<!-- remove stop words -->
 		<parameters>
 			<requestType>filter</requestType>
 			<table>pages</table>
@@ -22,6 +23,7 @@
 		</parameters>
 	</command>
 	<command>
+		<!-- extract the most frequent words -->
 		<parameters>
 			<requestType>extract</requestType>
 			<table>pages</table>
@@ -29,40 +31,40 @@
 		</parameters>
 	</command>
 	<command>
+		<!-- get the other pages to find the most similar ones -->
 		<parameters>
 			<requestType>select</requestType>
 			<table>pages</table>
 			<where>
 				<logic type="and">
 					<field operator="gt">
-						<name>pageID</name>
-						<value>14</value>
-					</field>	
-					<field operator="lt">
-						<name>pageID</name>
-						<value>25</value>
-					</field>	
-				</logic>	
+						<name>date</name>
+						<value>2013-05-19</value>
+					</field>
+					<!-- we don't want the original page -->
+					<logic type="not">
+						<field operator="eq">
+							<name>pageID</name>
+							<value>41</value>
+						</field>
+					</logic>
+				</logic>
 			</where>
 		</parameters>
 	</command>
 	<command>
+		<!-- merge both resourceList elements -->
 		<parameters>
 			<requestType>merge</requestType>
 			<table>pages</table>
 		</parameters>
 	</command>
 	<command>
+		<!-- rank, when not supplied a wordList element, uses the content of the first resource (our first document) -->
 		<parameters>
 			<requestType>rank</requestType>
 			<table>pages</table>
 		</parameters>
 	</command>
-	<command>
-		<parameters>
-			<requestType>limit</requestType>
-			<table>pages</table>
-			<amount>1</amount>
-		</parameters>
-	</command>
+
 </parameters>
