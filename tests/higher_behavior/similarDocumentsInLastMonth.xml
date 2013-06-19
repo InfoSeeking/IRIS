@@ -66,5 +66,12 @@
 			<table>pages</table>
 		</parameters>
 	</command>
-
+	<command>
+		<!-- get the highest ranked document -->
+		<parameters>
+			<requestType>limit</requestType>
+			<table>pages</table>
+			<amount>1</amount>
+		</parameters>
+	</command>
 </parameters>

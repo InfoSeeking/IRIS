@@ -158,7 +158,7 @@ class Select extends Controller{
 
 		$primary = parent::getIdField($table);
 		$statement = "SELECT * FROM " . $table . $additional;
-		echo "<h1>".$statement."</h1>";
+		
 		$response = "<parameters><table>" . $table . "</table><requestID>" . $REQ_ID . "</requestID><requestType>select</requestType><resourceList>";
 		$results = mysqli_query($cxn, $statement) or die(err("Could not run query: " . $statement));
 		$primaryDone = false;

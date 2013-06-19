@@ -1,8 +1,10 @@
 #Directory Structure
-- bin/ - Lemur executable files (compiled on Ubuntu)
+- bin/ - Executable files (compiled on Linux Mint)
+- extension/ - written in C to handle text processing, compiled version is called text_processing and is in bin folder
 - controllers/ - files which perform specific tasks (e.g. clustering, summarization, etc.)
 - library/ - helpful methods shared among all controllers
 - storage/ - folder where all of the request/response data is stored, where all of the necessary indexing files are created (and removed)
+- tests/ - this folder has all of our testing XML files, most of which are very simple and used for debugging, however, under tests/higher_behavior, there are more interesting XML tests using piping to do more complex actions
 - config.php - configuration for debugging and file paths
 - dbconfig.php.example - configuration file for database (remove the trailing .example to use)
 
