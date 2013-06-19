@@ -4,3 +4,5 @@ dbconfig.php
 bin/RedHat/*
 storage/requests/*
 storage/responses/*
+storage/page_cache/*
+storage/*

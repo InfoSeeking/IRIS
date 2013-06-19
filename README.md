@@ -633,6 +633,7 @@ Performs simple queries on documents
 	<query>
 		<type>eq|ne|lt|gt</type>
 		<value>value</value>
+		<useStemming>TRUE|FALSE</useStemming>
 	</query>
 	<resourceList>
 		<resource>

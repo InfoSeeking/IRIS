@@ -140,6 +140,6 @@ class Pipe extends Controller{
 			}
 			$i++;
 		}
-		echo $output->asXML();
+		return $output->asXML();
 	}
 }

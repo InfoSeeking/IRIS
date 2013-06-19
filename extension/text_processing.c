@@ -214,7 +214,7 @@ int main(int argc, char **argv){
                 useStemming = 1;
             }
         }
-        
+
         //print words that are not in stopwords
         for(node = mxmlFindElement(tree, tree, "resource", NULL, NULL, MXML_DESCEND); node != NULL; node = mxmlFindElement(node, tree, "resource", NULL, NULL, MXML_DESCEND)){
             mxml_node_t *content = mxmlFindElement(node, node, "content", NULL, NULL, MXML_DESCEND);
@@ -347,26 +347,7 @@ int main(int argc, char **argv){
         }
         free(ranked);
     }
-    else if(strcmp("query_tree", fn) == 0){
-        //test using prefix tree
-        pnode ptree = makePTree();
-        addToPrefix(&ptree, "cat");
-        addToPrefix(&ptree, "dog");
-        addToPrefix(&ptree, "catherine");
-        addToPrefix(&ptree, "cat");
-        addToPrefix(&ptree, "cathy");
-        addToPrefix(&ptree, "catherine");
-        addToPrefix(&ptree, "catherine");
-        addToPrefix(&ptree, "catherine");
-        pnode *r = fetchFromPrefix(&ptree, "cat");
-        if(r != NULL){
-            printf("Total: %d\nSubstrings: %d\n", r->count, r->prefixCount);
-        }
-        else{
-            printf("NULL\n");
-        }
-        freeTree(&ptree);
-    }
+    
     mxmlDelete(tree);
     return 0;
 }

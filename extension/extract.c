@@ -6,6 +6,7 @@
 #include "text_processing.h"
 
 
+//sticking with hashtable for now because prefix tree can only (easily) be traversed recursively, and that would not be simple to make the sorted array...
 keyword ** findFrequencies(hashtable *table, double totalWords, int uniqueWords){
     keyword **sorted = (keyword **)malloc(sizeof(keyword *) * uniqueWords);
 

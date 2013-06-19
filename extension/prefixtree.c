@@ -38,6 +38,7 @@ pnode * makeChildren(){
 	return children;
 }
 
+//returns 1 on error
 int addToPrefix(pnode *root, char * word){
 	pnode *ptr = root;
 	pnode *prev = NULL;

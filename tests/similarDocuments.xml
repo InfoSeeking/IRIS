@@ -7,7 +7,7 @@
 			<where>
 					<field operator="eq">
 						<name>pageID</name>
-						<value>12</value>
+						<value>14</value>
 					</field>		
 			</where>
 		</parameters>
@@ -35,11 +35,11 @@
 				<logic type="and">
 					<field operator="gt">
 						<name>pageID</name>
-						<value>12</value>
+						<value>14</value>
 					</field>	
 					<field operator="lt">
 						<name>pageID</name>
-						<value>20</value>
+						<value>25</value>
 					</field>	
 				</logic>	
 			</where>
