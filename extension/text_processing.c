@@ -30,8 +30,10 @@ void printHelp(){
     printf("Extract:\n\textract <input xml file>\n");
     printf("\tExtract gives the most frequently appeared words, limited to the <number of words> parameter in order of frequency.\n\n");
     printf("Filter:\n\tfilter <input xml file>\n\n");
-    printf("Query:\n\tquery <input xml file> (--words <words file>, --word-list \"<inline words>\" --match <eq <num>|gt <num>|lt <num>>)\n\n");
-    printf("Rank:\n\trank <input xml file> (--words <words file>, --word-list \"<inline words>\"\n\n");
+    printf("Query:\n\tquery <input xml file>\n\n");
+    printf("Rank:\n\trank <input xml file>\n\n");
+    printf("Vector Rank:\n\tvector_rank <input xml file>\n");
+    printf("\tVector Rank uses a vector model to rank the documents against the supplied wordList query and ranks based off of the cosine similarity of the vectors formed\n\n");
 }
 
 char * getWord(char *data, int *index){
@@ -451,14 +453,15 @@ int main(int argc, char **argv){
                 rankedDoc tmp = docs[j-1];
                 docs[j-1] = docs[j];
                 docs[j] = tmp;
+                j--;
             }
             free(doc_vector);
         }
 
         for(i = 0; i < num_docs; i++){
             printf("<resource>");
-            printf("<id>%d</id>", docs[i].id_num);
-            printf("<rank>%f</rank>", docs[i].rank);
+            printf("<id>%d</id>\n", docs[i].id_num);
+            printf("<rank>%f</rank>\n", docs[i].rank);
             printf("<content>%s</content>", docs[i].content);
             printf("</resource>");
         }

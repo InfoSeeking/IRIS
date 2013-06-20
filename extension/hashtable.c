@@ -77,6 +77,7 @@ void freeLL(node *n, int freeWords){
     else{
         freeLL(n->next, freeWords);
         if(freeWords){
+            free(n->data->word);
             free(n->data);
         }
         free(n);

@@ -25,7 +25,6 @@ vector_index * makeIndex(char * query){
         }
         word = getWord(query, &index);
     }
-    totalWords--;
     //now make the index linked lists
     vector_index * vi = (vector_index *)malloc(sizeof(vector_index));
     vi->lls = (vi_ll **)malloc(totalWords * sizeof(vi_ll *));
@@ -42,12 +41,11 @@ vector_index * makeIndex(char * query){
 }
 //recursively frees a linked list
 void freeIndexLL(vi_node *n){
-    if(n == 0){
+    if(n == NULL){
         return;
     }
     else{
         freeIndexLL(n->next);
-
         free(n);
     }
 }
@@ -102,11 +100,18 @@ void addToIndex(vector_index *vi, char * doc_data, int doc_id){
     char * word = getWord(doc_data, &index);
     while(word != NULL){
         totalWords++;
-        uniqueWords += addToHash(table, word);
+        int added = addToHash(table, word);
+        uniqueWords += added;
+        if(added == 0){
+            //word was duplicate, can free
+            free(word);
+        }
         word = getWord(doc_data, &index);
     }
 
-    findFrequencies(table, totalWords, uniqueWords);
+    keyword ** sorted = findFrequencies(table, totalWords, uniqueWords);
+    //sorted is unnecessary so just free it
+    free(sorted);
 
     //now go through each term and add to index with count
     for(i = 0; i < vi->num_terms; i++){

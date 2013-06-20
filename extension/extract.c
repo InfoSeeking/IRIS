@@ -49,7 +49,12 @@ keyword ** extract_keywords(char * data, int *num_words){
     char * word = getWord(data, &index);
     while(word != NULL){
         totalWords++;
-        uniqueWords += addToHash(table, word);
+        int added = addToHash(table, word);
+        uniqueWords += added;
+        if(added == 0){
+            //word was duplicate, can free
+            free(word);
+        }
         word = getWord(data, &index);
     }
 
