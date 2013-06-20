@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <mxml.h>
+#include <math.h>
 #include "extract.h"
 #include "filter.h"
 #include "query.h"
@@ -9,6 +10,7 @@
 #include "prefixtree.h"
 #include "rank.h"
 #include "text_processing.h"
+#include "vector_rank.h"
 
 /*
 issues:
@@ -346,6 +348,124 @@ int main(int argc, char **argv){
             printf("</resource>\n");
         }
         free(ranked);
+    }
+    else if(strcmp("vector_rank", fn) == 0){
+        /*
+        So ordinarily, implementing a vector model would involve building an index with all of the unique terms and a linked list with all 
+        of the documents which have those terms so finding the tf-idf weights is faster for repeated queries. However, since our implementation 
+        will only involve a single query at a time and will not store indexes for all possibilities of documents I propose just making vectors out
+        of the query terms
+        */
+
+        //get query
+        //to do the ranking based on a set of words, we should check the freqencies of each word, sum them and then rank the documents based on that
+        char * words_data = NULL;
+        int i;
+        int num_docs = 0;
+        int ranked_docs_size = 10;//assume 10 docs
+        rankedDoc * docs = (rankedDoc *)malloc(ranked_docs_size * sizeof(rankedDoc));
+
+        //for each document, return the ones which match the query
+        mxml_node_t *node;
+        //get parameters
+        node = mxmlFindElement(tree, tree, "wordList", NULL, NULL, MXML_DESCEND);
+        if(node != NULL){
+            words_data = (char *)mxmlGetOpaque(node);
+        }
+        //build that index
+        vector_index * vi = makeIndex(words_data);//now we have a blank index with the terms
+
+        //go through each document, add to index with frequency
+        for(node = mxmlFindElement(tree, tree, "resource", NULL, NULL, MXML_DESCEND); node != NULL; node = mxmlFindElement(node, tree, "resource", NULL, NULL, MXML_DESCEND)){
+            mxml_node_t *content = mxmlFindElement(node, node, "content", NULL, NULL, MXML_DESCEND);
+            mxml_node_t *id = mxmlFindElement(node, node, "id", NULL, NULL, MXML_DESCEND);
+
+            if(content == NULL) return err("No content element found in resource");
+            if(id == NULL) return err ("No id element found in resource");
+             
+            char *data = (char *)mxmlGetOpaque(content);
+            int id_num;
+            char * id_str = (char *)mxmlGetOpaque(id);
+
+            sscanf(id_str, "%d", &id_num);
+            addToIndex(vi, data, id_num);
+
+            docs[num_docs].id_num = id_num;
+            docs[num_docs].id = id_str;
+            docs[num_docs].content = data;
+            docs[num_docs].rank = 0;
+
+            num_docs++;
+            if(num_docs >= ranked_docs_size){
+                ranked_docs_size *= 2;
+                docs = (rankedDoc *)realloc(docs, ranked_docs_size * sizeof(rankedDoc));
+            }
+        }
+
+        //make vector of query and idf coefficients for each query term
+        double * query_vector = (double *)malloc(vi->num_terms * sizeof(double));
+        for(i = 0; i < vi->num_terms; i++){
+            //calculate the idf for each term
+            double n = (double)vi->lls[i]->num_docs;
+            if(n == 0){
+                query_vector[i] = 0;
+            }
+            else{
+                query_vector[i] = log((double)num_docs / n);
+            }
+            //printf("Query Vector[%d] = %f\n", i, query_vector[i]);
+        }
+
+        /*
+        TODO
+         -also the linear searching might need to go, rethink how to go about finding the counts per term
+         -also, I will need to sort this later and print in XML
+         -there are serious memory leaks, ~50%
+        */
+
+        //for each document, make vector out of frequency of word *
+        for(i = 0; i < num_docs; i++){
+            //make vector
+            double * doc_vector = (double *)malloc(vi->num_terms * sizeof(double));
+            int j;
+            for(j = 0; j < vi->num_terms; j++){
+                int count = getCount(vi->lls[j], docs[i].id_num);
+                doc_vector[j] = ((double)count) * query_vector[j];
+            }
+
+            double similarity;
+            //dot product the vectors
+            double num = dotProduct(doc_vector, query_vector, vi->num_terms);
+            double denom = mag(doc_vector, vi->num_terms) * mag(query_vector, vi->num_terms);
+
+            if(denom == 0){
+                //one is a zero vector, so it's rank is 0 anyway
+                similarity = 0;
+            }
+            else{
+                similarity = num / denom;
+            }
+            docs[i].rank = similarity;
+            j = i;
+            while(j > 0 && docs[j].rank > docs[j-1].rank){
+                rankedDoc tmp = docs[j-1];
+                docs[j-1] = docs[j];
+                docs[j] = tmp;
+            }
+            free(doc_vector);
+        }
+
+        for(i = 0; i < num_docs; i++){
+            printf("<resource>");
+            printf("<id>%d</id>", docs[i].id_num);
+            printf("<rank>%f</rank>", docs[i].rank);
+            printf("<content>%s</content>", docs[i].content);
+            printf("</resource>");
+        }
+
+        free(query_vector);
+        free(docs);
+        freeIndex(vi, 1);
     }
     
     mxmlDelete(tree);

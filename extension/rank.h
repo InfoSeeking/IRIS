@@ -7,6 +7,7 @@ typedef struct {
 	double rank;
 	char * content;
 	char * id;
+	int id_num;
 } rankedDoc;
 
 #endif
