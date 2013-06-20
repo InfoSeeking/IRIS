@@ -83,7 +83,7 @@ class Pipe extends Controller{
 				}
 				else{
 					//a bit of an exception
-					if($rt == "rank" || $rt == "query" || $rt == "filter"){
+					if($rt == "rank" || $rt == "query" || $rt == "filter" || $rt == "vector_rank"){
 						if(!pe($cmdObj, "wordList")){
 							//get it from the previous resourceList's first resource's content
 							//remove that resource as well

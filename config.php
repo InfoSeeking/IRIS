@@ -23,7 +23,8 @@ $VALID_REQUEST_TYPES = array(
 	"extract",
 	"filter",
 	"query",
-	"rank"
+	"rank",
+	"vector_rank"
 	);
 
 if($_SERVER["HTTP_HOST"] == "localhost"){

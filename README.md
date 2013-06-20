@@ -657,9 +657,26 @@ Ranks documents based on a supplied list of words. The ranking is based on total
 	<resourceList>
 		<resource>
 			<id>id</id>
+			<rank>number</rank>
 			<content></content>
 		</resource>
 		...
 	</resourceList>
 </parameters>
 ```
+
+##Vector Rank
+Ranks documents using a vector model of the wordList you supply and returns a rank based on the cosine similarity of the query and the document
+###Request
+<parameters>
+	<requestType>vector_rank</requestType>
+	<wordList>list of words to check</wordList>
+	<resourceList>
+		<resource>
+			<id>id</id>
+			<rank>number</rank>
+			<content></content>
+		</resource>
+		...
+	</resourceList>
+</parameters>
