@@ -734,12 +734,13 @@ Ranks documents using a vector model of the wordList you supply and returns a ra
 
 ##Index Query
 ###Request
+The query element is mostly the same as the query element describe in the Indri documentation [here](http://sourceforge.net/p/lemur/wiki/IndriRunQuery/) however, you can only specify one query at the moment.
 ```
 <parameters>
 	<requestType>index_query</requestType>
 	<indexID>number</indexID>
 	<query>
-		(indri type query) documentation [here](http://sourceforge.net/p/lemur/wiki/IndriRunQuery/)
+		indri type query
 	</query>
 </parameters>
 ```
