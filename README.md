@@ -668,6 +668,7 @@ Ranks documents based on a supplied list of words. The ranking is based on total
 ##Vector Rank
 Ranks documents using a vector model of the wordList you supply and returns a rank based on the cosine similarity of the query and the document
 ###Request
+```
 <parameters>
 	<requestType>vector_rank</requestType>
 	<wordList>list of words to check</wordList>
@@ -680,3 +681,81 @@ Ranks documents using a vector model of the wordList you supply and returns a ra
 		...
 	</resourceList>
 </parameters>
+```
+
+##Index Insert
+###Request
+```
+<parameters>
+	<requestType>index_insert</requestType>
+	<indexID>optional</indexID>
+	<persistence>TRUE|FALSE</persistence>
+	<resourceList>
+		<resource>
+			<url></url>
+		</resource>
+		<resource>
+			<url></url>
+		</resource>
+		<resource>
+			<url></url>
+		</resource>
+		<resource>
+			<url></url>
+		</resource>
+		...
+	</resourceList>
+</parameters>
+```
+###Response
+```
+<parameters>
+	<requestID>number</requestID>
+	<indexID>number</indexID>
+	<requestType>index_insert</requestType>
+</parameters>
+```
+##Index Delete
+###Request
+```
+<parameters>
+	<requestType>index_delete</requestType>
+	<indexID>required</indexID>
+</parameters>
+```
+###Response
+```
+<parameters>
+	<requestID>number</requestID>
+	<indexID>number</indexID>
+	<requestType>index_delete</requestType>
+</parameters>
+```
+
+##Index Query
+###Request
+```
+<parameters>
+	<requestType>index_query</requestType>
+	<indexID>number</indexID>
+	<query>
+		(indri type query) documentation [here](http://sourceforge.net/p/lemur/wiki/IndriRunQuery/)
+	</query>
+</parameters>
+```
+###Response
+The Indri resulting score is the logarithm of the probability, therefore the more negative the score is, the lower the rank, and vice-versa
+```
+<parameters>
+	<requestType>index_query</requestType>
+	<requestID>number</requestID>
+	<indexID>number</indexID>
+	<resourceList>
+		<resource>
+		 	<score>indri query score (sorted in descending order)</score>
+		 	<url>page url</url>
+		 </resource>
+		...
+	</resourceList>
+</parameters>
+```

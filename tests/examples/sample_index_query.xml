@@ -1,0 +1,10 @@
+<parameters>
+	<requestType>index_query</requestType>
+	<indexID>1103</indexID>
+	<query>
+		<text>
+			<!-- I don't know why, but these special characters need to be passed through bash, url must encode them or something -->
+			#combine(place men retire happy great)
+		</text>
+	</query>
+</parameters>

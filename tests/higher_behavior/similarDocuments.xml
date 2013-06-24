@@ -8,7 +8,7 @@
 			<where>
 					<field operator="eq">
 						<name>pageID</name>
-						<value>14</value><!-- Of Revenge -->
+						<value>14</value><!-- Of Death -->
 					</field>		
 			</where>
 		</parameters>
@@ -54,7 +54,7 @@
 	</command>
 	<command>
 		<parameters>
-			<requestType>rank</requestType>
+			<requestType>vector_rank</requestType>
 			<table>pages</table>
 		</parameters>
 	</command>

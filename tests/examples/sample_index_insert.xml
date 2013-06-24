@@ -1,0 +1,7 @@
+<parameters>
+	<requestType>index_insert</requestType>
+	<persistence>true</persistence>
+	<url>http://www.westegg.com/bacon/great-place.html</url>
+	<url>http://www.westegg.com/bacon/goodness.html</url>
+	<url>http://www.westegg.com/bacon/travel.html</url>
+</parameters>

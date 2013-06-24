@@ -266,15 +266,18 @@ function fetch_to_trec($url, $doc_id, $TREC){
 The following function removes temporary files that the script uses during processing a request
 */
 function clean(){
-	global $STORAGE;
+	global $STORAGE, $PERSISTENCE;
 	$removeArr = Array(
 		fname($STORAGE . "trec_file.list"),
 		fname($STORAGE . "trec.txt"),
 		fname($STORAGE . "build_index.param"),
 		fname($STORAGE . "cluster.param"),
-		fname($STORAGE . "index"),
-		fname($STORAGE . "sum.param")
+		fname($STORAGE . "sum.param"),
+		fname($STORAGE . "query.param")
 		);
+	if(!$PERSISTENCE){
+		array_push($removeArr, fname($STORAGE . "indexes/index"));
+	}
 	//If you are trying to get a better understanding of how the system works I suggest commenting out the following system(...) line so the temporary files are not removed
 	$cmd = "rm -r " . implode($removeArr, " ");
 	system($cmd);

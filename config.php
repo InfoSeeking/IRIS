@@ -7,16 +7,16 @@ $LIB="library/";
 $BIN="bin/";
 $CONTROLLER="controllers/";
 $FILE_ROOT="";
-$STATE="live"; //valid values are debug,live
+$STATE="debug"; //valid values are debug,live
 $HOST=""; //valid values are local,live
 $VALID_REQUEST_TYPES = array(
 	"cluster", 
 	"summarize", 
-	"select", 
+	"select", //SQL ops start
 	"merge", 
 	"insert",
 	"update",
-	"delete",
+	"delete", //SQL ops end
 	"limit",
 	"sort",
 	"pipe",
@@ -24,7 +24,10 @@ $VALID_REQUEST_TYPES = array(
 	"filter",
 	"query",
 	"rank",
-	"vector_rank"
+	"vector_rank",
+	"index_insert",
+	"index_delete",
+	"index_query"
 	);
 
 if($_SERVER["HTTP_HOST"] == "localhost"){
@@ -41,5 +44,5 @@ if($STATE=="live"){
 }
 
 $REQ_ID = "";//to be generated
-
+$PERSISTENCE = FALSE;//whether or not to delete files after request is over
 ?>

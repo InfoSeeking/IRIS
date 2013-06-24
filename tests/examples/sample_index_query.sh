@@ -1,0 +1,1 @@
+curl http://localhost/CoagmentoMiddleLayer/applic=<parameters><requestType>index_query</requestType><indexID>1103</indexID><query><text>#combine(place men retire happy great)</text></query><query><text>#combine(derp)</text></query><query><text>#combine(sad depress bad unhappy man)</text></query></parameters>'

@@ -8,7 +8,7 @@ class Summarize extends Controller{
 		$numOfSentences = intval($xml->maxSentences);
 		$numOfDocuments = 0;
 
-		$TREC = fopen(fname($STORAGE . "trec.txt"), "w");//TODO make sure that you're not overwriting anything with a unique id or something
+		$TREC = fopen(fname($STORAGE . "trec.txt"), "w");
 
 		$TREC_FILE_LIST = fopen($FILE_ROOT . fname($STORAGE . "trec_file.list"), "w");
 		fwrite($TREC_FILE_LIST, $FILE_ROOT . fname($STORAGE . "trec.txt"));
