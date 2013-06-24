@@ -41,15 +41,20 @@ class Index_query extends Controller{
 	function run($xml){
 		global $FILE_ROOT, $STORAGE, $REQ_ID, $PERSISTENCE, $CMD_EXTRA, $cxn;
 		if(!pe($xml, "indexID")) die(err("IndexID element not found"));
-		//if(!pe($xml, "query")) die(err("Query element not found"));
+		if(!pe($xml, "query")) die(err("Query element not found"));
 
-		$index_dir = $STORAGE . "indexes/index_" . (string)$xml->indexID;
+		
 		
 		
 		//write to parameter file
 		$fn = fname($STORAGE . "query.param");
 		$HANDLE = fopen($fn, "w");
-		$queryStr = "<parameters><index>" . $index_dir ."</index>";
+		$queryStr = "<parameters>";
+		foreach($xml->indexID as $indexID){
+			$index_dir = $STORAGE . "indexes/index_" . (string)$indexID;
+			$queryStr .= "<index>" . $index_dir ."</index>";
+		}
+		
 
 		$queryStr .= $xml->query->asXML();
 

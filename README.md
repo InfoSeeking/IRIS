@@ -760,3 +760,33 @@ The Indri resulting score is the logarithm of the probability, therefore the mor
 	</resourceList>
 </parameters>
 ```
+
+
+##Fetch
+Fetch gets the content of the passed url's
+###Request
+```
+<parameters>
+	<requestType>fetch</requestType>
+	<resourceList>
+		<resource>
+			<url>page url</url>
+		</resource>
+		...
+	</resourceList>
+</parameters>
+```
+###Response
+```
+<parameters>
+	<requestType>fetch</requestType>
+	<requestID>number</requestID>
+	<resourceList>
+		<resource>
+			<url>page url</url>
+			<content>page content</content>
+		</resource>
+		...
+	</resourceList>
+</parameters>
+```

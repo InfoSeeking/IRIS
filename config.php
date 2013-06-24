@@ -27,7 +27,8 @@ $VALID_REQUEST_TYPES = array(
 	"vector_rank",
 	"index_insert",
 	"index_delete",
-	"index_query"
+	"index_query",
+	"fetch"
 	);
 
 if($_SERVER["HTTP_HOST"] == "localhost"){

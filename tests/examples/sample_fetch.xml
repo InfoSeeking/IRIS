@@ -1,6 +1,5 @@
 <parameters>
-	<requestType>index_insert</requestType>
-	<persistence>true</persistence>
+	<requestType>fetch</requestType>
 	<resourceList>
 		<resource>
 			<url>http://www.westegg.com/bacon/great-place.html</url>
