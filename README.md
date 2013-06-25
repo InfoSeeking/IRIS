@@ -2,18 +2,18 @@
 Here is a very tentative list of possible things this API can do (some of these functions are accomplished by combining functions, denoted by 'piping')
 - [extract](#extract) - extract keywords by frequency
 - [fetch](#fetch) - fetch document content
-- filter - remove words from document content
-- index_insert - create or add to index
-- index_query - do an Indri-like query on an index
-- index_delete - delete an index
-- limit - SQL style limit of documents returned
-- pipe - do a Unix like pipe by using the output of a request as input to the next
-- query - do a boolean type query on a group of documents
-- rank - rank documents based on frequency of words supplied
-- sort - sort documents on a supplied field
-- vector_rank - rank documents on a vector model
-- cluster - cluster with Lemur
-- summarization - summarize with Lemur
+- [filter](#filter) - remove words from document content
+- [index_insert](#index_insert) - create or add to index
+- [index_query](#index_query) - do an Indri-like query on an index
+- [index_delete](#index_delete) - delete an index
+- [limit](#limit) - SQL style limit of documents returned
+- [pipe](#pipe) - do a Unix like pipe by using the output of a request as input to the next
+- [query](#query) - do a boolean type query on a group of documents
+- [rank](#rank) - rank documents based on frequency of words supplied
+- [sort](#sort) - sort documents on a supplied field
+- [vector_rank](#vector_rank) - rank documents on a vector model
+- [cluster](#cluster) - cluster with Lemur
+- [summarization](#summarization) - summarize with Lemur
 - summarization(piping) - summarize by piping
 - documentSimilarity(piping) - find similar documents by piping
 
