@@ -1,7 +1,7 @@
 #Functionality
 Here is a very tentative list of possible things this API can do (some of these functions are accomplished by combining functions, denoted by 'piping')
-- [extract](#Extract) - extract keywords by frequency
-- [fetch](#Fetch) - fetch document content
+- [extract](#extract) - extract keywords by frequency
+- [fetch](#fetch) - fetch document content
 - filter - remove words from document content
 - index_insert - create or add to index
 - index_query - do an Indri-like query on an index
