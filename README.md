@@ -12,7 +12,7 @@ Here is a very tentative list of possible things this API can do (some of these 
 - [rank](#rank) - rank documents based on frequency of words supplied
 - [sort](#sort) - sort documents on a supplied field
 - [vector_rank](#vector_rank) - rank documents on a vector model
-- [cluster](#cluster) - cluster with Lemur
+- [cluster](#clustering) - cluster with Lemur
 - [summarization](#summarization) - summarize with Lemur
 - summarization(piping) - summarize by piping
 - documentSimilarity(piping) - find similar documents by piping
@@ -684,7 +684,7 @@ Ranks documents based on a supplied list of words. The ranking is based on total
 </parameters>
 ```
 
-##<a id="Vector Rank"></a>Vector Rank
+##<a id="vector_rank"></a>Vector Rank
 Ranks documents using a vector model of the wordList you supply and returns a rank based on the cosine similarity of the query and the document
 ###Request
 ```
@@ -702,7 +702,7 @@ Ranks documents using a vector model of the wordList you supply and returns a ra
 </parameters>
 ```
 
-##<a id="Index Insert"></a>Index Insert
+##<a id="index_insert"></a>Index Insert
 ###Request
 ```
 <parameters>
@@ -734,7 +734,7 @@ Ranks documents using a vector model of the wordList you supply and returns a ra
 	<requestType>index_insert</requestType>
 </parameters>
 ```
-##<a id="Index Delete"></a>Index Delete
+##<a id="index_delete"></a>Index Delete
 ###Request
 ```
 <parameters>
@@ -751,7 +751,7 @@ Ranks documents using a vector model of the wordList you supply and returns a ra
 </parameters>
 ```
 
-##<a id="Index Query"></a>Index Query
+##<a id="index_query"></a>Index Query
 ###Request
 The query element is mostly the same as the query element describe in the Indri documentation [here](http://sourceforge.net/p/lemur/wiki/IndriRunQuery/) however, you can only specify one query at the moment.
 ```
