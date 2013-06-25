@@ -1,3 +1,22 @@
+#Functionality
+Here is a very tentative list of possible things this API can do (some of these functions are accomplished by combining functions, denoted by 'piping')
+- [extract](#Extract) - extract keywords by frequency
+- [fetch](#Fetch) - fetch document content
+- filter - remove words from document content
+- index_insert - create or add to index
+- index_query - do an Indri-like query on an index
+- index_delete - delete an index
+- limit - SQL style limit of documents returned
+- pipe - do a Unix like pipe by using the output of a request as input to the next
+- query - do a boolean type query on a group of documents
+- rank - rank documents based on frequency of words supplied
+- sort - sort documents on a supplied field
+- vector_rank - rank documents on a vector model
+- cluster - cluster with Lemur
+- summarization - summarize with Lemur
+- summarization(piping) - summarize by piping
+- documentSimilarity(piping) - find similar documents by piping
+
 #Directory Structure
 - bin/ - Executable files (compiled on Linux Mint)
 - extension/ - written in C to handle text processing, compiled version is called text_processing and is in bin folder
@@ -18,7 +37,7 @@ To add a new controller, add the file to the controllers directory, give it the 
 ```
 #Request and Response Format:
 
-##Summarization
+##<a id="Summarization"></a>Summarization
 ###Request
 ```
 <parameters>
@@ -71,7 +90,7 @@ Here,
 </parameters>
 
 ```
-##Clustering
+##<a id="Clustering"></a>Clustering
 ###Request
 ```
 <parameters>
@@ -146,7 +165,7 @@ Here,
 </parameters>
 ```
 
-##Error
+##<a id="Error"></a>Error
 ###Response
 ```
 <parameters>
@@ -173,7 +192,7 @@ Here,
 </resource>
 ```
 
-##Select
+##<a id="Select"></a>Select
 ###Request
 The field operator allows you to select from predefined fields based on the table (e.g. you can add a field of "url" or "snippetID" if the table value is "snippet").
 Not including the fields list will return no fields, but can still be useful for only retrieving the id's of the resulting resources.
@@ -280,7 +299,7 @@ Response:
 	</resourceList>
 </parameters>
 ```
-##Merge
+##<a id="Merge"></a>Merge
 Merge requests can easily merge multiple resource lists
 ###Request
 ```
@@ -307,7 +326,7 @@ Merge requests can easily merge multiple resource lists
 	</resourceList>	
 </parameters>
 ```
-##Insert
+##<a id="Insert"></a>Insert
 ###Request
 ```
 <parameters>
@@ -335,7 +354,7 @@ Merge requests can easily merge multiple resource lists
 	<requestType>insert</requestType>
 </parameters>
 ```
-##Update
+##<a id="Update"></a>Update
 ###Request
 ```
 <parameters>
@@ -368,7 +387,7 @@ Merge requests can easily merge multiple resource lists
 	</resourceList>
 </parameters>
 ```
-##Delete
+##<a id="Delete"></a>Delete
 ###Request
 ```
 <parameters>
@@ -388,7 +407,7 @@ Merge requests can easily merge multiple resource lists
 </parameters>
 ```
 
-##Pipe
+##<a id="Pipe"></a>Pipe
 The pipe command allows you to do a unix-like pipe feeding the output of one command into the input of another. You cannot do this by simply taking the XML output of one and passing it to another command since it needs a bit of reformatting. This allows multiple commands to be easily strung together and called repeatedly without much work of the client.
 
 Subtle Rules:
@@ -493,7 +512,7 @@ This contrived example merges two select statements and updates the projectID
 </parameters>
 ```
 
-##Limit
+##<a id="Limit"></a>Limit
 The limit request allows you to select a subset of results. The offset is optional and defaults to 0.
 ###Request
 ```
@@ -527,7 +546,7 @@ The limit request allows you to select a subset of results. The offset is option
 </parameters>
 ```
 
-##Sort
+##<a id="Sort"></a>Sort
 Sort a resource list
 ###Request
 ```
@@ -559,7 +578,7 @@ Sort a resource list
 	</resourceList>
 </parameters>
 ```
-##Extract
+##<a id="Extract"></a>Extract
 ###Request
 ```
 <parameters>
@@ -591,7 +610,7 @@ Sort a resource list
 </parameters>
 ```
 
-##Filter
+##<a id="Filter"></a>Filter
 ###Request
 The wordList parameter (optional) are the words you wish to remove from the content
 
@@ -625,7 +644,7 @@ The wordList parameter (optional) are the words you wish to remove from the cont
 </parameters>
 ```
 
-##Query
+##<a id="Query"></a>Query
 Performs simple queries on documents
 ###Request
 ```
@@ -647,7 +666,7 @@ Performs simple queries on documents
 </parameters>
 ```
 
-##Rank
+##<a id="Rank"></a>Rank
 Ranks documents based on a supplied list of words. The ranking is based on total number of occurences of the words supplied.
 ###Request
 ```
@@ -665,7 +684,7 @@ Ranks documents based on a supplied list of words. The ranking is based on total
 </parameters>
 ```
 
-##Vector Rank
+##<a id="Vector Rank"></a>Vector Rank
 Ranks documents using a vector model of the wordList you supply and returns a rank based on the cosine similarity of the query and the document
 ###Request
 ```
@@ -683,7 +702,7 @@ Ranks documents using a vector model of the wordList you supply and returns a ra
 </parameters>
 ```
 
-##Index Insert
+##<a id="Index Insert"></a>Index Insert
 ###Request
 ```
 <parameters>
@@ -715,7 +734,7 @@ Ranks documents using a vector model of the wordList you supply and returns a ra
 	<requestType>index_insert</requestType>
 </parameters>
 ```
-##Index Delete
+##<a id="Index Delete"></a>Index Delete
 ###Request
 ```
 <parameters>
@@ -732,7 +751,7 @@ Ranks documents using a vector model of the wordList you supply and returns a ra
 </parameters>
 ```
 
-##Index Query
+##<a id="Index Query"></a>Index Query
 ###Request
 The query element is mostly the same as the query element describe in the Indri documentation [here](http://sourceforge.net/p/lemur/wiki/IndriRunQuery/) however, you can only specify one query at the moment.
 ```
@@ -762,7 +781,7 @@ The Indri resulting score is the logarithm of the probability, therefore the mor
 ```
 
 
-##Fetch
+##<a id="Fetch"></a>Fetch
 Fetch gets the content of the passed url's
 ###Request
 ```
