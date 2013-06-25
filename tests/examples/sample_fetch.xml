@@ -2,13 +2,7 @@
 	<requestType>fetch</requestType>
 	<resourceList>
 		<resource>
-			<url>http://www.westegg.com/bacon/great-place.html</url>
-		</resource>
-		<resource>
-			<url>http://www.westegg.com/bacon/goodness.html</url>
-		</resource>
-		<resource>
-			<url>http://www.westegg.com/bacon/travel.html</url>
+			<url>http://www.wwnorton.com/college/history/ralph/referenc/eurotime.htm</url>
 		</resource>
 	</resourceList>
 </parameters>

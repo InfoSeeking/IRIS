@@ -1,7 +1,7 @@
 <?php
 class Summarize extends Controller{
 	function run($xml){
-		global $FILE_ROOT, $STORAGE, $REQ_ID, $CMD_EXTRA;
+		global $FILE_ROOT, $STORAGE, $REQ_ID, $CMD_EXTRA, $LIB;
 
 		$ids = Array();
 		$urls = Array();//associative id => url

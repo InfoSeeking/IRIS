@@ -231,7 +231,8 @@ function getPlainText($html){
 	
 	$bodytxt = substr($html, $start, $end - $start);
 	unset($html);
-
+	$bodytxt = preg_replace("@>@","> ", $bodytxt);//add space around tags to prevent words combining
+	$bodytxt = preg_replace("@<@"," <", $bodytxt);
 	$bodytxt = strip_tags_content($bodytxt, "script");
 	$bodytxt = strip_tags_content($bodytxt, "style");
 	$bodytxt = strip_cdata($bodytxt);
@@ -243,7 +244,22 @@ function getPlainText($html){
 //returns doc_title
 function fetch_to_trec($url, $doc_id, $TREC){
 	global $FILE_ROOT;
-	$html = file_get_contents($url);
+	$headers = get_headers($url);
+	$html = "";
+	$gzip = false;
+	//check for gzip encoding
+	foreach($headers as $line){
+		if($line == "Content-Encoding: gzip"){
+			$gzip = true;
+		}
+	}
+	if($gzip){
+		$html = gzinflate(substr(file_get_contents($url), 10, -8));
+	}
+	else{
+		$html = file_get_contents($url);
+	}
+
 	$title = "";
 	if(preg_match("/<title>(.*)<\/title>/isUm", $html, $matches)){
 		$title = $matches[1];
