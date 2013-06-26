@@ -185,8 +185,13 @@ There is also the option of specifying a user id to add an extra layer of page s
 - content - optional, you can specify the content (HTML or plain text) directly in the XML request
 
 ###Notes about resources:
-You must specify either the url or the content element.
-Resources are stored by the request if persistence is specified by the persistence element. If persistence is specified, then the pages will be stored on our server for caching. This means they must be uniquely identified. The client must specify the id element on resources if persistence is enabled. Therefore, the client is responsible for managing the pages uniquely.
+Resources are a generalization of an entity of information. A resource can be a webpage or user specified content. A client wanting to send resources to our API will put them in a resourceList element with the required information described below.
+
+For a resource, you must specify either the <b>url</b> (if it is a web page) or the <b>content</b> element with the plain text data.
+
+Resources are stored for caching if the <b>persistence</b> element is specified. If persistence is specified, then the pages will be stored on our server for caching, which can reduce response time and allow for more complicated requests (involving Indri indices). However, this means that each resource must be uniquely identified. 
+
+Identification of a resource happens on two or three levels. The client using the API will have a clientID. Each resource the client sends must include a unique <b>id</b> element. Also there is an optional user id which can be used to differentiate between users on the client's system.
 
 On the initial call to the API, the client will have to specify either the content or URL for all of the pages passed. However, a benefit of enabling persistence on pages is that for any later calls on the same pages, the client will only need to specify the id element.
 
@@ -194,7 +199,7 @@ Some controllers will automatically store the pages, for example, calling index_
 
 Controllers which modify content (e.g. filter) will return the content element with a type attribute indicating that it has been modified. For example, calling the filter controller will return content with type="filtered". Even having persistence enabled will not store modified content.
 
-Example first call:
+Example request:
 ```
 <persistence>TRUE</persistence>
 ...
@@ -211,20 +216,6 @@ Example first call:
 
 ```
 
-Example second call (only page ids are required)
-```
-<persistence>TRUE</persistence>
-...
-<resourceList>
-	<resource>
-		<id>page ID</id>
-	</resource>
-	<resource>
-		<id>page ID</id>
-	</resource>
-</resourceList>
-
-```
 ##<a id="Select"></a>Select (deprecated)
 ###Request
 The field operator allows you to select from predefined fields based on the table (e.g. you can add a field of "url" or "snippetID" if the table value is "snippet").
