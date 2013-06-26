@@ -70,7 +70,13 @@ function getResContent($xml, $cache){
 	if(!pe($xml, "clientID")){
 		die(err("Client Id not specified"));
 	}
+	$user_id = FALSE;
 	$client_id = $xml->clientID;
+
+	if(pe($xml, "userID")){
+		$user_id = $xml->userID;
+	}
+
 	foreach($xml->resourceList as $rList){
 		foreach($rList as $res){
 			if(!pe($res, "id")){
@@ -81,7 +87,7 @@ function getResContent($xml, $cache){
 			//get the content
 
 			//check if this is already cached
-			$fname = $client_id . "_" . $page_id . ".txt";
+			$fname = $client_id . (($user_id !== FALSE) ? "_" . $user_id : "") . "_" . $page_id . ".txt";
 			$fpath = $STORAGE . "pages_cache/" . $fname;
 			
 			if(file_exists($fpath)){
@@ -160,7 +166,12 @@ function handleRequest($xml){
 		die(err("Class . " . $classname . " does not exist"));
 	}
 	$response = $cobj->run($xml);
-	//add the client ID, a little hacky but it works
+	//add the client ID, a little hacky but it works for now, I didn't want to change it everywhere as this is
+	//definitely subject to change since when we actually authenticate clients, we will not be passing the clientID
+	//in XML like this
+	if(pe($xml, "userID")){
+		$userStr = "<userID>" . $xml->userID . "</userID>";
+	}
 	$response = "<parameters><clientID>" . $xml->clientID . "</clientID>" . substr($response, 12);
 	return $response;
 }
