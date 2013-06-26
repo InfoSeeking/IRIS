@@ -180,9 +180,9 @@ As of now, the client id is passed with every request in a clientID element. Thi
 There is also the option of specifying a user id to add an extra layer of page specificity. That way pages are stored per user id, so two different users could have two different pages with the same id both stored on the server
 
 ###Format of resource:
--id - unique number as specified by client, this must be unique for each page, we will use this to store in our indices and we will return the page id's
--url - optional, if the page is a webpage, we can fetch the content from a URL
--content - optional, you can specify the content (HTML or plain text) directly in the XML request
+- id - unique number as specified by client, this must be unique for each page, we will use this to store in our indices and we will return the page id's
+- url - optional, if the page is a webpage, we can fetch the content from a URL
+- content - optional, you can specify the content (HTML or plain text) directly in the XML request
 
 ###Notes about resources:
 You must specify either the url or the content element.
