@@ -177,7 +177,7 @@ int main(int argc, char **argv){
                 
             }
             printf("</keywords>\n");
-            printf("<content>");
+            printf("<content type='extracted'>");
             for(i = 0; i < num_words; i++){
                 printf("%s ", words[i]->word);
                 free(words[i]->word);

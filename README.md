@@ -174,25 +174,56 @@ Here,
 ```
 
 #Low Level Functionality (in progress)
-##Some Considerations:
-- Do we want the user to be able to delete/update multiple resource using a where clause or specific resources? I think it is safer to do it with specific resources, so that is how I am proceeding for now
-- If we do both text processing and SQL statments, we will be working with both text and SQL records, which may make piping difficult. A possible solution to this is to create a table for each additional text processing controller I make which we can store results and send the SQL resources back instead of the text so all XML results are in the form of SQL resources. This will require additional tables in the database however.
-
 ##Some Extra Notes:
-- The resource element has an id element which is the primary key as well as a content element (which at the moment is the plaintext for an html page)
-- A request must have resources of all of the same type, which is why the table element is required
+As of now, the client id is passed with every request in a clientID element. This will change with the addition of user authentication.
 
-##Format of resource:
+###Format of resource:
+-id - unique number as specified by client, this must be unique for each page, we will use this to store in our indices and we will return the page id's
+-url - optional, if the page is a webpage, we can fetch the content from a URL
+-content - optional, you can specify the content (HTML or plain text) directly in the XML request
+
+###Notes about resources:
+You must specify either the url or the content element.
+Resources are stored by the request if persistence is specified by the persistence element. If persistence is specified, then the pages will be stored on our server for caching. This means they must be uniquely identified. The client must specify the id element on resources if persistence is enabled. Therefore, the client is responsible for managing the pages uniquely.
+
+On the initial call to the API, the client will have to specify either the content or URL for all of the pages passed. However, a benefit of enabling persistence on pages is that for any later calls on the same pages, the client will only need to specify the id element.
+
+Some controllers will automatically store the pages, for example, calling index_insert will store the pages necessarily.
+
+Controllers which modify content (e.g. filter) will return the content element with a type attribute indicating that it has been modified. For example, calling the filter controller will return content with type="filtered". Even having persistence enabled will not store modified content.
+
+Example first call:
 ```
-<resource>
-	<id>(number)</id>
-	(<fields>
-	...
-	</fields>)
-</resource>
+<persistence>TRUE</persistence>
+...
+<resourceList>
+	<resource>
+		<id>page ID</id>
+		<url>http://...</url>
+	</resource>
+	<resource>
+		<id>page ID</id>
+		<content>Some lengthy text here...</content>
+	</resource>
+</resourceList>
+
 ```
 
-##<a id="Select"></a>Select
+Example second call (only page ids are required)
+```
+<persistence>TRUE</persistence>
+...
+<resourceList>
+	<resource>
+		<id>page ID</id>
+	</resource>
+	<resource>
+		<id>page ID</id>
+	</resource>
+</resourceList>
+
+```
+##<a id="Select"></a>Select (deprecated)
 ###Request
 The field operator allows you to select from predefined fields based on the table (e.g. you can add a field of "url" or "snippetID" if the table value is "snippet").
 Not including the fields list will return no fields, but can still be useful for only retrieving the id's of the resulting resources.
@@ -300,6 +331,7 @@ Response:
 </parameters>
 ```
 ##<a id="Merge"></a>Merge
+####(deprecated)
 Merge requests can easily merge multiple resource lists
 ###Request
 ```
@@ -327,6 +359,7 @@ Merge requests can easily merge multiple resource lists
 </parameters>
 ```
 ##<a id="Insert"></a>Insert
+####(deprecated)
 ###Request
 ```
 <parameters>
@@ -355,6 +388,7 @@ Merge requests can easily merge multiple resource lists
 </parameters>
 ```
 ##<a id="Update"></a>Update
+####(deprecated)
 ###Request
 ```
 <parameters>
@@ -388,6 +422,7 @@ Merge requests can easily merge multiple resource lists
 </parameters>
 ```
 ##<a id="Delete"></a>Delete
+####(deprecated)
 ###Request
 ```
 <parameters>
@@ -604,6 +639,9 @@ Sort a resource list
 		<resource>
 			<id>id</id>
 			<keywords>comma,seperated,keywords</keywords>
+			<content type="extracted">
+				data
+			</content>
 		</resource>
 		...
 	</resourceList>

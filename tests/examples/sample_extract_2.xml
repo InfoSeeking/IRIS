@@ -1,0 +1,13 @@
+<parameters>
+	<requestType>extract</requestType>
+	<clientID>1</clientID>
+	<persistence>true</persistence>
+	<table>pages</table>
+	<numWords>10</numWords>
+	<resourceList>
+		<resource>
+			<id>1</id>
+			<url>http://www.westegg.com/bacon/simulation.html</url>
+		</resource>
+	</resourceList>
+</parameters>

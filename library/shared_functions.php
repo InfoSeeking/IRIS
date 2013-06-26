@@ -61,9 +61,77 @@ function cleanOp($op){
 	if ($op == "lte") return "<=";
 	if ($op == "gte") return ">=";
 }
-function handleRequest($xml){ 
-	global $CONTROLLER, $VALID_REQUEST_TYPES;
-	
+/* 
+	alters xml to provide and fill the content element, will cache if cache is set to true
+*/
+function getResContent($xml, $cache){
+	global $STORAGE;
+	$i = 0;
+	if(!pe($xml, "clientID")){
+		die(err("Client Id not specified"));
+	}
+	$client_id = $xml->clientID;
+	foreach($xml->resourceList as $rList){
+		foreach($rList as $res){
+			if(!pe($res, "id")){
+				die(err("Id not specified on resource"));
+			}
+			$page_id = $res->id;
+			$content = "";
+			//get the content
+
+			//check if this is already cached
+			$fname = $client_id . "_" . $page_id . ".txt";
+			$fpath = $STORAGE . "pages_cache/" . $fname;
+			
+			if(file_exists($fpath)){
+				//in cache, fetch it
+				$HANDLE = fopen($fpath, "r");
+				$content = fread($HANDLE, filesize($fpath));
+				fclose($HANDLE);
+			}
+			else{
+				//check if this is a url or if this is content
+				if(pe($res, "url")){
+					//fetch the webpage
+					$url = $res->url;
+					$html = @file_get_contents($url);
+					//check if html recieved
+					if(!$html){
+						die(err("Could not fetch html for: " . $url));
+					}
+					$content = getPlainText($html);
+					if(!$content){
+						die(err("Could not get plain text for: " . $url));
+					}
+				}
+				else if(pe($res, "content")){
+					//content already there
+				}
+				else{
+					die(err("Neither url or content elements specified for uncached document id: " . $page_id));
+				}
+
+				if($cache){
+					//save page 
+					$HANDLE = fopen($fpath, "w");
+					fwrite($HANDLE, $content);
+					fclose($HANDLE);
+				}
+			}
+
+			if(!pe($res, "content")){
+				//add element
+				$res->addChild("content", $content);
+			}
+		}
+		$i++;
+	}
+}
+function handleRequest($xml){
+	global $CONTROLLER, $VALID_REQUEST_TYPES, $PERSISTENCE;
+	//add the content to the resources which don't have it
+	getResContent($xml, $PERSISTENCE);
 	$type = $xml->requestType;
 	$valid = false;
 	for($i = 0; $i < sizeof($VALID_REQUEST_TYPES); $i++){
@@ -92,6 +160,8 @@ function handleRequest($xml){
 		die(err("Class . " . $classname . " does not exist"));
 	}
 	$response = $cobj->run($xml);
+	//add the client ID, a little hacky but it works
+	$response = "<parameters><clientID>" . $xml->clientID . "</clientID>" . substr($response, 12);
 	return $response;
 }
 
@@ -109,45 +179,6 @@ function add_request($xml){
 	mysqli_query($cxn, $query) or die(err("Could not insert request into database"));
 	$REQ_ID = mysqli_insert_id($cxn);
 	return false;
-/* cache stuff here
-	if($HOST == "local"){
-		// add to cache 
-		$ids = Array();
-		$docSum = 0;
-		foreach($xml->docList->doc as $doc){
-			array_push($ids, $doc->docID);
-			$docSum += $doc->docID;
-		}
-		sort($ids,SORT_NUMERIC);
-		$sig = implode($ids, ",");
-		//check if there are entries in cache with same doc_sum and signature (doc_sum is for performance)
-		$query = sprintf("SELECT `reqID`, `signature` FROM request_cache WHERE `reqType`='%s' AND `doc_sum`=%d AND `signature`='%s'", esc($xml->requestType), $docSum, $sig);
-		$res = mysqli_query($cxn, $query) or die(err("Could not check cache for requests"));
-		if(mysqli_num_rows($res) == 1){
-			$row = mysqli_fetch_assoc($res);
-			$fname = $STORAGE . "responses/" . $row["reqID"] . ".xml";
-			//found
-			if(file_exists($fname)){
-				$HANDLE = fopen($fname, "r");
-				$response = fread($HANDLE, filesize($fname));
-				fclose($HANDLE);
-				return true;//cache hit
-			}
-			else{
-				return false;//even though in db, not on disk
-			}
-		}
-		
-		//insert into cache (preferably I would have this at the end in case of an error during, but it is convenient to place here for now)	
-		$query = sprintf("INSERT INTO request_cache (`reqID`, `doc_sum`, `signature`, `reqType`) VALUES(%d, %d, '%s', '%s')", $REQ_ID, $docSum, $sig, esc($xml->requestType));
-		mysqli_query($cxn, $query) or die(err("Could not add request to cache"));
-		return false;
-	}
-	else{
-		$REQ_ID = (string)time();
-		return false;
-	}
-	*/
 }
 
 /* gets a relative filename using the REQ_ID */
