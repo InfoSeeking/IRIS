@@ -11,6 +11,7 @@
 #include "rank.h"
 #include "text_processing.h"
 #include "vector_rank.h"
+#include "search_blocks.h"
 
 /*
 issues:
@@ -34,6 +35,8 @@ void printHelp(){
     printf("Rank:\n\trank <input xml file>\n\n");
     printf("Vector Rank:\n\tvector_rank <input xml file>\n");
     printf("\tVector Rank uses a vector model to rank the documents against the supplied wordList query and ranks based off of the cosine similarity of the vectors formed\n\n");
+    printf("Block Search:\n\tblock_search <input xml file>\n");
+    printf("\t Block search searches for words supplied in the wordList and finds results within a searchWindow, and returns the nearest block of text within the resultWindow\n\n");
 }
 
 char * getWord(char *data, int *index){
@@ -159,8 +162,8 @@ int main(int argc, char **argv){
             mxml_node_t *content = mxmlFindElement(node, node, "content", NULL, NULL, MXML_DESCEND);
             mxml_node_t *id = mxmlFindElement(node, node, "id", NULL, NULL, MXML_DESCEND);
 
-            if(content == NULL) return err("No content element found in resource");
-            if(id == NULL) return err ("No id element found in resource");
+            if(content == NULL) return err("No content element found in resource\n");
+            if(id == NULL) return err ("No id element found in resource\n");
             
             
             char *data = (char *)mxmlGetOpaque(content);
@@ -224,8 +227,8 @@ int main(int argc, char **argv){
             mxml_node_t *content = mxmlFindElement(node, node, "content", NULL, NULL, MXML_DESCEND);
             mxml_node_t *id = mxmlFindElement(node, node, "id", NULL, NULL, MXML_DESCEND);
 
-            if(content == NULL) return err("No content element found in resource");
-            if(id == NULL) return err("No id element found in resource");
+            if(content == NULL) return err("No content element found in resource\n");
+            if(id == NULL) return err("No id element found in resource\n");
              
             char *data = (char *)mxmlGetOpaque(content);
             
@@ -256,7 +259,7 @@ int main(int argc, char **argv){
             type = (char *)mxmlGetOpaque(node);
         }
         else{
-            return err("Query type required");
+            return err("Query type required\n");
         }
 
         node = mxmlFindElement(tree, qnode, "value", NULL, NULL, MXML_DESCEND);
@@ -264,7 +267,7 @@ int main(int argc, char **argv){
             sscanf(mxmlGetOpaque(node), "%d", &val);
         }
         else{
-            return err("Query value required");
+            return err("Query value required\n");
         }
 
         node = mxmlFindElement(tree, tree, "useStemming", NULL, NULL, MXML_DESCEND);
@@ -278,8 +281,8 @@ int main(int argc, char **argv){
             mxml_node_t *content = mxmlFindElement(node, node, "content", NULL, NULL, MXML_DESCEND);
             mxml_node_t *id = mxmlFindElement(node, node, "id", NULL, NULL, MXML_DESCEND);
 
-            if(content == NULL) return err("No content element found in resource");
-            if(id == NULL) return err ("No id element found in resource");
+            if(content == NULL) return err("No content element found in resource\n");
+            if(id == NULL) return err ("No id element found in resource\n");
              
             char *data = (char *)mxmlGetOpaque(content);
             if(processQuery(data, words_data, type, val, useStemming)){
@@ -312,8 +315,8 @@ int main(int argc, char **argv){
             mxml_node_t *content = mxmlFindElement(node, node, "content", NULL, NULL, MXML_DESCEND);
             mxml_node_t *id = mxmlFindElement(node, node, "id", NULL, NULL, MXML_DESCEND);
 
-            if(content == NULL) return err("No content element found in resource");
-            if(id == NULL) return err ("No id element found in resource");
+            if(content == NULL) return err("No content element found in resource\n");
+            if(id == NULL) return err ("No id element found in resource\n");
              
             char *data = (char *)mxmlGetOpaque(content);
             //get the sum of the frequencies 
@@ -382,8 +385,8 @@ int main(int argc, char **argv){
             mxml_node_t *content = mxmlFindElement(node, node, "content", NULL, NULL, MXML_DESCEND);
             mxml_node_t *id = mxmlFindElement(node, node, "id", NULL, NULL, MXML_DESCEND);
 
-            if(content == NULL) return err("No content element found in resource");
-            if(id == NULL) return err ("No id element found in resource");
+            if(content == NULL) return err("No content element found in resource\n");
+            if(id == NULL) return err ("No id element found in resource\n");
              
             char *data = (char *)mxmlGetOpaque(content);
             int id_num;
@@ -469,6 +472,76 @@ int main(int argc, char **argv){
         free(query_vector);
         free(docs);
         freeIndex(vi, 1);
+    }
+    else if(strcmp("block_search", fn) == 0){
+        int searchWindow = 0;
+        int resultWindow = 0;
+        int useStemming = 0;
+        char * words_data = NULL;
+        int i;
+        
+        //for each document, return the ones which match the query
+        mxml_node_t *node;
+        //get parameters
+        node = mxmlFindElement(tree, tree, "wordList", NULL, NULL, MXML_DESCEND);
+        if(node != NULL){
+            words_data = (char *)mxmlGetOpaque(node);
+        }
+
+        node = mxmlFindElement(tree, tree, "searchWindow", NULL, NULL, MXML_DESCEND);
+        if(node != NULL){
+            sscanf(mxmlGetOpaque(node), "%d", &searchWindow);
+        }
+        else{
+            return err("searchWindow required\n");
+        }
+
+        node = mxmlFindElement(tree, tree, "resultWindow", NULL, NULL, MXML_DESCEND);
+        if(node != NULL){
+            sscanf(mxmlGetOpaque(node), "%d", &resultWindow);
+        }
+        else{
+            return err("resultWindow required\n");
+        }
+
+        node = mxmlFindElement(tree, tree, "useStemming", NULL, NULL, MXML_DESCEND);
+        if(node != NULL){
+            char * us = (char *)mxmlGetOpaque(node);
+            if(strcmp(us, "TRUE") == 0 || strcmp(us, "true") == 0){
+                useStemming = 1;
+            }
+        }
+
+        //make a prefix tree out of the words
+        int index = 0;
+        char * word = getWord(words_data, &index);
+        pnode words_tree = makePTree();
+        int num_words = 0;
+        while(word != NULL){
+            addToPrefixWithId(&words_tree, word, num_words);
+            word = getWord(words_data, &index);
+            num_words++;
+        }
+
+        for(node = mxmlFindElement(tree, tree, "resource", NULL, NULL, MXML_DESCEND); node != NULL; node = mxmlFindElement(node, tree, "resource", NULL, NULL, MXML_DESCEND)){
+            mxml_node_t *content = mxmlFindElement(node, node, "content", NULL, NULL, MXML_DESCEND);
+            mxml_node_t *id = mxmlFindElement(node, node, "id", NULL, NULL, MXML_DESCEND);
+
+            if(content == NULL) return err("No content element found in resource\n");
+            if(id == NULL) return err ("No id element found in resource\n");
+             
+            char *data = (char *)mxmlGetOpaque(content);
+            //search data for blocks
+            printf("<resource><id>%s</id>", mxmlGetOpaque(id));
+            printf("\n<blockList>");
+            int num_matches = 0;
+            char ** blocks = getBlocks(data, &words_tree, num_words, searchWindow, resultWindow, useStemming, &num_matches);
+            for(i = 0; i < num_matches; i++){
+                printf("\n<block>\n%s\n</block>\n", blocks[i]);
+            }
+            printf("</blockList>\n<content>%s</content>", mxmlGetOpaque(content));
+            printf("</resource>\n");
+        }
     }
     
     mxmlDelete(tree);

@@ -40,6 +40,10 @@ pnode * makeChildren(){
 
 //returns 1 on error
 int addToPrefix(pnode *root, char * word){
+	return addToPrefixWithId(root, word, 0);
+}
+//returns 1 on error
+int addToPrefixWithId(pnode *root, char * word, int id){
 	pnode *ptr = root;
 	pnode *prev = NULL;
 
@@ -62,6 +66,7 @@ int addToPrefix(pnode *root, char * word){
 		ptr = &(ptr->children[index]);
 	}
 	prev->children[index].count++;
+	prev->children[index].id = id;
 	return 0;
 }
 
@@ -89,7 +94,13 @@ pnode * fetchFromPrefix(pnode *root, char * word, int useStemming){
 			}
 		}
 	}
-	return ptr;
+	if(ptr->count > 0){
+		return ptr;
+	}
+	else{
+		//dangerous
+		return NULL;
+	}
 } 
 
 void freeTree(pnode *tree){
