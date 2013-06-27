@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<parameters>
+  <requestType>summarize</requestType>
+  <maxSentences>10</maxSentences>
+  <individualSummaries>TRUE</individualSummaries>
+  <docList>
+    <doc>
+      <docID>44716</docID>
+    </doc>
+    <doc>
+      <docID>39752</docID>
+    </doc>
+    <doc>
+      <docID>39753</docID>
+    </doc>
+    <doc>
+      <docID>39751</docID>
+    </doc>
+    <doc>
+      <docID>40618</docID>
+    </doc>
+    <doc>
+      <docID>40613</docID>
+    </doc>
+    <doc>
+      <docID>39795</docID>
+    </doc>
+    <doc>
+      <docID>39796</docID>
+    </doc>
+    <doc>
+      <docID>39800</docID>
+    </doc>
+    <doc>
+      <docID>39791</docID>
+    </doc>
+    <doc>
+      <docID>39816</docID>
+    </doc>
+    <doc>
+      <docID>39833</docID>
+    </doc>
+    <doc>
+      <docID>39834</docID>
+    </doc>
+    <doc>
+      <docID>39822</docID>
+    </doc>
+  </docList>
+</parameters>
+ 

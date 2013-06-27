@@ -1,19 +1,21 @@
 #Functionality
 Here is a very tentative list of possible things this API can do (some of these functions are accomplished by combining functions, denoted by 'piping')
+- [summarization](#summarization) - summarize with Lemur
+- [cluster](#clustering) - cluster with Lemur
+- [merge](#merge) - merge multiple resourceList elements into one
+- [pipe](#pipe) - do a Unix like pipe by using the output of a request as input to the next
+- [limit](#limit) - SQL style limit of documents returned
+- [sort](#sort) - sort documents on a supplied field
 - [extract](#extract) - extract keywords by frequency
-- [fetch](#fetch) - fetch document content
 - [filter](#filter) - remove words from document content
+- [query](#query) - do a boolean type query on a group of documents
+- [rank](#rank) - rank documents based on frequency of words supplied
+- [vector_rank](#vector-rank) - rank documents on a vector model
 - [index_insert](#index-insert) - create or add to index
 - [index_query](#index-query) - do an Indri-like query on an index
 - [index_delete](#index-delete) - delete an index
-- [limit](#limit) - SQL style limit of documents returned
-- [pipe](#pipe) - do a Unix like pipe by using the output of a request as input to the next
-- [query](#query) - do a boolean type query on a group of documents
-- [rank](#rank) - rank documents based on frequency of words supplied
-- [sort](#sort) - sort documents on a supplied field
-- [vector_rank](#vector-rank) - rank documents on a vector model
-- [cluster](#clustering) - cluster with Lemur
-- [summarization](#summarization) - summarize with Lemur
+- [fetch](#fetch) - fetch document content
+- [extract_blocks](#extract-blocks) - search for a block of text
 - summarization(piping) - summarize by piping
 - documentSimilarity(piping) - find similar documents by piping
 
@@ -185,17 +187,15 @@ There is also the option of specifying a user id to add an extra layer of page s
 - content - optional, you can specify the content (HTML or plain text) directly in the XML request
 
 ###Notes about resources:
-Resources are a generalization of an entity of information. A resource can be a webpage or user specified content. A client wanting to send resources to our API will put them in a resourceList element with the required information described below.
+Resources are a generalization of an entity of information. A resource can be a webpage or user specified content. A client wanting to send resources to our API will send them in a <b>resourceList</b> element with the required information described below.
 
 For a resource, you must specify either the <b>url</b> (if it is a web page) or the <b>content</b> element with the plain text data.
 
-Resources are stored for caching if the <b>persistence</b> element is specified. If persistence is specified, then the pages will be stored on our server for caching, which can reduce response time and allow for more complicated requests (involving Indri indices). However, this means that each resource must be uniquely identified. 
+Furthermore, resources are stored for caching if the <b>persistence</b> element is specified. If persistence is specified, then the pages will be stored on our server for caching, which can reduce response time and allow for more complicated requests (involving Indri indices). However, this means that each resource must be uniquely identified. 
 
-Identification of a resource happens on two or three levels. The client using the API will have a clientID. Each resource the client sends must include a unique <b>id</b> element. Also there is an optional user id which can be used to differentiate between users on the client's system.
+Identification of a resource happens on two or three levels. The client using the API will have a client id. Each resource the client sends must include a unique <b>id</b> element. Also there is an optional user id which can be used to differentiate between users on the client's system.
 
 On the initial call to the API, the client will have to specify either the content or URL for all of the pages passed. However, a benefit of enabling persistence on pages is that for any later calls on the same pages, the client will only need to specify the id element.
-
-Some controllers will automatically store the pages, for example, calling index_insert will store the pages necessarily.
 
 Controllers which modify content (e.g. filter) will return the content element with a type attribute indicating that it has been modified. For example, calling the filter controller will return content with type="filtered". Even having persistence enabled will not store modified content.
 
@@ -216,7 +216,8 @@ Example request:
 
 ```
 
-##<a id="Select"></a>Select (deprecated)
+##<a id="Select"></a>Select
+####(deprecated)
 ###Request
 The field operator allows you to select from predefined fields based on the table (e.g. you can add a field of "url" or "snippetID" if the table value is "snippet").
 Not including the fields list will return no fields, but can still be useful for only retrieving the id's of the resulting resources.
@@ -324,7 +325,6 @@ Response:
 </parameters>
 ```
 ##<a id="Merge"></a>Merge
-####(deprecated)
 Merge requests can easily merge multiple resource lists
 ###Request
 ```
@@ -812,7 +812,7 @@ The Indri resulting score is the logarithm of the probability, therefore the mor
 ```
 
 
-##<a id="Fetch"></a>Fetch
+##<a id="fetch"></a>Fetch
 Fetch gets the content of the passed url's
 ###Request
 ```
@@ -834,6 +834,46 @@ Fetch gets the content of the passed url's
 	<resourceList>
 		<resource>
 			<url>page url</url>
+			<content>page content</content>
+		</resource>
+		...
+	</resourceList>
+</parameters>
+```
+
+##<a id="extract_blocks"></a>Extract Blocks
+###Request
+```
+<parameters>
+	<requestType>extract_blocks</requestType>
+	<wordList></wordList>
+	<searchWindow>num of words</searchWindow>
+	<resultWindow>num of words</resultWindow>
+	<useStemming>TRUE|FALSE</useStemming>
+	<resourceList>
+		<resource>
+			<url>page url</url>
+			<content>page content</content>
+		</resource>
+		...
+	</resourceList>
+</parameters>
+```
+
+###Response
+```
+<parameters>
+	<requestType>extract_blocks</requestType>
+	<requestID>number</requestID>
+	<resourceList>
+		<resource>
+			<url>page url</url>
+			<blockList>
+				<block>
+					block text
+				</block>
+				...
+			</blockList>
 			<content>page content</content>
 		</resource>
 		...

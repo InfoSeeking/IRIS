@@ -20,7 +20,6 @@ class Filter extends Controller{
 		global $FILE_ROOT, $STORAGE, $REQ_ID, $CMD_EXTRA, $BIN;
 		if(!pe($xml, "table")) die(err("No table found"));
 		if(!pe($xml, "resourceList")) die(err("No resources found"));
-
 		//write to temporary file
 		$fname = $STORAGE . $REQ_ID . "_filter.xml";
 		$TMP = fopen($fname, "w");

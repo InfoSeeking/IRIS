@@ -473,7 +473,7 @@ int main(int argc, char **argv){
         free(docs);
         freeIndex(vi, 1);
     }
-    else if(strcmp("block_search", fn) == 0){
+    else if(strcmp("extract_blocks", fn) == 0){
         int searchWindow = 0;
         int resultWindow = 0;
         int useStemming = 0;
@@ -533,13 +533,18 @@ int main(int argc, char **argv){
             char *data = (char *)mxmlGetOpaque(content);
             //search data for blocks
             printf("<resource><id>%s</id>", mxmlGetOpaque(id));
-            printf("\n<blockList>");
             int num_matches = 0;
             char ** blocks = getBlocks(data, &words_tree, num_words, searchWindow, resultWindow, useStemming, &num_matches);
+            if(num_matches > 0){
+                printf("\n<blockList>");
+            }
             for(i = 0; i < num_matches; i++){
                 printf("\n<block>\n%s\n</block>\n", blocks[i]);
             }
-            printf("</blockList>\n<content>%s</content>", mxmlGetOpaque(content));
+            if(num_matches > 0){
+                printf("</blockList>\n");
+            }
+            printf("<content>%s</content>", mxmlGetOpaque(content));
             printf("</resource>\n");
         }
     }

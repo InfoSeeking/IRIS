@@ -77,7 +77,7 @@ class Pipe extends Controller{
 			if($requiresInput[$rt]){
 				if($i == 0 || empty($resLists)){
 					//check if input already supplied
-					if(!pe($cmd->parameters, "resourceList") || !pe($cmd->parameters, "resourceLists")){
+					if(!pe($cmd->parameters, "resourceList") && !pe($cmd->parameters, "resourceLists")){
 						die(err($rt . " required input which is not given"));
 					}
 				}

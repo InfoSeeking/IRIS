@@ -28,7 +28,8 @@ $VALID_REQUEST_TYPES = array(
 	"index_insert",
 	"index_delete",
 	"index_query",
-	"fetch"
+	"fetch",
+	"extract_blocks"
 	);
 
 if($_SERVER["HTTP_HOST"] == "localhost"){

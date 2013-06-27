@@ -1,12 +1,12 @@
 <?php
 class Index_insert extends Controller{
 	function run($xml){
-		global $FILE_ROOT, $STORAGE, $REQ_ID, $PERSISTENCE, $CMD_EXTRA, $cxn, $LIB;
+		global $FILE_ROOT, $STORAGE, $REQ_ID, $CMD_EXTRA, $cxn, $LIB;
 		if(!pe($xml, "resourceList")) die(err("resourceList element not found"));
 
-		if(pe($xml, "persistence")){
-			$PERSISTENCE = strtolower($xml->persistence) == "true" ? TRUE : FALSE;
-		}
+		
+		$pers = strtolower($xml->persistence) == "true" ? TRUE : FALSE;
+		
 
 		$TREC_FILE_LIST = fopen($FILE_ROOT . fname($STORAGE . "trec_file.list"), "w");
 		fwrite($TREC_FILE_LIST, $FILE_ROOT . fname($STORAGE . "trec.txt"));

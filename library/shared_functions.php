@@ -64,9 +64,14 @@ function cleanOp($op){
 /* 
 	alters xml to provide and fill the content element, will cache if cache is set to true
 */
-function getResContent($xml, $cache){
+function getResContent($xml){
 	global $STORAGE;
+	$cache = FALSE;
 	$i = 0;
+
+	if(pe($xml, "persistence")){
+		$cache = strtolower($xml->persistence) == "true" ? TRUE : FALSE;
+	}
 	if(!pe($xml, "clientID")){
 		die(err("Client Id not specified"));
 	}
@@ -135,9 +140,9 @@ function getResContent($xml, $cache){
 	}
 }
 function handleRequest($xml){
-	global $CONTROLLER, $VALID_REQUEST_TYPES, $PERSISTENCE;
+	global $CONTROLLER, $VALID_REQUEST_TYPES;
 	//add the content to the resources which don't have it
-	getResContent($xml, $PERSISTENCE);
+	getResContent($xml);
 	$type = $xml->requestType;
 	$valid = false;
 	for($i = 0; $i < sizeof($VALID_REQUEST_TYPES); $i++){
@@ -169,10 +174,17 @@ function handleRequest($xml){
 	//add the client ID, a little hacky but it works for now, I didn't want to change it everywhere as this is
 	//definitely subject to change since when we actually authenticate clients, we will not be passing the clientID
 	//in XML like this
+	$tmpObj = new SimpleXMLElement($response);
 	if(pe($xml, "userID")){
-		$userStr = "<userID>" . $xml->userID . "</userID>";
+		if(!pe($tmpObj, "userID")){
+			$tmpObj->addChild("userID", (string)$xml->userID);
+		}
 	}
-	$response = "<parameters><clientID>" . $xml->clientID . "</clientID>" . substr($response, 12);
+	if(!pe($tmpObj, "clientID")){
+		$tmpObj->addChild("clientID", $xml->clientID);
+	}
+
+	$response = $tmpObj->asXML();
 	return $response;
 }
 
@@ -324,7 +336,7 @@ function fetch_to_trec($url, $doc_id, $TREC){
 The following function removes temporary files that the script uses during processing a request
 */
 function clean(){
-	global $STORAGE, $PERSISTENCE;
+	global $STORAGE;
 	$removeArr = Array(
 		fname($STORAGE . "trec_file.list"),
 		fname($STORAGE . "trec.txt"),
@@ -333,9 +345,7 @@ function clean(){
 		fname($STORAGE . "sum.param"),
 		fname($STORAGE . "query.param")
 		);
-	if(!$PERSISTENCE){
-		array_push($removeArr, fname($STORAGE . "indexes/index"));
-	}
+	
 	//If you are trying to get a better understanding of how the system works I suggest commenting out the following system(...) line so the temporary files are not removed
 	$cmd = "rm -r " . implode($removeArr, " ");
 	system($cmd);

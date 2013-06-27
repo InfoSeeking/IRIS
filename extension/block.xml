@@ -1,5 +1,6 @@
 <parameters>
-	<requestType>block_search</requestType>
+	<clientID>1</clientID>
+	<requestType>extract_blocks</requestType>
 	<wordList>death men children</wordList>
 	<searchWindow>20</searchWindow>
 	<resultWindow>5</resultWindow>

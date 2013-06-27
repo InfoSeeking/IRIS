@@ -35,9 +35,6 @@ catch(Exception $e){
 	die(err("Xml could not be parsed"));
 }
 
-if(pe($xml, "persistence")){
-	$PERSISTENCE = strtolower($xml->persistence) == "true" ? true : false;
-}
 
 $response = handleRequest($xml);
 echo $response;
