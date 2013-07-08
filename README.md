@@ -697,6 +697,21 @@ Performs simple queries on documents
 </parameters>
 ```
 
+###Response
+```
+<parameters>
+	<requestType>query</requestType>
+	<requestID>number</requestID>
+	<resourceList>
+		<resource>
+			<id>id</id>
+			<content></content>
+		</resource>
+		...
+	</resourceList>
+</parameters>
+```
+
 ##<a id="Rank"></a>Rank
 Ranks documents based on a supplied list of words. The ranking is based on total number of occurences of the words supplied.
 ###Request
