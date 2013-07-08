@@ -28,6 +28,7 @@ if(!isset($_REQUEST['xmldata'])){//change to POST when live
 
 $xml = false;
 $xmldata = $_REQUEST['xmldata'];
+//die($xmldata);
 try{
 	$xml = new SimpleXMLElement($xmldata);
 }

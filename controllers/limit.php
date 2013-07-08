@@ -32,7 +32,7 @@ class Limit extends Controller{
 	function run($xml){
 		global $FILE_ROOT, $STORAGE, $REQ_ID;
 		if(!pe($xml, "amount")) die(err("No amount found"));
-		if(!pe($xml, "table")) die(err("No table found"));
+		//if(!pe($xml, "table")) die(err("No table found"));
 		if(!pe($xml, "resourceList")) die(err("No resources found"));
 
 		$resOut = "";

@@ -113,14 +113,14 @@ function getResContent($xml){
 					}
 					$content = getPlainText($html);
 					if(!$content){
-						die(err("Could not get plain text for: " . $url));
+						die(err("Could not get plain text for: '" . $url . "', it may be malformed HTML"));
 					}
 				}
 				else if(pe($res, "content")){
 					//content already there
 				}
 				else{
-					die(err("Neither url or content elements specified for uncached document id: " . $page_id));
+					die(err("Neither url nor content elements specified for uncached document id: " . $page_id));
 				}
 
 				if($cache){

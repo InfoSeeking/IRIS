@@ -29,6 +29,7 @@ void filter_words(char *input_data, char *stopwords_data, int minlength, int max
     index = 0;
     char * word = getWord(input_data, &index);
     while(word != NULL){
+
         if((hasPTree == 0 || fetchFromPrefix(&ptree, word, useStemming) == NULL) && (minlength == -1 || strlen(word) >= minlength) && (maxlength == -1 || strlen(word) <= maxlength)){
             if(first){
                 first = 0;
