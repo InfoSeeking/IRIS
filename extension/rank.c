@@ -39,3 +39,4 @@ double get_sum(char * data, char *words_data){
     freeHash(table, 1);
     return freqSum;
 }
+

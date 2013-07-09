@@ -38,6 +38,13 @@ keyword ** findFrequencies(hashtable *table, double totalWords, int uniqueWords)
 returns a list of pointers to keyword structs sorted by frequency in descending order
 */
 keyword ** extract_keywords(char * data, int *num_words){
+    keyword ** sorted;
+    hashtable *table = buildTable(data, num_words, &sorted);
+    freeHash(table, 0);
+    return sorted;
+}
+
+hashtable * buildTable(char * data, int *num_words, keyword *** sorted){
     hashtable *table = (hashtable *)malloc(sizeof(hashtable));
     double totalWords = 0;
     int uniqueWords = 0;
@@ -57,10 +64,10 @@ keyword ** extract_keywords(char * data, int *num_words){
         }
         word = getWord(data, &index);
     }
-
-    keyword ** sorted = findFrequencies(table, totalWords, uniqueWords);
-
+    keyword ** tmp = findFrequencies(table, totalWords, uniqueWords);
+    if(sorted != NULL){
+        *sorted = tmp;
+    }
     *num_words = (int)uniqueWords;
-    freeHash(table, 0);
-    return sorted;
+    return table;
 }

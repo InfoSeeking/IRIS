@@ -40,6 +40,11 @@ void printHelp(){
 }
 
 char * getWord(char *data, int *index){
+    return getWordOfSentence(data, index, NULL);
+}
+
+//if endOfSentence is not null, it will be 1 when period reached
+char * getWordOfSentence(char * data, int *index, int *endOfSentence){
     int data_len = strlen(data);
     int wordIndex = 0;
     int origWordSize = 10;
@@ -48,7 +53,9 @@ char * getWord(char *data, int *index){
     char c;
     short endOfWord = 0;
     short endOfFile = 0;
-
+    if(endOfSentence != NULL){
+        *endOfSentence = 0;
+    }
     while(1){
         if(*index + 1 > data_len){
            //end of text, still need null character
@@ -60,18 +67,24 @@ char * getWord(char *data, int *index){
                 c = '\0';
                 endOfFile = 1;
                 endOfWord = 1;
+                if(endOfSentence != NULL){
+                    *endOfSentence = 1;
+                }
             }
         }
         else{
             c = data[*index];
             (*index)++;
         }
-        if(c == ' ' || c == '\n' || c == ',' || c == '.' || c == ';' || c == ')' || c == '(' || c == '\r'){
+        if(c == ' ' || c == '\n' || c == ',' || c == '.' || c == ';' || c == ')' || c == '(' || c == '\r' || c == '\t'){
             if(wordIndex == 0){
                 //there is no beginning, keep waiting
                 continue;
             }
             //end of word
+            if(c == '.' && endOfSentence != NULL){
+                *endOfSentence = 1;
+            }
             c = '\0';//null character
             endOfWord = 1;
         }
@@ -96,6 +109,18 @@ char * getWord(char *data, int *index){
         if(endOfFile){
             return NULL;
         }
+    }
+}
+
+char * getSentence(char * data, int *index){
+    int endOfSentence = 0;
+    char * word = getWordOfSentence(data, index, &endOfSentence);
+    while(word != NULL){
+        printf("%s ", word);
+        if(endOfSentence){
+            printf("\n");
+        }
+        word = getWordOfSentence(data, index, &endOfSentence);
     }
 }
 
@@ -144,7 +169,32 @@ int main(int argc, char **argv){
         return err("Could not parse input xml\n");
     }
     
-    if(strcmp("extract", fn) == 0){
+    if(strcmp("summarize", fn) == 0){
+        char * words_data;
+        mxml_node_t *node;
+        node = mxmlFindElement(tree, tree, "wordList", NULL, NULL, MXML_DESCEND);
+        if(node != NULL){
+            words_data = (char *)mxmlGetOpaque(node);
+        }
+
+        for(node = mxmlFindElement(tree, tree, "resource", NULL, NULL, MXML_DESCEND); node != NULL; node = mxmlFindElement(node, tree, "resource", NULL, NULL, MXML_DESCEND)){
+            mxml_node_t *content = mxmlFindElement(node, node, "content", NULL, NULL, MXML_DESCEND);
+            mxml_node_t *id = mxmlFindElement(node, node, "id", NULL, NULL, MXML_DESCEND);
+
+            if(content == NULL) return err("No content element found in resource\n");
+            if(id == NULL) return err ("No id element found in resource\n");
+            
+            
+            char *data = (char *)mxmlGetOpaque(content);
+            char * summary = summarize(data, words_data, 10);//for now magic num
+
+            printf("<resource>");
+            printf("<id>%s</id>\n", mxmlGetOpaque(id));
+            printf("<content type='summarized'>%s</content>\n", summary);
+            printf("</resource>\n");
+        }
+    }
+    else if(strcmp("extract", fn) == 0){
         word_limit = 10;
         keyword ** words = extract_keywords(argv[2], &num_words);
 
@@ -231,7 +281,8 @@ int main(int argc, char **argv){
             if(id == NULL) return err("No id element found in resource\n");
              
             char *data = (char *)mxmlGetOpaque(content);
-            
+            int ia = 0;
+            getSentence(data, &ia);
             int i;   
             printf("<resource>");
             printf("<id>%s</id>\n<content type=\"filtered\">\n", mxmlGetOpaque(id));

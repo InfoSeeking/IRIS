@@ -5,4 +5,5 @@
 int err(char * message);
 void printHelp();
 char * getWord(char *data, int *index);
+char * getWordOfSentence(char * data, int *index, int *endOfSentence);
 #endif
