@@ -186,6 +186,7 @@ int main(int argc, char **argv){
 
         //first rank the words
         int num_words;
+        int useFreq = 0;
         hashtable *table = NULL;
         if(words_data != NULL){
             table = buildTable(words_data, &num_words, NULL);
@@ -200,6 +201,7 @@ int main(int argc, char **argv){
             
             char *data = (char *)mxmlGetOpaque(content);
             if(table == NULL){
+                useFreq = 1;//use document words' frequencies to rank sentences
                 //summarize document based on it's most frequent words (hopefully stopwords are not an issue)
                 table = buildTable(data, &num_words, NULL);
             }
@@ -210,6 +212,11 @@ int main(int argc, char **argv){
             summarize(data, numSentences, table);
             printf("</content>\n");
             printf("</resource>\n");
+
+            if(useFreq){
+                freeHash(table, 1);
+                table = NULL;
+            }
         }
     }
     else if(strcmp("extract", fn) == 0){

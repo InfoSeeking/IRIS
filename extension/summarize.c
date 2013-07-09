@@ -11,14 +11,16 @@ r_sent * getAndRankSentence(char *data, int *index, hashtable *rankedWords){
 	double rank = 0;
     char * word = getWordOfSentence(data, index, &endOfSentence);
     int sent_size = 10;
-    char * sent = (char *)malloc(sizeof(char) * sent_size);
-    sent[0] = '\0';
+    char * sent; 
     int firstWord = 1;
     //create sent object
-    r_sent *tmp = (r_sent *)malloc(sizeof(r_sent));
+    r_sent *tmp;
     if(word == NULL){
     	return NULL;
     }
+    tmp = (r_sent *)malloc(sizeof(r_sent));
+    sent = (char *)malloc(sizeof(char) * sent_size);
+    sent[0] = '\0';
     while(word != NULL){
         keyword *k = fetchFromHash(rankedWords, word);
 
@@ -42,6 +44,7 @@ r_sent * getAndRankSentence(char *data, int *index, hashtable *rankedWords){
             tmp->sent = sent;
             return tmp;
         }
+        free(word);
         word = getWordOfSentence(data, index, &endOfSentence);
     }
     tmp->rank = rank;
@@ -73,7 +76,6 @@ void summarize(char * data, int num_sents, hashtable *table){
     	}
     	rs = getAndRankSentence(data, &index, table);
     }
-    freeHash(table, 1);
     int i;
     int upper_bound = sents_found < num_sents ? sents_found : num_sents;
     
@@ -84,5 +86,6 @@ void summarize(char * data, int num_sents, hashtable *table){
         free(sorted[i]->sent);
         free(sorted[i]);
     }
+    free(sorted);
     return;
 }

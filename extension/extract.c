@@ -69,6 +69,9 @@ hashtable * buildTable(char * data, int *num_words, keyword *** sorted){
     if(sorted != NULL){
         *sorted = tmp;
     }
+    else{
+        free(tmp);
+    }
     *num_words = (int)uniqueWords;
     return table;
 }
