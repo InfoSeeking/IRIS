@@ -5,12 +5,12 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-
+//Valgrind gives some memory errors which I will fix later
 r_sent * getAndRankSentence(char *data, int *index, hashtable *rankedWords){
 	int endOfSentence = 0;
 	double rank = 0;
     char * word = getWordOfSentence(data, index, &endOfSentence);
-    int sent_size = 30;
+    int sent_size = 10;
     char * sent = (char *)malloc(sizeof(char) * sent_size);
     sent[0] = '\0';
     int firstWord = 1;
@@ -22,7 +22,7 @@ r_sent * getAndRankSentence(char *data, int *index, hashtable *rankedWords){
     while(word != NULL){
         keyword *k = fetchFromHash(rankedWords, word);
 
-        while(strlen(sent) + strlen(word) + 1 > sent_size){ //+1 for space
+        while(strlen(sent) + strlen(word) + 2 > sent_size){ //+2 for space and null
         	//double size
         	sent_size *= 2;
         	sent = (char *)realloc(sent, sizeof(char) * sent_size);
@@ -50,10 +50,7 @@ r_sent * getAndRankSentence(char *data, int *index, hashtable *rankedWords){
 }
 
 /* num_sents is the number of sentences to return */
-char * summarize(char * data, char * words_data, int num_sents){
-    //first rank the words
-    int num_words;
-	hashtable *table = buildTable(words_data, &num_words, NULL);//should store this
+void summarize(char * data, int num_sents, hashtable *table){
     //then rank the sentences
     int index = 0;
     int list_size = 10;//number of total sentences to create sorted list
@@ -79,16 +76,13 @@ char * summarize(char * data, char * words_data, int num_sents){
     freeHash(table, 1);
     int i;
     int upper_bound = sents_found < num_sents ? sents_found : num_sents;
-    int out_size = 100;
-    char * output = (char *)malloc(sizeof(char) * out_size);
-    output[0] = '\0';
+    
     for(i = 0; i < upper_bound; i++){
-    	while(strlen(output) + strlen(sorted[i]->sent) + 2 > out_size){//+2 for.\n
-    		out_size *= 2;
-    		output = (char *)realloc(output, sizeof(char) * out_size);
-    	}
-    	strcat(output, ".\n");
-    	strcat(output, sorted[i]->sent);
+    	printf("%s.\n", sorted[i]->sent);
     }
-    return output;
+    for(i = 0; i < num_sents; i++){
+        free(sorted[i]->sent);
+        free(sorted[i]);
+    }
+    return;
 }

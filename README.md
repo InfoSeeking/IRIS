@@ -16,6 +16,7 @@ Here is a very tentative list of possible things this API can do (some of these 
 - [index_delete](#index-delete) - delete an index
 - [fetch](#fetch) - fetch document content
 - [extract_blocks](#extract-blocks) - search for a block of text
+- [summarize_sentences](#summarize-sentences) - gives the most important sentences as a summarization
 - summarization(piping) - summarize by piping
 - documentSimilarity(piping) - find similar documents by piping
 
@@ -890,6 +891,39 @@ Fetch gets the content of the passed url's
 				...
 			</blockList>
 			<content>page content</content>
+		</resource>
+		...
+	</resourceList>
+</parameters>
+```
+
+##<a id="summarize_sentences"></a>Summarize Sentences
+This simple summarization controller will use the words in the wordList passed and deem the most important sentences of a document by which those words appear the most.
+
+At the moment, the word list can have repeated words (which will weight those words higher). This will most likely be removed for consistency.
+```
+<parameters>
+	<requestType>summarize_sentences</requestType>
+	<numSentences>number</numSentences>
+	<wordList></wordList>
+	<resourceList>
+		<resource>
+			<id>id</id>
+			<content></content>
+		</resource>
+		...
+	</resourceList>
+</parameters>
+```
+###Response
+```
+<parameters>
+	<requestID>number</requestID>
+	<requestType>summarize_sentences</requestType>
+	<resourceList>
+		<resource>
+			<id>id</id>
+			<content type='summarized'></content>
 		</resource>
 		...
 	</resourceList>

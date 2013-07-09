@@ -7,7 +7,7 @@ typedef struct{
 } r_sent;//ranked sentence
 
 r_sent * getAndRankSentence(char *data, int *index, hashtable *rankedWords);
-char * summarize(char * data, char * words_data, int num_sents);
+void summarize(char * data, int num_sents, hashtable *table);
 
 
 #endif

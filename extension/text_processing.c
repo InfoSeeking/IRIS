@@ -37,6 +37,7 @@ void printHelp(){
     printf("\tVector Rank uses a vector model to rank the documents against the supplied wordList query and ranks based off of the cosine similarity of the vectors formed\n\n");
     printf("Block Search:\n\tblock_search <input xml file>\n");
     printf("\t Block search searches for words supplied in the wordList and finds results within a searchWindow, and returns the nearest block of text within the resultWindow\n\n");
+    printf("Summarize:\n\tsummarize <input xml file>\n");
 }
 
 char * getWord(char *data, int *index){
@@ -170,13 +171,25 @@ int main(int argc, char **argv){
     }
     
     if(strcmp("summarize", fn) == 0){
-        char * words_data;
-        mxml_node_t *node;
+        char * words_data = NULL;
+        mxml_node_t *node = NULL;
+        int numSentences = 5;
+
         node = mxmlFindElement(tree, tree, "wordList", NULL, NULL, MXML_DESCEND);
         if(node != NULL){
             words_data = (char *)mxmlGetOpaque(node);
         }
+        node = mxmlFindElement(tree, tree, "numSentences", NULL, NULL, MXML_DESCEND);
+        if(node != NULL){
+            sscanf(mxmlGetOpaque(node), "%d", &numSentences);
+        }
 
+        //first rank the words
+        int num_words;
+        hashtable *table = NULL;
+        if(words_data != NULL){
+            table = buildTable(words_data, &num_words, NULL);
+        }
         for(node = mxmlFindElement(tree, tree, "resource", NULL, NULL, MXML_DESCEND); node != NULL; node = mxmlFindElement(node, tree, "resource", NULL, NULL, MXML_DESCEND)){
             mxml_node_t *content = mxmlFindElement(node, node, "content", NULL, NULL, MXML_DESCEND);
             mxml_node_t *id = mxmlFindElement(node, node, "id", NULL, NULL, MXML_DESCEND);
@@ -186,11 +199,16 @@ int main(int argc, char **argv){
             
             
             char *data = (char *)mxmlGetOpaque(content);
-            char * summary = summarize(data, words_data, 10);//for now magic num
+            if(table == NULL){
+                //summarize document based on it's most frequent words (hopefully stopwords are not an issue)
+                table = buildTable(data, &num_words, NULL);
+            }
 
             printf("<resource>");
             printf("<id>%s</id>\n", mxmlGetOpaque(id));
-            printf("<content type='summarized'>%s</content>\n", summary);
+            printf("<content type='summarized'>");
+            summarize(data, numSentences, table);
+            printf("</content>\n");
             printf("</resource>\n");
         }
     }
@@ -281,8 +299,6 @@ int main(int argc, char **argv){
             if(id == NULL) return err("No id element found in resource\n");
              
             char *data = (char *)mxmlGetOpaque(content);
-            int ia = 0;
-            getSentence(data, &ia);
             int i;   
             printf("<resource>");
             printf("<id>%s</id>\n<content type=\"filtered\">\n", mxmlGetOpaque(id));
