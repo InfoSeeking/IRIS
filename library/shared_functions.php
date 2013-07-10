@@ -263,9 +263,9 @@ function strip_cdata($text){
 	return $text;
 }
 
+/* this method can be improved upon, for instance, conditional comments with multiple body tags will not work
+*/
 function getPlainText($html){
-	echo htmlspecialchars($html);
-	die();
 	$start = 0;
 	$end = 0;
 	if(preg_match("@<body.*(>)@iUsm", $html, $matches, PREG_OFFSET_CAPTURE)){
