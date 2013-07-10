@@ -30,7 +30,7 @@
 class Merge extends Controller{
 	function run($xml){
 		global $FILE_ROOT, $STORAGE, $REQ_ID, $cxn;
-		if(!pe($xml, "table")) die(err("Table element not found"));
+		//if(!pe($xml, "table")) die(err("Table element not found"));
 		$table = $xml->table;
 		$response = "<parameters><table>" . $table . "</table><requestID>" . $REQ_ID . "</requestID><requestType>merge</requestType><resourceList>";
 		if(pe($xml, "resourceList")){

@@ -30,7 +30,8 @@ $VALID_REQUEST_TYPES = array(
 	"index_delete",
 	"index_query",
 	"fetch",
-	"extract_blocks"
+	"extract_blocks",
+	"summarize_sentences"
 	);
 
 if($_SERVER["HTTP_HOST"] == "localhost"){

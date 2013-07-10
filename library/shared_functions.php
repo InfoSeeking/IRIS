@@ -233,7 +233,7 @@ function slice_out($text, $p1, $p2){
 			$end = $matches[1][1] + 1;
 		}
 		else{
-			$end = $start;
+			$end = $start + strlen($p1);
 		}
 		unset($matches);
 		$part1 = substr($text, 0, $start);
@@ -241,7 +241,6 @@ function slice_out($text, $p1, $p2){
 		$text = $part1 . $part2;
 		unset($part1);
 		unset($part2);
-	
 	}
 	return $text;
 }
@@ -265,6 +264,8 @@ function strip_cdata($text){
 }
 
 function getPlainText($html){
+	echo htmlspecialchars($html);
+	die();
 	$start = 0;
 	$end = 0;
 	if(preg_match("@<body.*(>)@iUsm", $html, $matches, PREG_OFFSET_CAPTURE)){
