@@ -63,7 +63,6 @@ class If_then extends Controller{
 				}
 
 				if($fxn && strtolower($fxn) == "length"){
-					
 					$cleaned = sizeof($nodes);
 				}
 			}
@@ -79,11 +78,13 @@ class If_then extends Controller{
 				$val2 = $cleaned;
 			}
 		}
+		//printf("<h1>%s %s %s</h1>", $val1, $op, $val2);
+		
 		//check op for special operators like exists
 		if($op == "exists"){
 			return $val1 != "";
 		}
-	//	printf("<h1>%s %s %s</h1>", $val1, $op, $val2);
+	
 		return $this->opTest($op, $val1, $val2);
 	}
 	/*

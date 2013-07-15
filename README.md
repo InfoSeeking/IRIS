@@ -283,48 +283,7 @@ The &lt;logic&gt; tags wrap fields in the &lt;where&gt; clause for logical conne
 	</resourceList>
 </parameters>
 ```
-###Select example
-Select the url from a pageID of 10 in the pages table
 
-Request:
-```
-<parameters>
-	<requestType>select</requestType>
-	<fields>
-		<field>url</field>
-		<field>pageID</field>
-	</fields>
-	<table>pages</table>
-	<where>
-			<field operator="eq">
-				<name>pageID</name>
-				<value>10</value>
-			</field>
-	</where>
-</parameters>
-```
-Response:
-```
-<parameters>
-	<requestID>20841</requestID>
-	<requestType>select</requestType>
-	<resourceList>
-		<resource>
-			<type>snippet</type>
-			<fields>
-				<field>
-					<name>pageID</name>
-					<value>10</value>
-				</field>
-				<field>
-					<name>url</name>
-					<value>http://www.google.com</value>
-				</field>
-			</fields>
-		</resource>
-	</resourceList>
-</parameters>
-```
 ##<a id="Merge"></a>Merge
 Merge requests can easily merge multiple resource lists
 ###Request
@@ -457,89 +416,6 @@ If you pipe to rank/filter/query, and do not supply a wordlist element, it will 
 ```
 ###Response
 The response will follow the format of the last executed command.
-###Pipe Examples
-####Example 1
-This example calls select on snippets with ids from 10 to 20 and then deletes the results
-
-Notice that the delete command is missing the resourceList since it will be automatically filled by the output of the select statement.
-```
-<parameters>
-	<requestType>pipe</requestType>
-	<command>
-		<parameters>
-			<requestType>select</requestType>
-			<table>snippets</table>
-			<where>
-					<logic type="and">
-						<field operator="gte">
-							<name>snippetID</name>
-							<value>10</value>
-						</field>
-						<field operator="lte">
-							<name>snippetID</name>
-							<value>20</value>
-						</field>
-					</logic>
-			</where>
-		</parameters>
-	</command>
-	<command>
-		<parameters>
-			<requestType>delete</requestType>
-		</parameters>
-	</command>
-</parameters>
-```
-####Example 2
-This contrived example merges two select statements and updates the projectID
-```
-<parameters>
-	<requestType>pipe</requestType>
-	<commandList>
-		<command>
-			<parameters>
-				<requestType>select</requestType>
-				<table>pages</table>
-				<where>
-						<field operator="eq">
-							<name>pageID</name>
-							<value>10</value>
-						</field>
-				</where>
-			</parameters>
-		</command>
-		<command>
-			<parameters>
-				<requestType>select</requestType>
-				<table>pages</table>
-				<where>
-					<field operator="eq">
-						<name>pageID</name>
-						<value>13</value>
-					</field>
-				</where>
-			</parameters>
-		</command>
-		<command>
-			<parameters>
-				<requestType>merge</requestType>
-				<mergeType>union</mergeType>
-			</parameters>
-		</command>
-		<command>
-			<parameters>
-				<requestType>update</requestType>
-				<fields>
-					<field>
-						<name>projectID</name>
-						<value>5</value>
-					</field>
-				</fields>
-			</parameters>
-		</command>
-	</commandList>
-</parameters>
-```
 
 ##<a id="Limit"></a>Limit
 The limit request allows you to select a subset of results. The offset is optional and defaults to 0.
@@ -932,10 +808,74 @@ At the moment, the word list can have repeated words (which will weight those wo
 
 
 ##If Then
-Perform a basic if-then control statement. The path element is in xpath format allowing you full access of the resourceList nodes.
+Perform a basic if-then control statement. 
 
-The motivation behind this is for the if-then control to be used in conjunction with pipe requests to reduce total number of requests.
+The val element can be in [xpath](http://www.php.net/manual/en/simplexmlelement.xpath.php) format to access XML nodes or a literal number/string.
+
+You can test the number of nodes returned by setting fxn to "length". You can also test for the existence of a node by using the "exists" test. Exists only requires 1 val element. Otherwise all of the other operators require 2 val elements.
+
+The motivation behind this is for the if-then control to be used in conjunction with pipe requests to reduce total number of requests. This can be seen under examples.
+
+###Request
+```
+<parameters>
+	<requestType>if</requestType>
+	<if>
+		<statement>
+			<val type="xpath|literal" nth="" fxn="length">value (optional)</val>
+			<test>eq|ne|lt|lte|gt|gte|exists (optional)</test>
+			<val type="xpath|literal" nth="" fxn="length">value (optional)</val>
+		</statement>
+		<command>
+			...
+		</command>
+	</if>
+	<elif>
+		(optional)
+		<statement>
+			...
+		</statement>
+		<command>
+			...
+		</command>
+	</elif>
+	<else>
+		(optional)
+		<command>
+			...
+		</command>
+	</else>
+	<resourceList>
+		<resource>
+			<id>id</id>
+			<content></content>
+		</resource>
+		...
+	</resourceList>
+</parameters>
+```
+###Response
+The response will be the response of the command executed from the structure OR if no command is executed (e.g. if statement is false and no else is specified) it will return the following:
+```
+<parameters>
+	<requestType>if_then</requestType>
+	<requestID></requestID>
+	<status>No branch taken</status>
+</parameters>
 ```
 
+##Halt
+The halt operator stops execution and is supposed to be used in conjunction with pipe requests and if_then requests to stop piping if certain conditions are met.
+###Request
 ```
-###Example Usage of If request
+<parameters>
+	<requestType>halt</requestType>
+</parameters>
+```
+###Response
+```
+<parameters>
+	<requestType>halt</requestType>
+	<requestID></requestID>
+</parameters>
+```
