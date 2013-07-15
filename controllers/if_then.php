@@ -1,7 +1,7 @@
 <?php
 /*
 <parameters>
-	<requestType>if</requestType>
+	<requestType>if_then</requestType>
 	<if>
 		<statement>
 			<val type="xpath|literal" nth="" fxn="length">value (optional)</val>
@@ -79,7 +79,7 @@ class If_then extends Controller{
 			}
 		}
 		//printf("<h1>%s %s %s</h1>", $val1, $op, $val2);
-		
+
 		//check op for special operators like exists
 		if($op == "exists"){
 			return $val1 != "";

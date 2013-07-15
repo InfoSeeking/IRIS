@@ -1,5 +1,5 @@
 #Functionality
-Here is a very tentative list of possible things this API can do (some of these functions are accomplished by combining functions, denoted by 'piping')
+Here is a list of all of the current controllers:
 - [summarization](#summarization) - summarize with Lemur
 - [cluster](#clustering) - cluster with Lemur
 - [merge](#merge) - merge multiple resourceList elements into one
@@ -17,8 +17,8 @@ Here is a very tentative list of possible things this API can do (some of these 
 - [fetch](#fetch) - fetch document content
 - [extract_blocks](#extract-blocks) - search for a block of text
 - [summarize_sentences](#summarize-sentences) - gives the most important sentences as a summarization
-- summarization(piping) - summarize by piping
-- documentSimilarity(piping) - find similar documents by piping
+- [if_then](#if-then) - perform an if-then form of control flow
+- [halt](#halt) - stop execution of a pipe
 
 #Directory Structure
 - bin/ - Executable files (compiled on Linux Mint)
@@ -812,14 +812,14 @@ Perform a basic if-then control statement.
 
 The val element can be in [xpath](http://www.php.net/manual/en/simplexmlelement.xpath.php) format to access XML nodes or a literal number/string.
 
-You can test the number of nodes returned by setting fxn to "length". You can also test for the existence of a node by using the "exists" test. Exists only requires 1 val element. Otherwise all of the other operators require 2 val elements.
+You can test the number of nodes returned by setting fxn to "length". You can also test for the existence of a node by using the "exists" test. Exists only requires 1 val element. Otherwise all of the other operators require 2 val elements. The nth attribute can be used to get a specific node.
 
 The motivation behind this is for the if-then control to be used in conjunction with pipe requests to reduce total number of requests. This can be seen under examples.
 
 ###Request
 ```
 <parameters>
-	<requestType>if</requestType>
+	<requestType>if_then</requestType>
 	<if>
 		<statement>
 			<val type="xpath|literal" nth="" fxn="length">value (optional)</val>
