@@ -1,0 +1,19 @@
+<parameters>
+	<requestType>extract_blocks</requestType>
+	<clientID>2</clientID>
+	<persistence>TRUE</persistence>
+	<wordList>death</wordList>
+	<searchWindow>10</searchWindow>
+	<resultWindow>50</resultWindow>
+	<useStemming>FALSE</useStemming>
+	<resourceList>
+		<resource>
+			<id>1</id>
+			<url>http://www.westegg.com/bacon/death.html</url>
+		</resource>
+		<resource>
+			<id>2</id>
+			<url>http://www.westegg.com/bacon/riches.html</url>
+		</resource>
+	</resourceList>
+</parameters>

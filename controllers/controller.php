@@ -34,5 +34,22 @@ class Controller{
 		}
 		return false;
 	}
+	//takes the string operators (eq,gt,lt, ...) and does the test
+	function opTest($op, $val1, $val2){
+		switch($op){
+			case "eq":
+			return $val1 == $val2;
+			case "ne":
+			return $val1 != $val2;
+			case "gt":
+			return $val1 > $val2;
+			case "gte":
+			return $val1 >= $val2;
+			case "lt":
+			return $val1 < $val2;
+			case "lte":
+			return $val1 <= $val2;
+		}
+	}
 
 }

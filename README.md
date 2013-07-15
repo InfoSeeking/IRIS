@@ -929,3 +929,13 @@ At the moment, the word list can have repeated words (which will weight those wo
 	</resourceList>
 </parameters>
 ```
+
+
+##If Then
+Perform a basic if-then control statement. The path element is in xpath format allowing you full access of the resourceList nodes.
+
+The motivation behind this is for the if-then control to be used in conjunction with pipe requests to reduce total number of requests.
+```
+
+```
+###Example Usage of If request
