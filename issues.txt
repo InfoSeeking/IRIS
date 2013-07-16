@@ -1,5 +1,0 @@
-Issues:
-- Summarization is only with words, not very useful for reading...
-- Clustering is only working with old <doc> <docID> database hooks, should I make a new clustering controller or should I update the other one??
-- Ranking documents from a document may be easier with a specific controller (instead of doing filtering + extracting + ranking seperately)
-- Slice out method in shared functions takes longer than 30 seconds on this page (it may be an infinite loop): http://news.drive.com.au/drive/motor-news/head-to-head-lancer-vs-mazda3-20121026-289lq.html

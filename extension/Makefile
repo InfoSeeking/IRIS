@@ -36,4 +36,4 @@ summarize.o: summarize.c
 	$(COMPILER) $(CCFLAGS) -c summarize.c
 
 clean:
-	rm -rf text_processing.o extract.o hashtable.o filter.o query.o text_processing *.gch rank.o prefixtree.o vector_rank.o search_blocks.o
+	rm -rf text_processing.o extract.o hashtable.o filter.o query.o text_processing *.gch rank.o prefixtree.o vector_rank.o search_blocks.o summarize.o

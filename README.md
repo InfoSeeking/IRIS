@@ -1,11 +1,9 @@
 #Functionality
 Here is a list of all of the current controllers:
-- [summarization](#summarization) - summarize with Lemur
-- [cluster](#clustering) - cluster with Lemur
 - [merge](#merge) - merge multiple resourceList elements into one
 - [pipe](#pipe) - do a Unix like pipe by using the output of a request as input to the next
 - [limit](#limit) - SQL style limit of documents returned
-- [sort](#sort) - sort documents on a supplied field
+- [sort](#sort) - sort documents on a supplied field (deprecated)
 - [extract](#extract) - extract keywords by frequency
 - [filter](#filter) - remove words from document content
 - [query](#query) - do a boolean type query on a group of documents
@@ -38,145 +36,16 @@ To add a new controller, add the file to the controllers directory, give it the 
 ... (other parameters)
 </parameters>
 ```
-#Request and Response Format:
 
-##<a id="Summarization"></a>Summarization
-###Request
-```
-<parameters>
-	<requestType>summarize</requestType>
-	<maxSentences>10</maxSentences>
-	<individualSummaries>TRUE</individualSummaries>
-	<docList>
-		<doc>
-			<docID>1</docID>
-		</doc>
-		<doc>
-			<docID>2</docID>
-		</doc>
-		<doc>
-			<docID>3</docID>
-		</doc>
-	</docList>
-</parameters>
-
-```
-Here,
-- &lt;maxSentences&gt;: up to how many words to produce in the summary
-- &lt;individualSummaries&gt;: create individual summaries for each document? Here it's set to "TRUE", which means you'd output three summaries (there are three documents).
-
-###Response
-```
-<parameters>
-	<requestID>123</requestID>
-	<requestType>summarize</requestType>
-	<docList>
-	<doc>
-	<docID>1</docID>
-		<summary>
-		stuff
-		</summary>
-	</doc>
-	<doc>
-	<docID>2</docID>
-		<summary>
-		stuff
-		</summary>
-	</doc>
-	<doc>
-	<docID>3</docID>
-		<summary>
-		stuff
-		</summary>
-	</doc>
-	</docList>
-</parameters>
-
-```
-##<a id="Clustering"></a>Clustering
-###Request
-```
-<parameters>
-	<requestType>cluster</requestType>
-	<numClusters>3</numClusters>
-	<docList>
-		<doc>
-			<docID>1</docID>
-		</doc>
-		<doc>
-			<docID>2</docID>
-		</doc>
-		<doc>
-			<docID>3</docID>
-		</doc>
-		<doc>
-			<docID>4</docID>
-		</doc>
-		<doc>
-			<docID>5</docID>
-		</doc>
-		<doc>
-			<docID>6</docID>
-		</doc>
-	</docList>
-</parameters>
-
-```
-
-###Response
-```
-<parameters>
-	<requestID>123</requestID>
-	<requestType>cluster</requestType>
-	<clusterList>
-	<cluster>
-		<clusterID>1</clusterID>
-		<docList>
-			<doc>
-				<docID>1</docID>
-				<title>abc</title>
-			</doc>
-				<docID>3</docID>
-				<title>xyz</title>
-			</doc>
-		</docList>
-	</cluster>
-	<cluster>
-		<clusterID>2</clusterID>
-		<docList>
-			<doc>
-				<docID>2</docID>
-				<title>abc</title>
-			</doc>
-				<docID>6</docID>
-				<title>xyz</title>
-			</doc>
-		</docList>
-	</cluster>
-	<cluster>
-		<clusterID>3</clusterID>
-		<docList>
-			<doc>
-				<docID>4</docID>
-				<title>abc</title>
-			</doc>
-				<docID>5</docID>
-				<title>xyz</title>
-			</doc>
-		</docList>
-	</cluster>
-</parameters>
-```
-
-##<a id="Error"></a>Error
-###Response
+##Error Response
+When IRIS encounters an error, this is what it will return:
 ```
 <parameters>
 	<error>message</error>
 </parameters>
 ```
 
-#Low Level Functionality (in progress)
+#Low Level Functionality
 ##Some Extra Notes:
 As of now, the client id is passed with every request in a clientID element. This will change with the addition of user authentication.
 
@@ -216,88 +85,30 @@ Example request:
 </resourceList>
 
 ```
-
-##<a id="Select"></a>Select
-####(deprecated)
+##Merge
+Merge requests can easily merge multiple select responses in various ways
 ###Request
-The field operator allows you to select from predefined fields based on the table (e.g. you can add a field of "url" or "snippetID" if the table value is "snippet").
-Not including the fields list will return no fields, but can still be useful for only retrieving the id's of the resulting resources.
-
-The &lt;logic&gt; tags wrap fields in the &lt;where&gt; clause for logical connectives.
 ```
 <parameters>
-	<requestType>select</requestType>
-	<fields>
-		<field>
-			field name
-		</field>
-		<field>
-			field name
-		</field>
-		...
-	</fields>
-	<table>
-		table name (pages|annotation|snippet|bookmarks|searches)
-	</table>
-	<where>
-		(<logic type="and|or|not")
-			<field operator="eq|ne|lt|gt|lte|gte|like|in">
-				<name>
-					field name
-				</name>
-				<value>
-					test value
-				</value>
-			</field>
-			<field operator="eq|ne|lt|gt|lte|gte|like|in">
-				<name>
-					field name
-				</name>
-				<value>
-					test value
-				</value>
-			</field>
+	<requestType>merge</requestType>
+	<mergeType>union|intersection|difference</mergeType>
+	<resourceLists>
+		<resourceList>
+			<resource>
+				<id>id</id>
+				<content></content>
+			</resource>
 			...
-		(</logic>)
+		</resourceList>
+		<resourceList>
+			<resource>
+				<id>id</id>
+				<content></content>
+			</resource>
+			...
+		</resourceList>
 		...
-	</where>
-	(<orderby type="desc|asc">
-		<field>
-			field name
-		</field>
-	 </orderby>)
-	 (<limit>
-	 	number
-	 (</limit)
-</parameters>
-```
-
-###Response
-```
-<parameters>
-	<requestID>number</requestID>
-	<table>table name</table>
-	<requestType>select</requestType>
-	<resourceList>
-		...
-	</resourceList>
-</parameters>
-```
-
-##<a id="Merge"></a>Merge
-Merge requests can easily merge multiple resource lists
-###Request
-```
-<parameters>
-	<requestType>merge</requestType>
-	<table>table name</table>
-	<resourceList>
-		...
-	</resourceList>
-	<resourceList>
-		...
-	</resourceList>
-	...
+	</resourceLists>
 </parameters>
 ```
 ###Response
@@ -305,96 +116,19 @@ Merge requests can easily merge multiple resource lists
 <parameters>
 	<requestID>number</requestID>
 	<requestType>merge</requestType>
-	<table>table name</table>
 	<resourceList>
+		<resource>
+				<id>id</id>
+				<content></content>
+		</resource>
+		<resource>
+				<id>id</id>
+				<content></content>
+		</resource>
 		...
 	</resourceList>	
 </parameters>
 ```
-##<a id="Insert"></a>Insert
-####(deprecated)
-###Request
-```
-<parameters>
-	<requestType>insert</requestType>
-	<table>table name</table>
-	<fields>
-		<field>
-			<name>
-				field name
-			</name>
-			<value>
-				field value
-			</value>
-		</field>
-		...
-	</fields>
-</parameters>
-```
-###Response
-```
-<parameters>
-	<requestID>number</requestID>
-	<table>table name</table>
-	<insertID>number</insertID>
-	<requestType>insert</requestType>
-</parameters>
-```
-##<a id="Update"></a>Update
-####(deprecated)
-###Request
-```
-<parameters>
-	<requestType>update</requestType>
-	<table>table name</table>
-	<fields>
-		<field>
-			<name>
-				field name
-			</name>
-			<value>
-				field value
-			</value>
-		</field>
-		...
-	</fields>
-	<resourceList>
-		...
-	</resourceList>
-</parameters>
-```
-###Response
-```
-<parameters>
-	<requestID>number</requestID>
-	<table>table name</table>
-	<requestType>update</requestType>
-	<resourceList>
-		...
-	</resourceList>
-</parameters>
-```
-##<a id="Delete"></a>Delete
-####(deprecated)
-###Request
-```
-<parameters>
-	<requestType>delete</requestType>
-	<table>table name</table>
-	<resourceList>
-		...
-	</resourceList>
-</parameters>
-```
-###Response
-```
-<parameters>
-<table>table name</table>
-	<requestID>number</requestID>
-	<requestType>delete</requestType>
-</parameters>
-```
-
 ##<a id="Pipe"></a>Pipe
 The pipe command allows you to do a unix-like pipe feeding the output of one command into the input of another. You cannot do this by simply taking the XML output of one and passing it to another command since it needs a bit of reformatting. This allows multiple commands to be easily strung together and called repeatedly without much work of the client.
 
@@ -423,12 +157,10 @@ The limit request allows you to select a subset of results. The offset is option
 ```
 <parameters>
 	<requestType>limit</requestType>
-	<table>table name</table>
 	(<offset>number</offset>)
 	<amount>number</amount>
 	<resourceList>
 		<resource>
-			<table>table name</table>
 			<id>id</id>
 		</resource>
 		...
@@ -439,11 +171,9 @@ The limit request allows you to select a subset of results. The offset is option
 ```
 <parameters>
 	<requestID>number</requestID>
-	<table>table name</table>
 	<requestType>limit</requestType>
 	<resourceList>
 		<resource>
-			<table>table name</table>
 			<id>id</id>
 		</resource>
 		...
@@ -451,13 +181,14 @@ The limit request allows you to select a subset of results. The offset is option
 </parameters>
 ```
 
-##<a id="Sort"></a>Sort
+##<a id="Sort"></a>Sort (deprecated)
 Sort a resource list
+This controller uses an older format of resources (and will check for a field element). However, it will be updated to adhere to the new XML format. Until then, it is advised not to use this operator unless you wish to alter it.
+
 ###Request
 ```
 <parameters>
 	<requestType>sort</requestType>
-	<table>table name</table>
 	<orderby type="desc|asc"> 
 		field name (defaults to id)
 	</orderby>
@@ -473,7 +204,6 @@ Sort a resource list
 ```
 <parameters>
 	<requestID>number</requestID>
-	<table>table name</table>
 	<requestType>sort</requestType>
 	<resourceList>
 		<resource>
