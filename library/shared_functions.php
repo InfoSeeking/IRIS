@@ -184,8 +184,12 @@ function handleRequest($xml){
 	if(!pe($tmpObj, "clientID")){
 		$tmpObj->addChild("clientID", $xml->clientID);
 	}
-
 	$response = $tmpObj->asXML();
+
+	//remove content if asked for
+	if(pe($xml, "returnType") && $xml->returnType == "nocontent"){
+		$response = strip_tags_content($response, "content");
+	}
 	return $response;
 }
 

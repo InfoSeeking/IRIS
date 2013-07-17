@@ -96,6 +96,7 @@ Controllers which modify content (e.g. filter) will return the content element w
 Example request:
 ```
 <persistence>TRUE</persistence>
+<returnType>nocontent</returnType>
 ...
 <resourceList>
 	<resource>
@@ -110,12 +111,11 @@ Example request:
 
 ```
 ##Merge
-Merge requests can easily merge multiple select responses in various ways
+Merge requests combine multiple resourceList elements into one
 ###Request
 ```
 <parameters>
 	<requestType>merge</requestType>
-	<mergeType>union|intersection|difference</mergeType>
 	<resourceLists>
 		<resourceList>
 			<resource>
