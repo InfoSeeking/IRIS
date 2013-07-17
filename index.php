@@ -37,6 +37,7 @@ catch(Exception $e){
 }
 
 
+//handleRequest will load the requestType controller
 $response = handleRequest($xml);
 echo $response;
 

@@ -28,14 +28,36 @@ Here is a list of all of the current controllers:
 - config.php - configuration for debugging and file paths
 - dbconfig.php.example - configuration file for database (remove the trailing .example to use)
 
-#Adding a new controller to the API
-To add a new controller, add the file to the controllers directory, give it the same name as the request type. E.G. if you wanted to add a controller for 'keywords' add a file keywords.php to controllers. Then, in config.php, add 'keywords' to the VALID_REQUEST_TYPES array. An example input that would access that controller would look like:
-```
-<parameters>
-<requestType>keywords</requestType>
-... (other parameters)
-</parameters>
-```
+#Issues and Disclaimers:
+- There is no user authentication implemented. As of now each request MUST HAVE the clientID element which I plan to replace with OAuth.
+- As the toolkit is now, persistent documents are never deleted. This may change in the future if I make a tool to delete old and unused cached pages/indexes but at the moment it 
+
+#How to Alter and Host IRIS
+##Server Prerequisites and Considerations
+To run IRIS, you need the following:
+- [MiniXML](http://www.msweet.org/projects.php?Z3) for C extensions (not required if you don't need to recompile the text_processing binaries)
+- PHP 5.4.6 (It probably works on other versions, but this is what is was developed on)
+- MySQL (for storing request information, however, this can be removed if necessary)
+- Permissions to write to storage folder
+
+Some considerations:
+- You should have roughly 200MB of storage space minimum. This covers approximately 1000 requests, responses, and pages as well as 100 indexes. This is a very rough estimate and if you intend on storing persistent requests as well as indexes more space would be advisable.
+- You may want to increase the PHP maximum execution time. If you are expecting requests with a lot of URLs (not content) fetching every document may take longer than the default maximum execution time of 30 seconds. 
+
+##Overview
+The API endpoint is the index.php file. When a client makes a request to the API, the index.php file receives this request. The request is expected to contain a variable called <b>xmldata</b> which contains all of the request XML (formats of which are described later in this documentation). When index.php receives this, it will parse the <b>xmldata</b> variable as a SimpleXML object. Using the value of the "requestType" element, it loads a controller with that value (if one exists and is specified in config.php). So if the value of requestType is "extract" then it will load the file controllers/extract.php.
+
+##How to Add a Controller
+In the file you created in the controllers directory, make a new class with the same name as the file (except with a capital letter first). This class needs to extend the Controller class. Now you can override the run method and write the code to process the request there and return the output. So going with our keywords example you should have the following:
+
+- A file named keywords.php in the controllers directory
+- In keywords.php, a class named Keywords which extends the Controller class
+- In the Keywords class, a run method which contains the main processing logic
+
+Now if you try sending a request with requestType set to "keywords" IRIS will complain and say that keywords is not a valid type. So as a last step, in config.php, add 'keywords' to the VALID_REQUEST_TYPES array. Now IRIS will know that "keywords" is a valid controller.
+
+##How to Add a Text Processing extension
+For heavy text processing, it is recommended that you write a program in C which your PHP controller can call since text processing would probably be less efficient in PHP. All of the text processing functions are contained within the "extension" directory. The text_processing.c file is the main file. To add a new 
 
 ##Error Response
 When IRIS encounters an error, this is what it will return:

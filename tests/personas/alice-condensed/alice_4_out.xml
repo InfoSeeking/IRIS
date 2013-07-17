@@ -1,0 +1,38 @@
+
+<?xml version="1.0"?>
+<parameters>
+	<requestType>extract_blocks</requestType>
+	<requestID>1333</requestID>
+	<resourceList>
+		<resource>
+			<id>1</id>
+			<url>http://marinebio.org/species.asp?id=36</url>
+		</resource>
+		<resource>
+			<id>2</id>
+			<url>http://www.ms-starship.com/sciencenew/sharks.htm</url>
+		</resource>
+		<resource>
+			<id>3</id>
+			<blockList>
+				<block>for maneuverability these sharks generally swim with eel like undulations dogfish sharks also have tails with longer upper than lower lobes however the backbone runs through the upper lobe at a lower angle than the lobe itself reducing the amount of downward thrust produced their tails cannot sustain high speeds but combine the capability for bursts of speed with maneuverability angel sharks have unique tails among sharks their caudal fins are reverse heterocercal with the lower lobe larger than the upper 1 integument edit main article dermal denticle unlike bony fish the sharks have a complex dermal corset made of flexible collagenous fibres and arranged as a helical network surrounding their body this works as an outer skeleton providing attachment for their swimming muscles and thus saving energy a similar arrangement of collagen fibres has been discovered in dolphins and</block>
+			</blockList>
+		</resource>
+		<resource>
+			<id>4</id>
+			<blockList>
+				<block>dermal denticle unlike bony fish sharks have a complex dermal corset made of flexible collagenous fibers and arranged as a helical network surrounding their body this works as an outer skeleton providing attachment for their swimming muscles and thus saving energy 25 their dermal teeth give them hydrodynamic advantages as they reduce turbulence when swimming 19 tails tails provide thrust making speed and acceleration dependent on tail shape caudal fin shapes vary considerably between shark species due to their evolution in separate environments sharks possess a heterocercal caudal fin in which the dorsal portion is usually noticeably larger than the ventral portion this is because the shark s vertebral column extends into that dorsal portion providing a greater surface area for muscle attachment this allows more efficient locomotion among these negatively buoyant cartilaginous fish by contrast most bony fish possess</block>
+			</blockList>
+		</resource>
+		<resource>
+			<id>5</id>
+			<url>http://www.sharks-world.com/shark_anatomy.html</url>
+		</resource>		
+		<resource>
+			<id>7</id>
+			<blockList>
+				<block>is well adapted for high maneuverability and is often seen in smaller fish that require elaborate escape patterns 5 it is important to point out that fish do not rely exclusively on one locomotor mode but are rather lomotor generalists 3 choosing among and combining behaviors from many available behavioral techniques in fact at slower speeds predominantly bcf swimmers will often incorporate movement of their pectoral anal and dorsal fins as an additional stabilizing mechanism at slower speeds but hold them close to their body at high speeds to improve streamlining and reducing drag 3 zebrafish have even been observed to alter their locomotor behavior in response to changing hydrodynamic influences throughout growth and maturation 6 in addition to adapting locomotor behavior controlling buoyancy effects is critical for aquatic survival since aquatic ecosystems vary greatly by depth fish generally control</block>
+			</blockList>
+		</resource>
+	</resourceList>
+</parameters>

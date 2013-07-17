@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<parameters><requestType>extract_blocks</requestType><requestID>1332</requestID>
+<resourceList>
+		<resource>
+			<id>1</id>
+			<url>http://marinebio.org/species.asp?id=36</url>
+		</resource>
+		<resource>
+			<id>2</id>
+			<url>http://www.ms-starship.com/sciencenew/sharks.htm</url>
+		</resource>
+		<resource>
+			<id>3</id>
+			<url>http://en.wikipedia.org/wiki/Shark_anatomy</url>
+		</resource>
+		<resource>
+			<id>4</id>
+			<url>http://en.wikipedia.org/wiki/Shark</url>
+		</resource>
+		<resource>
+			<id>5</id>
+			<blockList>
+				<block>3 powerful jaws 4 efficient liver 5 anatomic tail 6 dynamic fins 7 highly developed senses nbsp the amazing shark anatomy cartilage instead of bones all sharks have cartilage for their skeleton rather than bones this is very different from humans and most types of land animals having this cartilage though is what allows them to move at unbelievable speeds through the water all sharks have cartilage for their skeleton rather than bones dermal denticles since sharks don rsquo t have bones they rely on dermal denticles on their skin nbsp to help them keep the right shape nbsp shark skin is very rough because if you see it very closely it is covered with small denticles denticles nbsp are found all over the body of every species of shark out there they help make it easier to swim nbsp</block>
+			</blockList>
+		</resource>
+		<resource>
+			<id>7</id>
+			<url>http://en.wikipedia.org/wiki/Fish_locomotion</url>
+		</resource>
+
+</resourceList>
+</parameters>

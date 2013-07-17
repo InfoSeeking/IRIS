@@ -1,0 +1,26 @@
+<!-- now that Carol has the clusters she needs to move one person from each of the larger groups into the smaller group, so she is going to rank the documents in the larger groups and move the lowest ranked ones -->
+<parameters>
+	<requestType>filter</requestType>
+	<clientID>1</clientID>
+	<wordList>
+a about above according across actually adj after afterwards again against ago all almost alone along already also although always am among amongst amoungst amount an and another any anyhow anyone anything anyway anywhere are aren around as at b back be became because become becomes becoming been before beforehand begin beginning behind being below beside besides between beyond bill billion both bottom but by c call can cannot cant caption co con could couldnt cry d de describe detail did didn dlrs do does doesn don done down due during e each eg eight eighty either eleven else elsewhere empty end ending enough etc even ever every everyone everything everywhere except f few fifteen fifty fify fill find fire first five for former formerly forty found four from front full further g get give go h had has hasn hasnt have haven he hence her here hereafter hereby herein hereupon hers herself him himself his how however hundred i ie if in inc indeed instead interest into is isn it its itself j k l last later latter latterly least less let like likely ltd m made make makes many may maybe me meantime meanwhile might mill million mine miss mln more moreover most mostly move mr mrs much must my myself n name namely neither never nevertheless next nine ninety no nobody none nonetheless noone nor not nothing now nowhere o of off often on once one only onto or other others otherwise our ours ourselves out over overall own p pct per perhaps please put q r rather re recent recently reuters reuter s said same says see seem seemed seeming seems serious seven seventy several she should shouldn show since sincere six sixty so some somehow someone something sometime sometimes somewhere still stop such t take taking ten than that the their them themselves then thence there thereafter thereby therefore therein thereupon these they thick thin third thirty this those though thousand three through throughout thru thus to together too top toward towards trillion twelve twenty two u un under unless unlike unlikely until up upon us used using v very via w was wasn we well were weren what whatever when whence whenever where whereafter whereas whereby wherein whereupon wherever whether which while whither who whoever whole whom whomever whose why will with within without won would wouldn x y year yes yet you your yours yourself yourselves z
+	</wordList>
+	<resourceList>
+		<resource>
+			<id>8</id>
+			<content>
+			PARENTS 
+		    “Parents”. I consider mine as my flat mates these days because we do not spend much time together. We are four people living in a house together but we even eat our dinners separately because everybody comes home at different times and we are busy all the time. What I remember from the old days is my two grown up flat mates are two different characters so I have no idea why they still live together.
+
+		    They are pretty much the same in physical appearance.  They both have fair complexions which is typical of Caucasians. They should be thin if we consider this “type” but they are not. Actually they were but I can’t remember those days.
+
+		     They have different personalities. My father is moody and pretty much aggressive just like me. He has obsessions, like everything should be perfect. On the other hand, my mother never cares about what she is doing and she has what we will call the patience of a saint. Whenever my father gets angry and starts shouting, my mother goes “Ergun, why are you shouting?” with a very calm voice.
+
+		     What they really can’t get along about is their tastes in life. My mother loves spending money. She can spend her whole day going around the stores shopping while my father is sitting at home reading newspapers and books or watching documentaries on TV.
+
+		     Although my parents are very different from each other, they came to an agreement and that is not being a parent for me any more. They never worry about me when I am late and they never interfere in my choices. I think from now on they will work on my brother, my poor little brother.
+
+			</content>
+		</resource>
+	</resourceList>
+	</parameters>

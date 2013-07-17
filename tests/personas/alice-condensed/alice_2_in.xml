@@ -1,0 +1,33 @@
+<parameters>
+	<requestType>extract_blocks</requestType>
+	<wordList>body speed</wordList>
+	<searchWindow>20</searchWindow>
+	<resultWindow>50</resultWindow>
+	<useStemming>TRUE</useStemming>
+	<resourceList>
+		<resource>
+			<id>1</id>
+			<url>http://marinebio.org/species.asp?id=36</url>
+		</resource>
+		<resource>
+			<id>2</id>
+			<url>http://www.ms-starship.com/sciencenew/sharks.htm</url>
+		</resource>
+		<resource>
+			<id>3</id>
+			<url>http://en.wikipedia.org/wiki/Shark_anatomy</url>
+		</resource>
+		<resource>
+			<id>4</id>
+			<url>http://en.wikipedia.org/wiki/Shark</url>
+		</resource>
+		<resource>
+			<id>5</id>
+			<url>http://www.sharks-world.com/shark_anatomy.html</url>
+		</resource>
+		<resource>
+			<id>7</id>
+			<url>http://en.wikipedia.org/wiki/Fish_locomotion</url>
+		</resource>
+	</resourceList>
+</parameters>
