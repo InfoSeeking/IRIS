@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<parameters>
+	<requestType>limit</requestType>
+	<requestID>1382</requestID>
+	<amount><!-- user input -->
+		3
+	</amount>
+	<resourceList>
+		<resource>
+			<rank>0.557745</rank>
+			<id>4</id>
+			<content>In this article we explore how beliefs about system ideals and the achievement of those ideals...</content>
+		</resource>
+		<resource>
+			<rank>0.165720</rank>
+			<id>2</id>
+			<content>Contrary to those of adults and adolescents  children s value structures and value preferences have...</content>
+		</resource>
+		<resource>
+			<rank>0.139078</rank>
+			<id>1</id>
+			<content>Assessing Difficulties in Career Decision Making Among Swiss Adolescents with the German My Vocation...</content>
+		</resource>
+	</resourceList>
+</parameters>

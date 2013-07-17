@@ -1,0 +1,17 @@
+<parameters>
+	<requestType>filter</requestType>
+	<clientID>1</clientID>
+	<wordList><!-- user input -->
+		and for of to the
+	</wordList>
+	<resourceList>
+		<resource>
+			<id>7</id>
+			<content>
+				...
+				Studies 2 and 3 also examined people’s motivation for endorsing goal ideals. People of all statuses endorsed system ideals to promote an ideal system more than to legitimize the actual system (Study 2); however, high-status people were slightly more likely to endorse system ideals to legitimize the actual system than low-status people (Study 3). 
+				...
+ 			</content>
+		</resource>
+	</resourceList>
+	</parameters>

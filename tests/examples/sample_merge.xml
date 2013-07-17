@@ -1,22 +1,24 @@
 <parameters>
+	<clientID>1</clientID>
 	<requestType>merge</requestType>
-	<mergeType>union|intersection|difference</mergeType>
-	<resourceLists>
-		<resourceList>
-			<resource>
-			 res1
-			</resource>
-			<resource>
-				res2
-			</resource>
-		</resourceList>
-		<resourceList>
-			<resource>
-				res3
-			</resource>
-			<resource>
-				res4
-			</resource>
-		</resourceList>
-	</resourceLists>
+	<resourceList>
+		<resource>
+			<id>1</id>
+			<content>Document 1</content>
+		</resource>
+		<resource>
+			<id>2</id>
+			<content>Document 2</content>
+		</resource>
+	</resourceList>
+	<resourceList>
+		<resource>
+			<id>3</id>
+			<content>Document 3</content>
+		</resource>
+		<resource>
+			<id>4</id>
+			<content>Document 4</content>
+		</resource>
+	</resourceList>
 </parameters>

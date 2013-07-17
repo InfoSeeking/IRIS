@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<script>
+  /* 
+  	Well hello there traveller!
+  	Before you try running this page on your own server be sure to change the API endpoint to match yours!
+  	*/
+  	var API_ENDPOINT = "http://localhost/IRIS/application/index.php";
+
+  	</script>
+
+  	<meta charset="utf-8">
+  	<meta name="author" content="Kevin Albertson">
+
+  	<title>API Tester</title>
+
+  	<link href='http://fonts.googleapis.com/css?family=Droid+Sans' rel='stylesheet' type='text/css'>
+  	<link href="inc/style.css" rel="stylesheet" type="text/css" />
+  	<link rel='stylesheet' type='text/css' href='xmltree/xmltree.css' />
+
+  	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+  	<script src='xmltree/xmltree.js'></script>	
+  	<script src='inc/data.js'></script>
+
+  <!--[if lt IE 9]>
+  <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+</head>
+<body>
+	<div id="null"></div>
+	<div id="container">
+		<div id="loader">Loading...</div>
+		<div id="feedback"></div>
+		<div style="width: 100%" class="clearfix">
+			<div class="side left" id="input">
+				<h2>Input</h2>
+				<div class="tools">
+					<label>Request Type: </label>
+					<select id="selection">
+						<option value="extract">Extract</option>
+						<option value="filter">Filter</option>
+						<option value="rank">Rank</option>
+					</select>
+					<button id="process">Process</button>
+				</div>
+				<textarea></textarea>
+			</div>
+			<div class="side right" id="output">
+				<div></div>
+			</div>
+		</div>
+
+	</div>
+	<script type="text/javascript">
+	var timer = null;
+	function showFeedback(msg, cl){
+		$("#feedback").removeClass().addClass(cl).html(msg).show();
+		timer = window.clearTimeout(timer);
+		timer = window.setTimeout(function(){$("#feedback").fadeOut();}, 7500);
+	}
+	function toggleLoader(val){
+		if(val){
+			$("#loader").show();
+		}
+		else{
+			$("#loader").hide();
+		}
+	}
+
+	function sendRequest(inputData){
+		var userData = {
+			xmldata: $("#input textarea").val()
+		};
+		console.log(userData);
+		toggleLoader(true);
+		$.ajax({
+			url: API_ENDPOINT,
+			data: userData,
+			type: 'POST',
+			success: function(returnData){
+				toggleLoader(false);
+				parseOutput(returnData);
+			}
+		})
+		
+	}
+
+	function parseOutput(outputData){
+		if(!outputData){
+			return;
+		}
+		$("#output div").html("");
+		//parse the input to double check
+		new XMLTree({
+			shorten: true,
+			xml: outputData,
+			container: "#output div",
+			startExpanded: true,
+			XMLCallback : function(tree){
+				/* check for errors */
+				var err = tree.find("parsererror");
+				if(err.size() > 0){
+					var errText = err.find('div').html();
+					showFeedback(errText, 'error');
+					return null;
+				}
+				$(".side.left").animate({
+					width: '39%',
+					paddingRight: '1%'
+				});
+				$(".side.right").animate({
+					width: '59%',
+					paddingLeft: '1%'
+				});
+				return tree;
+			}
+		});
+	}
+
+	$("#process").on("click", function(){
+		var inputArea = $("#input textarea");
+		var input = inputArea.val().trim();
+		if(input != ""){
+  			//parse the input to double check
+  			new XMLTree({
+  				xml: input,
+  				container: "#null",
+  				startExpanded: true,
+  				XMLCallback : function(tree){
+  					console.log(tree);
+  					inputArea.css({
+  						backgroundPosition: "0px -16px"
+  					});
+  					/* check for errors */
+  					var err = tree.find("parsererror");
+  					if(err.size() > 0){
+  						var errText = err.find('div').html();
+  						showFeedback(errText, 'error');
+  						//find the line number and highlight it
+  						var match = errText.match(/line ([0-9]+)/);
+  						if(match){
+  							var lineNo = match[1];
+  							inputArea.css({
+  								backgroundPosition: "0px " + ((lineNo-1) * 13) + "px"
+  							});
+  						}
+  						return null;
+  					}
+  					sendRequest(input);
+  					return null;//no need to continue
+  				}
+  			});
+  		}
+  		else{
+  			showFeedback("Please Add Input", "error");
+  		}
+  	});
+
+$("textarea").html(data.requests.extract);
+
+$("#selection").on("change", function(e){
+	$("#input textarea").html(data.requests[$(this).val()]);
+});
+</script>
+</body>
+</html>

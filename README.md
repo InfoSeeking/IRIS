@@ -25,6 +25,7 @@ Here is a list of all of the current controllers:
 - library/ - helpful methods shared among all controllers
 - storage/ - folder where all of the request/response data is stored, where all of the necessary indexing files are created (and removed)
 - tests/ - this folder has all of our testing XML files, most of which are very simple and used for debugging, however, under tests/higher_behavior, there are more interesting XML tests using piping to do more complex actions
+- tests/requester - this is a tool for sending XML requests to your API and viewing responses in a collapsable XML tree. It is useful for testing without having to write code
 - config.php - configuration for debugging and file paths
 - dbconfig.php.example - configuration file for database (remove the trailing .example to use)
 
@@ -71,6 +72,8 @@ When IRIS encounters an error, this is what it will return:
 
 #Request and Response Format
 ##Some Extra Notes:
+You can specify IRIS not to return the content element (as this can be very large) by passing the element returnType with a value of nocontent.
+
 As of now, the client id is passed with every request in a clientID element. This will change with the addition of user authentication.
 
 There is also the option of specifying a user id to add an extra layer of page specificity. That way pages are stored per user id, so two different users could have two different pages with the same id both stored on the server
