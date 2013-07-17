@@ -10,14 +10,7 @@ $FILE_ROOT="";
 $STATE="debug"; //valid values are debug,live
 $HOST=""; //valid values are local,live
 $VALID_REQUEST_TYPES = array(
-	"cluster", 
-	"new_cluster",
-	"summarize", 
-	"select", //SQL ops start
 	"merge", 
-	"insert",
-	"update",
-	"delete", //SQL ops end
 	"limit",
 	"sort",
 	"pipe",

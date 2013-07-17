@@ -1,14 +1,18 @@
 <parameters>
+	<clientID>1</clientID>
 	<requestType>index_insert</requestType>
 	<persistence>true</persistence>
 	<resourceList>
 		<resource>
+			<id>10</id>
 			<url>http://www.westegg.com/bacon/great-place.html</url>
 		</resource>
 		<resource>
+			<id>21</id>
 			<url>http://www.westegg.com/bacon/goodness.html</url>
 		</resource>
 		<resource>
+			<id>30</id>
 			<url>http://www.westegg.com/bacon/travel.html</url>
 		</resource>
 	</resourceList>

@@ -44,7 +44,7 @@ Some considerations:
 - You should have roughly 200MB of storage space minimum. This covers approximately 1000 requests, responses, and pages as well as 100 indexes. This is a very rough estimate and if you intend on storing persistent requests as well as indexes more space would be advisable.
 - You may want to increase the PHP maximum execution time. If you are expecting requests with a lot of URLs (not content) fetching every document may take longer than the default maximum execution time of 30 seconds. 
 
-##Overview
+##How the Requests are Handled
 The API endpoint is the index.php file. When a client makes a request to the API, the index.php file receives this request. The request is expected to contain a variable called <b>xmldata</b> which contains all of the request XML (formats of which are described later in this documentation). When index.php receives this, it will parse the <b>xmldata</b> variable as a SimpleXML object. Using the value of the "requestType" element, it loads a controller with that value (if one exists and is specified in config.php). So if the value of requestType is "extract" then it will load the file controllers/extract.php.
 
 ##How to Add a Controller
@@ -67,7 +67,7 @@ When IRIS encounters an error, this is what it will return:
 </parameters>
 ```
 
-#Low Level Functionality
+#Request and Response Format
 ##Some Extra Notes:
 As of now, the client id is passed with every request in a clientID element. This will change with the addition of user authentication.
 
@@ -386,15 +386,19 @@ Ranks documents using a vector model of the wordList you supply and returns a ra
 	<persistence>TRUE|FALSE</persistence>
 	<resourceList>
 		<resource>
+			<id></id>
 			<url></url>
 		</resource>
 		<resource>
+			<id></id>
 			<url></url>
 		</resource>
 		<resource>
+			<id></id>
 			<url></url>
 		</resource>
 		<resource>
+			<id></id>
 			<url></url>
 		</resource>
 		...
@@ -440,6 +444,7 @@ The query element is mostly the same as the query element describe in the Indri 
 ```
 ###Response
 The Indri resulting score is the logarithm of the probability, therefore the more negative the score is, the lower the rank, and vice-versa
+Index Query cannot return more than the id of the pages since Indri will only return document ids
 ```
 <parameters>
 	<requestType>index_query</requestType>
