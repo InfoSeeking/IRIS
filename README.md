@@ -35,7 +35,9 @@ Here is a list of all of the current controllers:
 #How to Alter and Host IRIS
 ##Server Prerequisites and Considerations
 To run IRIS, you need the following:
+- Indri (I used version 5.4) binaries of IndriBuildIndex and IndriRunQuery. There are versions compiled on Linux Mint in the bin folder, however if you are running a different operating system you may need to recompile. You can find the source for Indri [here](http://sourceforge.net/projects/lemur/)
 - [MiniXML](http://www.msweet.org/projects.php?Z3) for C extensions (not required if you don't need to recompile the text_processing binaries)
+- The text_processing binary compiled on your system. The source for this is in the extensions folder. There is an existing binary in the bin folder, and it was compiled on Linux Mint.
 - PHP 5.4.6 (It probably works on other versions, but this is what is was developed on)
 - MySQL (for storing request information, however, this can be removed if necessary)
 - Permissions to write to storage folder

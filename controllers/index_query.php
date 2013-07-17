@@ -59,7 +59,6 @@ class Index_query extends Controller{
 		foreach($scores as $id => $score){
 			$response .= "<resource><score>" . $score . "</score><id>". $id . "</id></resource>";
 		}
-
 		$response .= "</resourceList></parameters>";
 		return $response;
 	}

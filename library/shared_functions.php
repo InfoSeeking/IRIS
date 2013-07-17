@@ -61,6 +61,7 @@ function cleanOp($op){
 	if ($op == "lte") return "<=";
 	if ($op == "gte") return ">=";
 }
+
 /* 
 	alters xml to provide and fill the content element, will cache if cache is set to true
 */
@@ -296,43 +297,6 @@ function getPlainText($html){
 	return $bodytxt;
 }
 
-//returns doc_title
-function fetch_to_trec($url, $doc_id, $TREC){
-	global $FILE_ROOT;
-	$headers = get_headers($url);
-	$html = "";
-	$gzip = false;
-	//check for gzip encoding
-	foreach($headers as $line){
-		if($line == "Content-Encoding: gzip"){
-			$gzip = true;
-		}
-	}
-	if($gzip){
-		$html = gzinflate(substr(file_get_contents($url), 10, -8));
-	}
-	else{
-		$html = file_get_contents($url);
-	}
-
-	$title = "";
-	if(preg_match("/<title>(.*)<\/title>/isUm", $html, $matches)){
-		$title = $matches[1];
-	}
-	else{
-		echo "No match";
-	}
-	$plaintext = getPlainText($html);
-	if(!$plaintext){
-		die(err("Could not get plain text for " . $url .""));
-	}
-	fwrite($TREC, "<DOC>\n<DOCNO>" . $doc_id ."</DOCNO>\n<TEXT>\n");
-	fwrite($TREC, "<title>" . $title . "</title>");
-	fwrite($TREC, $plaintext);
-	fwrite($TREC, "</TEXT>\n</DOC>\n");
-	return $title;
-}
-
 /* 
 The following function removes temporary files that the script uses during processing a request
 */
@@ -352,44 +316,5 @@ function clean(){
 	system($cmd);
 }
 
-/*
-$docIds		an array of document ids
-returns an associative array document id => document url
-*/
-function getUrlArray($docIds){
-	global $cxn;
-	$respArr = Array();
-	$query = "SELECT `url`, `pageID` FROM pages WHERE `pageID` IN (";
-	$first = true;
-	foreach($docIds as $val){
-		if($first)
-			$first = false;
-		else
-			$query .= ",";
-		$query .= intval($val);
-	}
-	$query .= ")";
 
-	$results = mysqli_query($cxn, $query) or die(err("Could not get page url's from database"));
-	if(mysqli_num_rows($results) < sizeof($docIds)){
-		die(err("Some documents from your request were not found"));
-	}
-	while($row = mysqli_fetch_assoc($results)){
-		$respArr[$row['pageID']] = $row['url'];
-	}
-	return $respArr;
-}
-
-function table_valid($tbl){
-	switch($tbl){
-		case "pages":
-		case "annotation":
-		case "snippet":
-		case "bookmarks":
-		case "searches":
-			return true;
-		default:
-			return false;
-	}
-}
 ?>
