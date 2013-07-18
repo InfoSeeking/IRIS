@@ -1,27 +1,28 @@
 <parameters>
-	<requestType>pipe</requestType>
-	<command>
-		<parameters>
-			<requestType>select</requestType>
-			<table>pages</table>
-			<where>
-					<field operator="lte">
-						<name>pageID</name>
-						<value>9</value>
-					</field>		
-			</where>
-		</parameters>
-	</command>
-	<command>
-		<parameters>
-			<requestType>query</requestType>
-			<table>pages</table>
-			<wordList>anger</wordList>
-			<query>
-				<type>gt</type>
-				<value>0</value>
-			</query>
-		</parameters>
-	</command>
-
+	<requestType>query</requestType>
+	<clientID>1</clientID>
+	<wordList>love</wordList>
+	<!-- query documents which have more than zero occurences of the word 'love' -->
+	<query>
+		<type>gt</type>
+		<value>0</value>
+	</query>
+	<resourceList>
+		<resource>
+			<id>1</id>
+			<url>http://www.westegg.com/bacon/death.html</url>
+		</resource>
+		<resource>
+			<id>2</id>
+			<url>http://www.westegg.com/bacon/love.html</url>
+		</resource>
+		<resource>
+			<id>3</id>
+			<url>http://www.westegg.com/bacon/anger.html</url>
+		</resource>
+		<resource>
+			<id>4</id>
+			<url>http://www.westegg.com/bacon/parents.html</url>
+		</resource>
+	</resourceList>
 </parameters>

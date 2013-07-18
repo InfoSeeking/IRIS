@@ -1,36 +1,40 @@
 <parameters>
+	<clientID>1</clientID>
 	<requestType>pipe</requestType>
-	
-<command>
-	<parameters>
-		<requestType>select</requestType>
-		<table>pages</table>
-		<where>
-				<field operator="eq">
-					<name>pageID</name>
-					<value>11</value>
-				</field>		
-		</where>
-	</parameters>
-</command>
-<command>
-	<parameters>
-		<requestType>select</requestType>
-			<table>pages</table>
-			<where>
-					<field operator="eq">
-						<name>pageID</name>
-						<value>5</value>
-					</field>
-			</where>
-	</parameters>
-</command>
-<command>
-	<parameters>
-		<table>pages</table>
-		<requestType>merge</requestType>
-	</parameters>
-</command>
-	
+	<command>
+		<!-- remove the word death from 'Of Death' by Sir Francis Bacon -->
+		<parameters>
+			<requestType>filter</requestType>
+			<clientID>1</clientID>
+			<wordList>death</wordList>
+			<resourceList>
+				<resource>
+					<id>1</id>
+					<url>http://www.westegg.com/bacon/death.html</url>
+				</resource>
+			</resourceList>
+		</parameters>
+	</command>
+	<command>
+		<!-- remove the word love from 'Of Love' by Sir Francis Bacon -->
+		<parameters>
+			<requestType>filter</requestType>
+			<clientID>1</clientID>
+			<wordList>love</wordList>
+			<resourceList>
+				<resource>
+					<id>2</id>
+					<url>http://www.westegg.com/bacon/love.html</url>
+				</resource>
+			</resourceList>
+		</parameters>
+	</command>
+	<command>
+		<!-- merge into one resourceList -->
+		<parameters>
+			<requestType>merge</requestType>
+			<clientID>1</clientID>
+		</parameters>
+	</command>
 </parameters>
 

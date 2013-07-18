@@ -1,31 +1,40 @@
 <parameters>
+	<clientID>1</clientID>
 	<requestType>limit</requestType>
-	<table>pages</table>
 	<amount>2</amount>
+	<offset>1</offset>
 	<resourceList>
 		<resource>
 			<id>10</id>
+			<content></content>
 		</resource>
 		<resource>
 			<id>11</id>
+			<content></content>
 		</resource>
 		<resource>
 			<id>12</id>
+			<content></content>
 		</resource>
 		<resource>
 			<id>13</id>
+			<content></content>
 		</resource>
 		<resource>
 			<id>14</id>
+			<content></content>
 		</resource>
 		<resource>
 			<id>15</id>
+			<content></content>
 		</resource>
 		<resource>
 			<id>16</id>
+			<content></content>
 		</resource>
 		<resource>
 			<id>17</id>
+			<content></content>
 		</resource>
 	</resourceList>
 </parameters>

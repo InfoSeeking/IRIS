@@ -47,7 +47,7 @@ class Index_query extends Controller{
 		fclose($HANDLE);
 
 		$out = Array();
-		exec($BIN. "IndriRunQuery " . $fn . " " . $CMD_EXTRA, $out);
+		exec($BIN. "IndriRunQuery " . $fn . " ", $out);
 
 		$response = "<parameters><requestType>index_query</requestType><requestID>". $REQ_ID ."</requestID>";
 		$response .= "<resourceList>";

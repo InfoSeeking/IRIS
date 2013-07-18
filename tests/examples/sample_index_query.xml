@@ -1,12 +1,10 @@
 <parameters>
 	<requestType>index_query</requestType>
-	<indexID>1168</indexID>
+	<clientID>1</clientID>
+	<indexID>1</indexID>
 	<query>
 		<text>
-			<!-- I don't know why, but these special characters need to be passed through bash, url must encode them or something -->
-			#combine(place men retire happy great)
+			#combine(men)
 		</text>
 	</query>
 </parameters>
-
-curl http://localhost/CoagmentoMiddleLayer/application/index.php -d 'xmldata=<parameters><requestType>index_query</requestType><indexID>1168</indexID><query><text>#combine(place men retire happy great)</text></query></parameters>'

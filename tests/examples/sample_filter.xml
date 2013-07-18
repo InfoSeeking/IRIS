@@ -1,23 +1,12 @@
 <parameters>
-	<requestType>pipe</requestType>
-	<command>
-		<parameters>
-			<requestType>select</requestType>
-			<table>pages</table>
-			<where>
-					<field operator="eq">
-						<name>pageID</name>
-						<value>9</value>
-					</field>		
-			</where>
-		</parameters>
-	</command>
-	<command>
-		<parameters>
-			<requestType>filter</requestType>
-			<table>pages</table>
-			<stopWords>the a do to are am and</stopWords>
-		</parameters>
-	</command>
-
+	<requestType>filter</requestType>
+	<clientID>1</clientID>
+	<!-- remove some stopwords -->
+	<wordList>the and a is for or but of</wordList>
+	<resourceList>
+		<resource>
+			<id>1</id>
+			<url>http://www.westegg.com/bacon/death.html</url>
+		</resource>
+	</resourceList>
 </parameters>

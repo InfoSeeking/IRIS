@@ -1,14 +1,16 @@
 <?php
 /* configurable 'constants' you may edit these to reflect your system/development stage */
 
-$ROOT="http://localhost/CoagmentoMiddleLayer/application/";
+$ROOT="http://localhost/CoagmentoMiddleLayer/application/";//index.php should be here
 $STORAGE="storage/"; //storage folder (writable directory)
 $LIB="library/";
 $BIN="bin/";
 $CONTROLLER="controllers/";
 $FILE_ROOT="";
-$STATE="debug"; //valid values are debug,live
+$STATE="live"; //valid values are debug,live
 $HOST=""; //valid values are local,live
+$STORE_REQUESTS = true; //if this is true then each request made will be stored in storage/requests
+$STORE_RESPONSES = true;
 $VALID_REQUEST_TYPES = array(
 	"merge", 
 	"limit",

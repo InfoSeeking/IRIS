@@ -1,5 +1,5 @@
 <parameters>
-	<requestType>rank</requestType>
+	<requestType>vector_rank</requestType>
 	<clientID>1</clientID>
 	<wordList>anger angry hate hatred man woman</wordList>
 	<resourceList>

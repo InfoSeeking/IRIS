@@ -1,8 +1,10 @@
 <parameters>
 	<requestType>fetch</requestType>
+	<clientID>1</clientID>
 	<resourceList>
 		<resource>
-			<url>http://www.wwnorton.com/college/history/ralph/referenc/eurotime.htm</url>
+			<id>1</id>
+			<url>http://www.westegg.com/bacon/goodness.html</url>
 		</resource>
 	</resourceList>
 </parameters>

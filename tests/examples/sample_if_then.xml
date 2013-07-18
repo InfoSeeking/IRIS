@@ -1,0 +1,52 @@
+<parameters>
+	<requestType>pipe</requestType>
+	<clientID>2</clientID>
+	<command>
+		<parameters>
+			<requestType>extract_blocks</requestType>
+			<clientID>2</clientID>
+			<persistence>TRUE</persistence>
+			<wordList>death</wordList>
+			<searchWindow>10</searchWindow>
+			<resultWindow>50</resultWindow>
+			<useStemming>FALSE</useStemming>
+			<resourceList>
+				<resource>
+					<id>1</id>
+					<url>http://www.westegg.com/bacon/death.html</url>
+				</resource>
+				<resource>
+					<id>2</id>
+					<url>http://www.westegg.com/bacon/riches.html</url>
+				</resource>
+			</resourceList>
+		</parameters>
+	</command>
+	<command>
+		<parameters>
+			<clientID>2</clientID>
+			<requestType>if_then</requestType>
+			<if>
+				<statement>
+					<val type="xpath" fxn="length">resourceList/resource/blockList/block</val>
+					<test>gt</test>
+					<val>5</val><!-- change this value to 50 to see the other command run -->
+				</statement>
+				<command>
+					<parameters>
+						<requestType>halt</requestType>
+						<clientID>2</clientID>
+					</parameters>
+				</command>
+			</if>
+			<else>
+				<command>
+					<parameters>
+						<requestType>extract</requestType>
+						<clientID>2</clientID>
+					</parameters>
+				</command>
+			</else>
+		</parameters>
+	</command>
+</parameters>

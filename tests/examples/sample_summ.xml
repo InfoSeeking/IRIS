@@ -1,8 +1,0 @@
-<parameters>
-	<requestType>summarize</requestType>
-	<maxSentences>5</maxSentences>
-	<individualSummaries>TRUE</individualSummaries>
-	<docList>
-		<doc><docID>73</docID></doc>
-	</docList>
-</parameters>

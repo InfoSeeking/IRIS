@@ -114,7 +114,7 @@ Example request:
 
 ```
 ##Merge
-Merge requests combine multiple resourceList elements into one
+Merge requests combine multiple resourceList elements into one.
 ###Request
 ```
 <parameters>
@@ -157,9 +157,9 @@ Merge requests combine multiple resourceList elements into one
 </parameters>
 ```
 ##<a id="Pipe"></a>Pipe
-The pipe command allows you to do a unix-like pipe feeding the output of one command into the input of another. You cannot do this by simply taking the XML output of one and passing it to another command since it needs a bit of reformatting. This allows multiple commands to be easily strung together and called repeatedly without much work of the client.
+The pipe command allows you to do a unix-like pipe feeding the output of one command into the input of another. This allows multiple commands to be easily strung together and called repeatedly without much work of the client. See the tests folder to see some example pipe requests.
 
-Subtle Rules:
+Subtle Behavior:
 
 If you pipe to rank/filter/query, and do not supply a wordlist element, it will automatically use the content of the first resource of the first resourceList in queue
 ###Request
@@ -170,7 +170,7 @@ If you pipe to rank/filter/query, and do not supply a wordlist element, it will 
 		(Any of the input formats for the commands)
 	</command>
 	<command>
-		(This command will get the resourceList input from the previous command, therefore it is unnecessary to include a resourceList in this command.)
+		(This command will get the resourceList input from the previous command, therefore it is not necessary to include a resourceList in this command.)
 	</command>
 	...
 </parameters>
@@ -179,7 +179,7 @@ If you pipe to rank/filter/query, and do not supply a wordlist element, it will 
 The response will follow the format of the last executed command.
 
 ##<a id="Limit"></a>Limit
-The limit request allows you to select a subset of results. The offset is optional and defaults to 0.
+The limit request allows you to select a subset of results. The offset is optional and defaults to 0. This is comparable to a SQL limit.
 ###Request
 ```
 <parameters>
@@ -265,9 +265,14 @@ This controller uses an older format of resources (and will check for a field el
 	<resourceList>
 		<resource>
 			<id>id</id>
-			<keywords>comma,seperated,keywords</keywords>
+			<keywords>
+				<keyword>
+					<word></word>
+					<freq></freq>
+				</keyword>
+			</keywords>
 			<content type="extracted">
-				data
+				words in order of frequency
 			</content>
 		</resource>
 		...
@@ -277,7 +282,8 @@ This controller uses an older format of resources (and will check for a field el
 
 ##<a id="Filter"></a>Filter
 ###Request
-The wordList parameter (optional) are the words you wish to remove from the content
+The filter controller removes words from the resources provided.
+The wordList parameter contains the words you wish to remove from the content.
 
 ```
 <parameters>
@@ -310,7 +316,17 @@ The wordList parameter (optional) are the words you wish to remove from the cont
 ```
 
 ##<a id="Query"></a>Query
-Performs simple queries on documents
+As of now, you can query documents with a set of words in the wordList element. The query checks the number of occurences of each word. You can use the following checks:
+
+- eq - equal
+- ne - not equal
+- gt - greater than
+- lt - less than
+
+The useStemming flag tells whether or not to match a word based on partial beginning match. i.e. if useStemming is true and the word 'cat' is in the wordList, this will match for 'catch', or anything starting with 'cat'.
+
+The query must be valid for each word in the wordList to return the document. (I may change this later as I feel this can be more useful)
+
 ###Request
 ```
 <parameters>
@@ -356,7 +372,6 @@ Ranks documents based on a supplied list of words. The ranking is based on total
 	<resourceList>
 		<resource>
 			<id>id</id>
-			<rank>number</rank>
 			<content></content>
 		</resource>
 		...
@@ -365,7 +380,7 @@ Ranks documents based on a supplied list of words. The ranking is based on total
 ```
 
 ##<a id="vector_rank"></a>Vector Rank
-Ranks documents using a vector model of the wordList you supply and returns a rank based on the cosine similarity of the query and the document
+Ranks documents using a td-idf vector model of the wordList you supply and returns a rank based on the cosine similarity of the query and the document
 ###Request
 ```
 <parameters>
@@ -374,7 +389,6 @@ Ranks documents using a vector model of the wordList you supply and returns a ra
 	<resourceList>
 		<resource>
 			<id>id</id>
-			<rank>number</rank>
 			<content></content>
 		</resource>
 		...
@@ -383,6 +397,7 @@ Ranks documents using a vector model of the wordList you supply and returns a ra
 ```
 
 ##<a id="index_insert"></a>Index Insert
+Create or add documents to an Indri index.
 ###Request
 ```
 <parameters>
@@ -419,6 +434,7 @@ Ranks documents using a vector model of the wordList you supply and returns a ra
 </parameters>
 ```
 ##<a id="index_delete"></a>Index Delete
+Delete an Indri index.
 ###Request
 ```
 <parameters>
@@ -467,13 +483,14 @@ Index Query cannot return more than the id of the pages since Indri will only re
 
 
 ##<a id="fetch"></a>Fetch
-Fetch gets the content of the passed url's
+Fetch gets the content of the passed url's. This operator is sort of a placeholder, since when a request is made (and only URLs are specified) IRIS will automatically fetch them anyway. You do not need to use a fetch before piping to another operator as it is unnecessary. However, this can be useful for fetching documents for your own use.
 ###Request
 ```
 <parameters>
 	<requestType>fetch</requestType>
 	<resourceList>
 		<resource>
+			<id></id>
 			<url>page url</url>
 		</resource>
 		...
@@ -487,6 +504,7 @@ Fetch gets the content of the passed url's
 	<requestID>number</requestID>
 	<resourceList>
 		<resource>
+			<id></id>
 			<url>page url</url>
 			<content>page content</content>
 		</resource>
@@ -496,6 +514,8 @@ Fetch gets the content of the passed url's
 ```
 
 ##<a id="extract_blocks"></a>Extract Blocks
+Extract blocks allows you to search for words within a specific <b>searchWindow</b> and will return the words within the <b>resultWindow</b>. For example, if you set the <b>wordList</b> to "hello goodbye" and the <b>searchWindow</b> to 5 and the <b>resultWindow</b> to 10, it will search for the the occurrences of hello and goodbye within 5 words of each other and return the surrounding 10 words.
+
 ###Request
 ```
 <parameters>

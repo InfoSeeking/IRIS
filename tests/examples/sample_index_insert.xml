@@ -1,5 +1,6 @@
 <parameters>
 	<clientID>1</clientID>
+	<indexID>1</indexID>
 	<requestType>index_insert</requestType>
 	<persistence>true</persistence>
 	<resourceList>

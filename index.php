@@ -41,17 +41,19 @@ catch(Exception $e){
 $response = handleRequest($xml);
 echo $response;
 
-//save this request
-$fname = $STORAGE . "requests/" . $REQ_ID . ".xml";
-$REQ_FILE = fopen($fname, "w");
-fwrite($REQ_FILE, $xmldata);
-fclose($REQ_FILE);
-
-//save response
-$RES_FILE = fopen($STORAGE . "responses/" . $REQ_ID . ".xml", "w");
-fwrite($RES_FILE, $response);
-fclose($RES_FILE);
-
+if($STORE_REQUEST){
+	//save this request
+	$fname = $STORAGE . "requests/" . $REQ_ID . ".xml";
+	$REQ_FILE = fopen($fname, "w");
+	fwrite($REQ_FILE, $xmldata);
+	fclose($REQ_FILE);
+}
+if($STORE_RESPONSE){
+	//save response
+	$RES_FILE = fopen($STORAGE . "responses/" . $REQ_ID . ".xml", "w");
+	fwrite($RES_FILE, $response);
+	fclose($RES_FILE);
+}
 clean();
 mysqli_close($cxn);
 ?>

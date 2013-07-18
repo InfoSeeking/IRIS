@@ -1,4 +1,5 @@
 <parameters>
 	<requestType>index_delete</requestType>
-	<indexID>1083</indexID>
+	<clientID>1</clientID>
+	<indexID>1</indexID>
 </parameters>
