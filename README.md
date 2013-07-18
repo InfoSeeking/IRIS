@@ -241,6 +241,7 @@ This controller uses an older format of resources (and will check for a field el
 </parameters>
 ```
 ##<a id="Extract"></a>Extract
+Extract shows the most frequent words. It will return the number of keywords specified by <b>numWords</b>.
 ###Request
 ```
 <parameters>
