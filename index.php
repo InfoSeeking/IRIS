@@ -23,7 +23,7 @@ $response = "";
 
 //get xml data and write to a file
 if(!isset($_REQUEST['xmldata'])){//change to POST when live
-	die(err("No xml data provided"));
+	die(err("No xml data provided, pass data through the xmldata variable with a POST request"));
 }
 
 $xml = false;

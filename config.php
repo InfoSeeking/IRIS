@@ -37,7 +37,7 @@ if($_SERVER["HTTP_HOST"] == "localhost"){
 else if($_SERVER["HTTP_HOST"] == "iris.comminfo.rutgers.edu"){
 	$HOST="live";
 	$STATE = "live";
-	$BIN = "LD_LIBRARY_PATH=/usr/local/lib bin/";
+	$BIN = "";//LD_LIBRARY_PATH=/usr/local/lib bin/";
 }
 
 /* do not edit below this... or else */

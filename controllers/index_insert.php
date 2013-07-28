@@ -42,7 +42,7 @@ class Index_insert extends Controller{
 
 		//build index with that parameter file, if user supplied indexID add to the existing index
 		//now build the index
-		system($FILE_ROOT . "bin/IndriBuildIndex " . fname($STORAGE . "build_index.param") . $CMD_EXTRA);
+		system($BIN . "IndriBuildIndex " . fname($STORAGE . "build_index.param") . $CMD_EXTRA);
 		$response = "<parameters><requestID>" . $REQ_ID ."</requestID><indexID>" . $index_id . "</indexID><requestType>index_insert</requestType></parameters>";
 		return $response;
 		
