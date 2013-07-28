@@ -1,3 +1,7 @@
+The API for IRIS is located at [iris.comminfo.rutgers.edu](http://iris.comminfo.rutgers.edu)
+
+You can see more about IRIS [here](http://iris.infoseeking.org)
+
 #Functionality
 Here is a list of all of the current controllers:
 - [merge](#merge) - merge multiple resourceList elements into one
