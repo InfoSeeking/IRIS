@@ -91,6 +91,7 @@ char ** getBlocks(char *data, pnode *words_tree, int num_words, int searchWindow
 			int strSize = resultLL->num_chars * 2;//approximate
 			int actualSize = 0;
 			blockMatches[curMatch] = (char *)malloc(strSize * sizeof(char));
+			blockMatches[curMatch][0] = '\0';
 			do{
 				actualSize += strlen(ptr->word) + 1;
 				if(actualSize > strSize){
@@ -105,7 +106,7 @@ char ** getBlocks(char *data, pnode *words_tree, int num_words, int searchWindow
 			//add other half of words
 			word = getWord(data, &index);
 			for(i = 0; i < resultWindow + searchWindow && word != NULL; i++){
-				actualSize += strlen(word) + 1;
+				actualSize += strlen(word) + 2;
 				if(actualSize > strSize){
 					strSize *= 2;
 					blockMatches[curMatch] = (char *)realloc(blockMatches[curMatch], strSize * sizeof(char));
