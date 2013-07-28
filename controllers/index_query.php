@@ -48,7 +48,6 @@ class Index_query extends Controller{
 
 		$out = Array();
 		exec($BIN. "IndriRunQuery " . $fn . " ", $out);
-
 		$response = "<parameters><requestType>index_query</requestType><requestID>". $REQ_ID ."</requestID>";
 		$response .= "<resourceList>";
 		$scores = Array();

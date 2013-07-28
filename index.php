@@ -41,14 +41,14 @@ catch(Exception $e){
 $response = handleRequest($xml);
 echo $response;
 
-if($STORE_REQUEST){
+if($STORE_REQUESTS){
 	//save this request
 	$fname = $STORAGE . "requests/" . $REQ_ID . ".xml";
 	$REQ_FILE = fopen($fname, "w");
 	fwrite($REQ_FILE, $xmldata);
 	fclose($REQ_FILE);
 }
-if($STORE_RESPONSE){
+if($STORE_RESPONSES){
 	//save response
 	$RES_FILE = fopen($STORAGE . "responses/" . $REQ_ID . ".xml", "w");
 	fwrite($RES_FILE, $response);

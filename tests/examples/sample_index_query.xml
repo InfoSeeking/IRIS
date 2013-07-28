@@ -3,8 +3,6 @@
 	<clientID>1</clientID>
 	<indexID>1</indexID>
 	<query>
-		<text>
 			#combine(men)
-		</text>
 	</query>
 </parameters>

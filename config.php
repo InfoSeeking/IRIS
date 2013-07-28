@@ -34,11 +34,13 @@ $VALID_REQUEST_TYPES = array(
 if($_SERVER["HTTP_HOST"] == "localhost"){
 	$HOST="local";
 }
-else{
+else if($_SERVER["HTTP_HOST"] == "iris.comminfo.rutgers.edu"){
 	$HOST="live";
+	$STATE = "live";
+	$BIN = "LD_LIBRARY_PATH=/usr/local/lib bin/";
 }
 
-/* do not edit below this */
+/* do not edit below this... or else */
 $CMD_EXTRA = " 2>&1";
 if($STATE=="live"){
 	$CMD_EXTRA = " 1>/dev/null 2>&1";

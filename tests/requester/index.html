@@ -7,6 +7,7 @@
   	Before you try running this page on your own server be sure to change the API endpoint to match yours!
   	*/
   	var API_ENDPOINT = "http://localhost/IRIS/application/index.php";
+  	API_ENDPOINT = "http://iris.comminfo.rutgers.edu";
 
   	</script>
 
@@ -94,6 +95,7 @@
 		//parse the input to double check
 		new XMLTree({
 			shorten: true,
+			noURLTracking: true,
 			xml: outputData,
 			container: "#output div",
 			startExpanded: true,
