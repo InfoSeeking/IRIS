@@ -4,8 +4,12 @@ require_once("dbconfig.php");
 require_once($CONTROLLER . "controller.php");
 require_once($LIB . "magic_quotes.php");
 require_once($LIB . "shared_functions.php");
+require_once("autoload.php");
 
 header("Access-Control-Allow-Origin: *");
+
+
+
 /*
 requests should be made with the request type on the end of the url like so:
 <api url>/<request type>
@@ -23,7 +27,7 @@ $response = "";
 
 //get xml data and write to a file
 if(!isset($_REQUEST['xmldata'])){//change to POST when live
-	die(err("No xml data provided, pass data through the xmldata variable with a POST request"));
+	die(err("No XML data provided. To pass XML data, send a POST request with a variable 'xmldata' set to your data. To see more information, view the <a href='http://iris.infoseeking.org'>website for IRIS</a>"));
 }
 
 $xml = false;
@@ -33,11 +37,13 @@ try{
 	$xml = new SimpleXMLElement($xmldata);
 }
 catch(Exception $e){
-	die(err("Xml could not be parsed"));
+	die(err("XML could not be parsed"));
+}
+if(!$xml){
+	die(err("XML could not be parsed"));
 }
 
-
-//handleRequest will load the requestType controller
+// will load the requestType controller
 $response = handleRequest($xml);
 echo $response;
 
@@ -56,4 +62,32 @@ if($STORE_RESPONSES){
 }
 clean();
 mysqli_close($cxn);
+
+use UnitedPrototype\GoogleAnalytics;
+/* track the page */
+if($USE_ANALYTICS){
+	// Initilize GA Tracker
+	//account_id and domain are declared in db_config
+	$tracker = new GoogleAnalytics\Tracker($account_id, $domain);
+
+	// Assemble Visitor information
+	// (could also get unserialized from database)
+	$visitor = new GoogleAnalytics\Visitor();
+	$visitor->setIpAddress($_SERVER['REMOTE_ADDR']);
+	$visitor->setUserAgent($_SERVER['HTTP_USER_AGENT']);
+
+	// Assemble Session information
+	// (could also get unserialized from PHP session)
+	$session = new GoogleAnalytics\Session();
+
+	// Assemble Page information
+	$page = new GoogleAnalytics\Page('/index.php');
+	$page->setTitle('API Endpoint');
+
+	//track request type
+	$reqType = new GoogleAnalytics\CustomVariable(1, "requestType", $xml->requestType, GoogleAnalytics\CustomVariable::SCOPE_PAGE);
+
+	// Track page view
+	$tracker->trackPageview($page, $session, $visitor);
+}
 ?>
