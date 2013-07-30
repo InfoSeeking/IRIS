@@ -3,7 +3,7 @@ The API for IRIS is located at [iris.comminfo.rutgers.edu](http://iris.comminfo.
 You can see more about IRIS [here](http://iris.infoseeking.org)
 
 #Functionality
-Here is a list of all of the current controllers:
+Here is a list of all of the current operators:
 - [merge](#merge) - merge multiple resourceList elements into one
 - [pipe](#pipe) - do a Unix like pipe by using the output of a request as input to the next
 - [limit](#limit) - SQL style limit of documents returned
@@ -26,7 +26,7 @@ Here is a list of all of the current controllers:
 - bin/ - Executable files (compiled on Linux Mint)
 - extension/ - written in C to handle text processing, compiled version is called text_processing and is in bin folder
 - controllers/ - files which perform specific tasks (e.g. clustering, summarization, etc.)
-- library/ - helpful methods shared among all controllers
+- library/ - helpful methods shared among all operators
 - storage/ - folder where all of the request/response data is stored, where all of the necessary indexing files are created (and removed)
 - tests/ - this folder has all of our testing XML files, most of which are very simple and used for debugging, however, under tests/higher_behavior, there are more interesting XML tests using piping to do more complex actions
 - tests/requester - this is a tool for sending XML requests to your API and viewing responses in a collapsable XML tree. It is useful for testing without having to write code
@@ -52,19 +52,19 @@ Some considerations:
 - You may want to increase the PHP maximum execution time. If you are expecting requests with a lot of URLs (not content) fetching every document may take longer than the default maximum execution time of 30 seconds. 
 
 ##How the Requests are Handled
-The API endpoint is the index.php file. When a client makes a request to the API, the index.php file receives this request. The request is expected to contain a variable called <b>xmldata</b> which contains all of the request XML (formats of which are described later in this documentation). When index.php receives this, it will parse the <b>xmldata</b> variable as a SimpleXML object. Using the value of the "requestType" element, it loads a controller with that value (if one exists and is specified in config.php). So if the value of requestType is "extract" then it will load the file controllers/extract.php.
+The API endpoint is the index.php file. When a client makes a request to the API, the index.php file receives this request. The request is expected to contain a variable called <b>xmldata</b> which contains all of the request XML (formats of which are described later in this documentation). When index.php receives this, it will parse the <b>xmldata</b> variable as a SimpleXML object. Using the value of the "requestType" element, it loads an operator with that value (if one exists and is specified in config.php). So if the value of requestType is "extract" then it will load the file controllers/extract.php.
 
-##How to Add a Controller
+##How to Add an Operator
 In the file you created in the controllers directory, make a new class with the same name as the file (except with a capital letter first). This class needs to extend the Controller class. Now you can override the run method and write the code to process the request there and return the output. So going with our keywords example you should have the following:
 
 - A file named keywords.php in the controllers directory
 - In keywords.php, a class named Keywords which extends the Controller class
 - In the Keywords class, a run method which contains the main processing logic
 
-Now if you try sending a request with requestType set to "keywords" IRIS will complain and say that keywords is not a valid type. So as a last step, in config.php, add 'keywords' to the VALID_REQUEST_TYPES array. Now IRIS will know that "keywords" is a valid controller.
+Now if you try sending a request with requestType set to "keywords" IRIS will complain and say that keywords is not a valid type. So as a last step, in config.php, add 'keywords' to the VALID_REQUEST_TYPES array. Now IRIS will know that "keywords" is a valid operator.
 
 ##How to Add a Text Processing extension
-For heavy text processing, it is recommended that you write a program in C which your PHP controller can call since text processing would probably be less efficient in PHP. All of the text processing functions are contained within the "extension" directory. The text_processing.c file is the main file. To add a new 
+For heavy text processing, it is recommended that you write a program in C which your PHP operator can call since text processing would probably be less efficient in PHP. All of the text processing functions are contained within the "extension" directory. The text_processing.c file is the main file. To add a new 
 
 ##Error Response
 When IRIS encounters an error, this is what it will return:
@@ -98,7 +98,7 @@ Identification of a resource happens on two or three levels. The client using th
 
 On the initial call to the API, the client will have to specify either the content or URL for all of the pages passed. However, a benefit of enabling persistence on pages is that for any later calls on the same pages, the client will only need to specify the id element.
 
-Controllers which modify content (e.g. filter) will return the content element with a type attribute indicating that it has been modified. For example, calling the filter controller will return content with type="filtered". Even having persistence enabled will not store modified content.
+Operators which modify content (e.g. filter) will return the content element with a type attribute indicating that it has been modified. For example, calling the filter operator will return content with type="filtered". Even having persistence enabled will not store modified content.
 
 Example request:
 ```
@@ -214,7 +214,7 @@ The limit request allows you to select a subset of results. The offset is option
 
 ##<a id="Sort"></a>Sort (deprecated)
 Sort a resource list
-This controller uses an older format of resources (and will check for a field element). However, it will be updated to adhere to the new XML format. Until then, it is advised not to use this operator unless you wish to alter it.
+This operator uses an older format of resources (and will check for a field element). However, it will be updated to adhere to the new XML format. Until then, it is advised not to use this operator unless you wish to alter it.
 
 ###Request
 ```
@@ -287,7 +287,7 @@ Extract shows the most frequent words. It will return the number of keywords spe
 
 ##<a id="Filter"></a>Filter
 ###Request
-The filter controller removes words from the resources provided.
+The filter operator removes words from the resources provided.
 The wordList parameter contains the words you wish to remove from the content.
 
 ```
@@ -561,7 +561,7 @@ Extract blocks allows you to search for words within a specific <b>searchWindow<
 ```
 
 ##<a id="summarize_sentences"></a>Summarize Sentences
-This simple summarization controller will use the words in the wordList passed and deem the most important sentences of a document by which those words appear the most.
+This simple summarization operator will use the words in the wordList passed and deem the most important sentences of a document by which those words appear the most.
 
 At the moment, the word list can have repeated words (which will weight those words higher). This will most likely be removed for consistency.
 ```

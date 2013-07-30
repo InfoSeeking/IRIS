@@ -62,32 +62,4 @@ if($STORE_RESPONSES){
 }
 clean();
 mysqli_close($cxn);
-
-use UnitedPrototype\GoogleAnalytics;
-/* track the page */
-if($USE_ANALYTICS){
-	// Initilize GA Tracker
-	//account_id and domain are declared in db_config
-	$tracker = new GoogleAnalytics\Tracker($account_id, $domain);
-
-	// Assemble Visitor information
-	// (could also get unserialized from database)
-	$visitor = new GoogleAnalytics\Visitor();
-	$visitor->setIpAddress($_SERVER['REMOTE_ADDR']);
-	$visitor->setUserAgent($_SERVER['HTTP_USER_AGENT']);
-
-	// Assemble Session information
-	// (could also get unserialized from PHP session)
-	$session = new GoogleAnalytics\Session();
-
-	// Assemble Page information
-	$page = new GoogleAnalytics\Page('/index.php');
-	$page->setTitle('API Endpoint');
-
-	//track request type
-	$reqType = new GoogleAnalytics\CustomVariable(1, "requestType", $xml->requestType, GoogleAnalytics\CustomVariable::SCOPE_PAGE);
-
-	// Track page view
-	$tracker->trackPageview($page, $session, $visitor);
-}
 ?>

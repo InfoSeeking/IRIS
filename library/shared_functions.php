@@ -203,7 +203,7 @@ function add_request($xml){
 	global $REQ_ID, $cxn, $HOST, $response;
 	//for now only test the request table locally
 	
-	$query = sprintf("INSERT INTO operator_requests (`reqType`, `date`, `time`) VALUES('%s', CURDATE(), CURTIME())", esc($xml->requestType));
+	$query = sprintf("INSERT INTO operator_requests (`reqType`, `date`, `time`, `ip_addr`) VALUES('%s', CURDATE(), CURTIME(), '%s')", esc($xml->requestType), esc($_SERVER['REMOTE_ADDR']));
 	mysqli_query($cxn, $query) or die(err("Could not insert request into database"));
 	$REQ_ID = mysqli_insert_id($cxn);
 	return false;
