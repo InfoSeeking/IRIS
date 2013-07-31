@@ -8,10 +8,6 @@ class Index_insert extends Controller{
 		$pers = strtolower($xml->persistence) == "true" ? TRUE : FALSE;
 		
 
-		$TREC_FILE_LIST = fopen($FILE_ROOT . fname($STORAGE . "trec_file.list"), "w");
-		fwrite($TREC_FILE_LIST, $FILE_ROOT . fname($STORAGE . "trec.txt"));
-		fclose($TREC_FILE_LIST);
-
 		$TREC = fopen(fname($STORAGE . "trec.txt"), "w");
 		foreach($xml->resourceList->resource as $res){
 				fwrite($TREC, "<DOC>\n<DOCNO>" . $res->id ."</DOCNO>\n<TEXT>\n");

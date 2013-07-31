@@ -1,5 +1,6 @@
 <?php
 /* uses updated syntax and stuff */
+//TODO: add content/url to output if available
 class Cluster extends Controller{
 	function run($xml){
 		global $FILE_ROOT, $STORAGE, $REQ_ID, $CMD_EXTRA, $LIB, $BIN;
@@ -7,21 +8,17 @@ class Cluster extends Controller{
 		$numOfClusters = intval($xml->numClusters);
 		$numOfDocuments = 0;
 
-		$TREC = fopen($FILE_ROOT . fname($STORAGE . "trec.txt"), "w");//TODO make sure that you're not overwriting anything with a unique id or something
 
-		$TREC_FILE_LIST = fopen($FILE_ROOT . fname($STORAGE . "trec_file.list"), "w");
-		fwrite($TREC_FILE_LIST, $FILE_ROOT . fname($STORAGE . "trec.txt"));
-		fclose($TREC_FILE_LIST);
-
-		$trec_content = "";
+		$TREC = fopen(fname($STORAGE . "trec.txt"), "w");
 		foreach($xml->resourceList->resource as $res){
-			$trec_content .= "<DOC><DOCNO>". $res->id . "</DOCNO>";
-			$trec_content .= "<TEXT>". $res->content . "</TEXT></DOC>";
-			$numOfDocuments++;
+				//I am not sure why, but if you don't include the newline characters, IndriBuildIndex says the document is malformed :/
+				fwrite($TREC, "<DOC>\n<DOCNO>" . $res->id ."</DOCNO>\n<TEXT>\n");
+				fwrite($TREC, $res->content);
+				fwrite($TREC, "</TEXT>\n</DOC>\n");
+				$numOfDocuments++;
 		}
-
-		fwrite($TREC, $trec_content);
 		fclose($TREC);
+
 
 		if($numOfClusters > $numOfDocuments){
 			die(err("Number of clusters is more than the number of documents"));
@@ -29,12 +26,11 @@ class Cluster extends Controller{
 
 		//now build the index
 		$IPARAM = fopen(fname($STORAGE . "build_index.param"), "w");
-		$tmp = "<parameters><index>" . fname($STORAGE . "index") . "</index><indexType>indri</indexType><dataFiles>" . fname($STORAGE . "trec_file.list") . "</dataFiles><docFormat>trec</docFormat><stopwords>" . $LIB . "stopwords.param</stopwords></parameters>";
+		$tmp = "<parameters><index>" . fname($STORAGE . "index") . "</index><corpus><path>" . fname($STORAGE . "trec.txt") . "</path><class>trectext</class></corpus><stopper>" . $stopwords . "</stopper></parameters>";
 		fwrite($IPARAM, $tmp);
 		fclose($IPARAM);
 
-		system($BIN . "BuildIndex " . fname($STORAGE . "build_index.param") . $CMD_EXTRA);
-
+		system($BIN . "IndriBuildIndex " . fname($STORAGE . "build_index.param") . $CMD_EXTRA);
 		//create cluster parameters
 		$CPARAM = fopen($FILE_ROOT . fname($STORAGE . "cluster.param"), "w");
 
@@ -66,7 +62,6 @@ class Cluster extends Controller{
 			$response .= "<cluster><clusterID>" . $i ."</clusterID><resourceList>\n";
 		        for($j = 0; $j < sizeof($cids); $j++){
 		        	$response .= "<resource><id>" . $cids[$j] ."</id>";
-		        	//$response .= "<url>TODO</url>";
 		          	$response .= "</resource>";
 		   	    }
 		     $response .= "</resourceList></cluster>";

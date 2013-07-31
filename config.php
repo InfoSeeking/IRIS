@@ -34,6 +34,7 @@ $VALID_REQUEST_TYPES = array(
 
 if($_SERVER["HTTP_HOST"] == "localhost"){
 	$HOST="local";
+	//$STATE="debug";
 }
 else if($_SERVER["HTTP_HOST"] == "iris.comminfo.rutgers.edu"){
 	$HOST="live";

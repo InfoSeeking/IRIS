@@ -21,6 +21,7 @@ Here is a list of all of the current operators:
 - [summarize_sentences](#summarize-sentences) - gives the most important sentences as a summarization
 - [if_then](#if-then) - perform an if-then form of control flow
 - [halt](#halt) - stop execution of a pipe
+- [cluster](#cluster) - do k-means clustering with Lemur
 
 #Directory Structure
 - bin/ - Executable files (compiled on Linux Mint)
@@ -41,6 +42,7 @@ Here is a list of all of the current operators:
 ##Server Prerequisites and Considerations
 To run IRIS, you need the following:
 - Indri (I used version 5.4) binaries of IndriBuildIndex and IndriRunQuery. There are versions compiled on Linux Mint in the bin folder, however if you are running a different operating system you may need to recompile. You can find the source for Indri [here](http://sourceforge.net/projects/lemur/)
+- The OfflineCluster binary from Lemur (only used for the cluster operator) also located [here](http://sourceforge.net/projects/lemur/)
 - [MiniXML](http://www.msweet.org/projects.php?Z3) for C extensions (not required if you don't need to recompile the text_processing binaries)
 - The text_processing binary compiled on your system. The source for this is in the extensions folder. There is an existing binary in the bin folder, and it was compiled on Linux Mint.
 - PHP 5.4.6 (It probably works on other versions, but this is what is was developed on)
@@ -664,5 +666,43 @@ The halt operator stops execution and is supposed to be used in conjunction with
 <parameters>
 	<requestType>halt</requestType>
 	<requestID></requestID>
+</parameters>
+```
+
+##Cluster
+The cluster operator uses the OfflineCluster program provided with Lemur. This does k-means clustering. As of now, the response will only give the id's of the documents regardless of the returnType specified. This may change in the future.
+
+###Request
+```
+<parameters>
+	<requestType>cluster</requestType>
+	<numClusters></numClusters>
+	<resourceList>
+		...
+	</resourceList>
+</parameters>
+```
+
+###Response
+```
+<?xml version="1.0"?>
+<parameters>
+	<requestType>cluster</requestType>
+	<requestID></requestID>
+	<clusterList>
+		<cluster>
+			<clusterID>0</clusterID>
+			<resourceList>
+				...
+			</resourceList>
+		</cluster>
+		<cluster>
+			<clusterID>1</clusterID>
+			<resourceList>
+				...
+			</resourceList>
+		</cluster>
+		...
+	</clusterList>
 </parameters>
 ```

@@ -312,7 +312,8 @@ function clean(){
 		fname($STORAGE . "build_index.param"),
 		fname($STORAGE . "cluster.param"),
 		fname($STORAGE . "sum.param"),
-		fname($STORAGE . "query.param")
+		fname($STORAGE . "query.param"),
+		fname($STORAGE . "index")
 		);
 	
 	//If you are trying to get a better understanding of how the system works I suggest commenting out the following system(...) line so the temporary files are not removed
