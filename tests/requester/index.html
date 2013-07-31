@@ -4,11 +4,12 @@
 	<script>
   /* 
   	Well hello there traveller!
-  	Before you try running this page on your own server be sure to change the API endpoint to match yours!
+  	Before you try running this page on your own server be sure to change the ROOT_URL to match yours!
   	*/
-  	var API_ENDPOINT = "http://localhost/IRIS/application/index.php";
-  //	API_ENDPOINT = "http://iris.comminfo.rutgers.edu";
-
+  	var ROOT_URL = "http://localhost/IRIS/application";
+  		//ROOT_URL = "http://iris.comminfo.rutgers.edu";
+  	var FETCH_SAMPLE = ROOT_URL + "/tests/requester/fetchSample.php";
+  	var API_ENDPOINT = ROOT_URL + "/index.php";
   	</script>
 
   	<meta charset="utf-8">
@@ -37,21 +38,37 @@
 			<div class="side left" id="input">
 				<h2>Input</h2>
 				<div class="tools">
-					<label>Request Type: </label>
+					<label>Sample Request: </label>
 					<select id="selection">
-						<option value="extract">Extract</option>
-						<option value="filter">Filter</option>
-						<option value="rank">Rank</option>
+						<option value="--">--</option>
+						<option value="cluster">cluster</option>
+						<option value="extract">extract</option>
+						<option value="extract_blocks">extract_blocks</option>
+						<option value="fetch">fetch</option>
+						<option value="filter">filter</option>
+						<option value="if_then">if_then</option>
+						<option value="index_delete">index_delete</option>
+						<option value="index_insert">index_insert</option>
+						<option value="index_query">index_query</option>
+						<option value="limit">limit</option>
+						<option value="merge">merge</option>
+						<option value="pipe">pipe</option>
+						<option value="query">query</option>
+						<option value="rank">rank</option>
+						<option value="summarize_sentences">summarize_sentences</option>
+						<option value="vector_rank">vector_rank</option>
 					</select>
+					<button id="clear">Clear</button>
 					<button id="process">Process</button>
 				</div>
 				<textarea></textarea>
+				<p>Documentation is located on Github <a href="https://github.com/kevinAlbs/IRIS" target="_blank">here</a>.</p>
 			</div>
 			<div class="side right" id="output">
 				<div></div>
 			</div>
 		</div>
-
+		
 	</div>
 	<script type="text/javascript">
 	var timer = null;
@@ -158,12 +175,32 @@
   			showFeedback("Please Add Input", "error");
   		}
   	});
+	function clear(){
+		$("#input textarea").html("");
+	}
 
-$("textarea").html(data.requests.extract);
+	$("#clear").on("click", clear);
 
-$("#selection").on("change", function(e){
-	$("#input textarea").html(data.requests[$(this).val()]);
-});
+	$("textarea").html(data.requests.extract);
+
+	$("#selection").on("change", function(e){
+		toggleLoader(true);
+		var sample = $(this).val();
+		if(sample == "--"){
+			toggleLoader(false);
+			clear();
+			return;
+		}
+
+		$.ajax({
+			url: FETCH_SAMPLE,
+			data: {sample: $(this).val()},
+			success: function(returnData){
+				toggleLoader(false);
+				$("#input textarea").html(returnData);
+			}
+		});
+	});
 </script>
 </body>
 </html>

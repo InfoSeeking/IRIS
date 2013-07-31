@@ -60,15 +60,22 @@
 		background-position: 0px -16px;
 		background-attachment: local;
 	}
-	button#process{
+	button{
 		cursor: pointer;
-		padding: 5px;
+		padding: 5px 10px;
 		border-radius: 3px;
 		border: 1px green solid;
 		background: rgb(0, 230, 100);
+	}
+	#process{
 		position: absolute;
 		top: 10px;
 		right: 0px;
+	}
+	#clear{
+		background: #FC7474;
+		border-color: #FA6161;
+		margin-left: 1em;
 	}
 	.tools{
 		position: relative;

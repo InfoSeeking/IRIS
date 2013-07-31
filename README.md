@@ -1,4 +1,6 @@
-The API for IRIS is located at [iris.comminfo.rutgers.edu](http://iris.comminfo.rutgers.edu)
+The API endpoint for IRIS is located at [iris.comminfo.rutgers.edu](http://iris.comminfo.rutgers.edu)
+
+You can test out the API yourself or use our [request sending tool](http://iris.comminfo.rutgers.edu/tests/requester/)
 
 You can see more about IRIS [here](http://iris.infoseeking.org)
 
