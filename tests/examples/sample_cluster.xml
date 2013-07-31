@@ -1,0 +1,31 @@
+<parameters>
+	<requestType>cluster</requestType>
+	<clientID>2</clientID>
+	<numClusters>3</numClusters>
+	<resourceList>
+		<resource>
+			<id>1</id>
+			<url>http://www.westegg.com/bacon/death.html</url>
+		</resource>
+		<resource>
+			<id>2</id>
+			<url>http://www.westegg.com/bacon/riches.html</url>
+		</resource>
+		<resource>
+			<id>3</id>
+			<url>http://www.westegg.com/bacon/truth.html</url>
+		</resource>
+		<resource>
+			<id>4</id>
+			<url>http://www.westegg.com/bacon/nobility.html</url>
+		</resource>
+		<resource>
+			<id>5</id>
+			<url>http://www.westegg.com/bacon/delays.html</url>
+		</resource>
+		<resource>
+			<id>6</id>
+			<url>http://www.westegg.com/bacon/suspicion.html</url>
+		</resource>
+	</resourceList>
+</parameters>
