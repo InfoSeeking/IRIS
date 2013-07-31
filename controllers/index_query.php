@@ -35,6 +35,9 @@ class Index_query extends Controller{
 		$queryStr = "<parameters>";
 		foreach($xml->indexID as $indexID){
 			$index_dir = $STORAGE . "indexes/index_" . (string)$indexID;
+			if(!file_exists($index_dir)){
+				die(err("Index " . $indexID . " does not exist"));
+			}
 			$queryStr .= "<index>" . $index_dir ."</index>";
 		}
 		

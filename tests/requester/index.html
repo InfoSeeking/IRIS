@@ -7,7 +7,7 @@
   	Before you try running this page on your own server be sure to change the ROOT_URL to match yours!
   	*/
   	var ROOT_URL = "http://localhost/IRIS/application";
-  		//ROOT_URL = "http://iris.comminfo.rutgers.edu";
+  	//	ROOT_URL = "http://iris.comminfo.rutgers.edu";
   	var FETCH_SAMPLE = ROOT_URL + "/tests/requester/fetchSample.php";
   	var API_ENDPOINT = ROOT_URL + "/index.php";
   	</script>
@@ -23,7 +23,6 @@
 
   	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
   	<script src='xmltree/xmltree.js'></script>	
-  	<script src='inc/data.js'></script>
 
   <!--[if lt IE 9]>
   <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -181,7 +180,6 @@
 
 	$("#clear").on("click", clear);
 
-	$("textarea").html(data.requests.extract);
 
 	$("#selection").on("change", function(e){
 		toggleLoader(true);
@@ -198,6 +196,7 @@
 			success: function(returnData){
 				toggleLoader(false);
 				$("#input textarea").html(returnData);
+
 			}
 		});
 	});

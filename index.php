@@ -4,7 +4,6 @@ require_once("dbconfig.php");
 require_once($CONTROLLER . "controller.php");
 require_once($LIB . "magic_quotes.php");
 require_once($LIB . "shared_functions.php");
-require_once("autoload.php");
 
 header("Access-Control-Allow-Origin: *");
 
