@@ -1,6 +1,6 @@
 <?php
 $API_ENDPOINT = "http://iris.comminfo.rutgers.edu";
-$API_ENDPOINT = "http://localhost/IRIS/application/index.php";
+//$API_ENDPOINT = "http://localhost/IRIS/application/index.php";
 //using this proxy, the IP address is from the web server, not the client's computer
 
 if(!isset($_POST['xmldata'])) die("Nothing passed");

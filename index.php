@@ -7,7 +7,14 @@ require_once($LIB . "shared_functions.php");
 
 header("Access-Control-Allow-Origin: *");
 
-
+if(isset($_GET['pg'])){
+	//load a page instead
+	switch($_GET['pg']){
+		case "register":
+			die(include($LIB . $_GET['pg'] . ".php"));
+		break;
+	}
+}
 /*
 requests should be made with the request type on the end of the url like so:
 <api url>/<request type>
