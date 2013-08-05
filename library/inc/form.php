@@ -1,4 +1,4 @@
-<p>To register for API usage please enter the following information.</p>
+<p>To register for API usage please enter the following information. All fields are required.</p>
 <p>API calls for registered clients must come from the specified website. This is how IRIS authenticates clients.</p>
 <form action="#" method="post">
 	<div class="row">

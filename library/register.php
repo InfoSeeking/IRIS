@@ -34,6 +34,10 @@
 		display: block;
 		margin-top: 10px;
 	}
+	.err{
+		background: #FFBFBF;
+		padding: .5em 1em;
+	}
   </style>
 
   <!--[if lt IE 9]>
@@ -68,6 +72,10 @@ function process(){
 	$name = trim($_POST['name']);
 	$email = trim($_POST['email']);
 	$website = trim($_POST['website']);
+
+	if($email == ""){return printErr("Please enter your email.");}
+	if($website == ""){return printErr("Please enter the website.");}
+	if($name == ""){return printErr("Please enter your name.");}
 
 	//remove the protocol off of the website
 	if(strpos($website, "http://") === 0){
