@@ -61,7 +61,7 @@ if($clientID > $PUBLICLY_RESERVED){
 		$website = $row['website'];
 		$web_ip = gethostbyname($website);
 		if($ip != $web_ip){
-			die(err("Our records show that the client id of '" . $clientID . "' is registered. However, the IP address from which you are calling does not match the IP address of the website."));
+			die(err("Our records show that the client id of '" . $clientID . "' is registered. However, the IP address from which you are calling (" . $ip . ") does not match the IP address of the website. (" . $web_ip . ")"));
 		}
 		//good to go
 	}

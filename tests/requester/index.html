@@ -4,12 +4,10 @@
 	<script>
   /* 
   	Well hello there traveller!
-  	Before you try running this page on your own server be sure to change the ROOT_URL to match yours!
+  	Before you try running this page on your own server be sure to change the API_ENDPOINT in proxy.php to match yours!
   	*/
-  	var ROOT_URL = "http://localhost/IRIS/application";
-  //		ROOT_URL = "http://iris.comminfo.rutgers.edu";
-  	var FETCH_SAMPLE = ROOT_URL + "/tests/requester/fetchSample.php";
-  	var API_ENDPOINT = ROOT_URL + "/index.php";
+
+  	var FETCH_SAMPLE = "fetchSample.php";
   	</script>
 
   	<meta charset="utf-8">
@@ -92,7 +90,7 @@
 		console.log(userData);
 		toggleLoader(true);
 		$.ajax({
-			url: API_ENDPOINT,
+			url: "proxy.php",
 			data: userData,
 			type: 'POST',
 			success: function(returnData){
