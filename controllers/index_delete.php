@@ -10,7 +10,7 @@ class Index_delete extends Controller{
 			//try to get it
 			$index_id = intval((string)$xml->indexID);
 		}
-		$index_dir = $STORAGE ."indexes/index_" . $index_id;
+		$index_dir = $STORAGE ."indexes/index_" . $xml->clientID . "_" . $index_id;
 		system("rm -rf " . $index_dir . $CMD_EXTRA);
 
 		$response = "<parameters><requestID>" . $REQ_ID ."</requestID><indexID>" . $index_id . " </indexID><requestType>index_delete</requestType></parameters>";

@@ -31,7 +31,7 @@ class Index_insert extends Controller{
 		//get stopwords
 		$stopwords = file_get_contents($LIB . "stopwords_indri.param");
 		
-		$index_dir = $STORAGE ."indexes/index_" . $index_id;
+		$index_dir = $STORAGE ."indexes/index_" . $xml->clientID . "_" . $index_id;
 		$tmp = "<parameters><index>" . $index_dir . "</index><corpus><path>" . fname($STORAGE . "trec.txt") . "</path><class>trectext</class></corpus><stopper>" . $stopwords . "</stopper></parameters>";
 		fwrite($IPARAM, $tmp);
 		fclose($IPARAM);
