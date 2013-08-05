@@ -140,9 +140,47 @@ function getResContent($xml){
 		$i++;
 	}
 }
+
+function checkClientID($xml){
+	global $cxn, $PUBLICLY_RESERVED;
+	//validate client id
+	if(!pe($xml, 'clientID')){
+		//default client id
+		$xml->addChild("clientID", "1");
+	}
+	$clientID = intval($xml->clientID);
+	//if <= 10000, then this is a public id, no worries
+	if($clientID > $PUBLICLY_RESERVED){
+		//must check that this matches
+		$ip = $_SERVER['REMOTE_ADDR'];
+		//get the associated website for this client id
+		//remember, in the database, the registered ids start at 0 (so subtract 10,000)
+		$db_id = $clientID - $PUBLICLY_RESERVED;
+		$r = mysqli_query($cxn, "SELECT * FROM clients WHERE `client_id`=" . $db_id) or die(err("Could not query database for client/website association"));
+		if(mysqli_num_rows($r) == 0){
+			die(err("There is no registration for a client id of '" . $clientID . "'. Client ids over " . $PUBLICLY_RESERVED . " are for registration only. If you wish to use publicly available client ids, use an id less than or equal to" . $PUBLICLY_RESERVED));
+		}
+		else{
+			$row = mysqli_fetch_assoc($r);
+			$website = $row['website'];
+			$web_ip = gethostbyname($website);
+			if($ip != $web_ip){
+				if($STATE=='debug'){
+					die(err("Our records show that the client id of '" . $clientID . "' is registered. However, the IP address from which you are calling (" . $ip . ") does not match the IP address of the website. (" . $web_ip . ")"));
+				}
+				else{
+					die(err("Our records show that the client id of '" . $clientID . "' is registered. However, the IP address from which you are calling does not match the IP address of the website."));	
+				}
+			}
+			//good to go
+		}
+	}
+
+}
 function handleRequest($xml){
 	global $CONTROLLER, $VALID_REQUEST_TYPES;
-
+	
+	checkClientID($xml);
 	//add the content to the resources which don't have it
 	getResContent($xml);
 	$type = $xml->requestType;
