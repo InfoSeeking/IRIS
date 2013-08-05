@@ -41,7 +41,7 @@ if(!$xml){
 	die(err("XML could not be parsed"));
 }
 if(!pe($xml, 'clientID')){
-	die(err("Client ID not specified"));
+	$xml->addChild("clientID", "1");
 }
 //validate client id
 $clientID = intval($xml->clientID);
@@ -61,7 +61,12 @@ if($clientID > $PUBLICLY_RESERVED){
 		$website = $row['website'];
 		$web_ip = gethostbyname($website);
 		if($ip != $web_ip){
-			die(err("Our records show that the client id of '" . $clientID . "' is registered. However, the IP address from which you are calling (" . $ip . ") does not match the IP address of the website. (" . $web_ip . ")"));
+			if($STATE=='debug'){
+				die(err("Our records show that the client id of '" . $clientID . "' is registered. However, the IP address from which you are calling (" . $ip . ") does not match the IP address of the website. (" . $web_ip . ")"));
+			}
+			else{
+				die(err("Our records show that the client id of '" . $clientID . "' is registered. However, the IP address from which you are calling does not match the IP address of the website."));	
+			}
 		}
 		//good to go
 	}

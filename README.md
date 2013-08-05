@@ -52,7 +52,7 @@ To run IRIS, you need the following:
 - Permissions to write to storage folder
 
 Some considerations:
-- You should have roughly 200MB of storage space minimum. This covers approximately 1000 requests, responses, and pages as well as 100 indexes. This is a very rough estimate and if you intend on storing persistent requests as well as indexes more space would be advisable.
+- You should have roughly 300MB of storage space minimum. This covers approximately 1000 requests, responses, and pages as well as 100 indexes. This is a very rough estimate and if you intend on storing persistent requests as well as indexes more space would be advisable.
 - You may want to increase the PHP maximum execution time. If you are expecting requests with a lot of URLs (not content) fetching every document may take longer than the default maximum execution time of 30 seconds. 
 
 ##How the Requests are Handled
@@ -77,12 +77,17 @@ When IRIS encounters an error, this is what it will return:
 	<error>message</error>
 </parameters>
 ```
+#Authentication for Data Protection
+IRIS is an open API and therefore we wish to make it as easy to use as possible (ideally having no registration for users). However, without registration, there is no guarantee that your data is safe. If two different clients use the same client id, they could accidently overwrite each others stored files (indexes, cached pages, etc.). To combat this, we have implemented an optional registration which authenticates clients per website (as of now). This means that registered users specify which website they will be calling IRIS from, and we give them a fixed client id. When they call the API with that client id, we check if the IP address from where they are calling matches that of the website.
+
+However, registration is completely optional. If you do not wish to register, use any client id less than or equal to 10,000. These ids are completely open to the public and can be used on the fly. We do not suggest using this if you are planning on storing any data since the data safety is not guaranteed.
 
 #Request and Response Format
 ##Some Extra Notes:
-You can specify IRIS not to return the content element (as this can be very large) by passing the element returnType with a value of nocontent.
 
-As of now, the client id is passed with every request in a clientID element. This will change with the addition of user authentication.
+If the clientID element is unspecified, we assume a client id of 1.
+
+You can specify IRIS not to return the content element (as this can be very large) by passing the element returnType with a value of nocontent.
 
 There is also the option of specifying a user id to add an extra layer of page specificity. That way pages are stored per user id, so two different users could have two different pages with the same id both stored on the server
 
