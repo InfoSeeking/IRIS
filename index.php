@@ -8,7 +8,6 @@ require_once($LIB . "shared_functions.php");
 header("Access-Control-Allow-Origin: *");
 
 
-
 /*
 requests should be made with the request type on the end of the url like so:
 <api url>/<request type>
@@ -26,7 +25,7 @@ $response = "";
 
 //get xml data and write to a file
 if(!isset($_REQUEST['xmldata'])){//change to POST when live
-	die(err("No XML data provided. To pass XML data, send a POST request with a variable 'xmldata' set to your data. To see more information, view the <a href='http://iris.infoseeking.org'>website for IRIS</a>"));
+	die(include($LIB . "noRequest.html"));
 }
 
 $xml = false;
@@ -40,6 +39,32 @@ catch(Exception $e){
 }
 if(!$xml){
 	die(err("XML could not be parsed"));
+}
+if(!pe($xml, 'clientID')){
+	die(err("Client ID not specified"));
+}
+//validate client id
+$clientID = intval($xml->clientID);
+//if <= 10000, then this is a public id, no worries
+if($clientID > $PUBLICLY_RESERVED){
+	//must check that this matches
+	$ip = $_SERVER['REMOTE_ADDR'];
+	//get the associated website for this client id
+	//remember, in the database, the registered ids start at 0 (so subtract 10,000)
+	$db_id = $clientID - $PUBLICLY_RESERVED;
+	$r = mysqli_query($cxn, "SELECT * FROM clients WHERE `client_id`=" . $db_id) or die(err("Could not query database for client/website association"));
+	if(mysqli_num_rows($r) == 0){
+		die(err("There is no registration for a client id of '" . $clientID . "'. Client ids over " . $PUBLICLY_RESERVED . " are for registration only. If you wish to use publicly available client ids, use an id less than or equal to" . $PUBLICLY_RESERVED));
+	}
+	else{
+		$row = mysqli_fetch_assoc($r);
+		$website = $row['website'];
+		$web_ip = gethostbyname($website);
+		if($ip != $web_ip){
+			die(err("Our records show that the client id of '" . $clientID . "' is registered. However, the IP address from which you are calling does not match the IP address of the website."));
+		}
+		//good to go
+	}
 }
 
 // will load the requestType controller

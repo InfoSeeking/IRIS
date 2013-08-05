@@ -142,6 +142,7 @@ function getResContent($xml){
 }
 function handleRequest($xml){
 	global $CONTROLLER, $VALID_REQUEST_TYPES;
+
 	//add the content to the resources which don't have it
 	getResContent($xml);
 	$type = $xml->requestType;
@@ -190,6 +191,11 @@ function handleRequest($xml){
 	if(pe($xml, "returnType") && $xml->returnType == "nocontent"){
 		$response = strip_tags_content($response, "content");
 	}
+	//remove XML header since SimpleXML derps when it's there
+	$xmlHeader = "<?xml version=\"1.0\"?>\n";
+	if(strpos($response, $xmlHeader) === 0){
+		$response = substr($response, strlen($xmlHeader));
+	}
 	return $response;
 }
 
@@ -200,10 +206,11 @@ if it has it will return TRUE and set the $response variable to the cached outpu
 */
 function add_request($xml){
 	//called when request starts, adds request to database and generate's id
-	global $REQ_ID, $cxn, $HOST, $response;
+	global $REQ_ID, $cxn, $HOST, $response, $PUBLICLY_RESERVED;
 	//for now only test the request table locally
 	
-	$query = sprintf("INSERT INTO operator_requests (`reqType`, `date`, `time`, `ip_addr`) VALUES('%s', CURDATE(), CURTIME(), '%s')", esc($xml->requestType), esc($_SERVER['REMOTE_ADDR']));
+	$db_id = intval($xml->clientID) - $PUBLICLY_RESERVED;
+	$query = sprintf("INSERT INTO operator_requests (`reqType`, `date`, `time`, `ip_addr`, `client_id`) VALUES('%s', CURDATE(), CURTIME(), '%s', %d)", esc($xml->requestType), esc($_SERVER['REMOTE_ADDR']), $db_id);
 	mysqli_query($cxn, $query) or die(err("Could not insert request into database"));
 	$REQ_ID = mysqli_insert_id($cxn);
 	return false;
