@@ -5,6 +5,7 @@
   <title>IRIS</title>
   <meta name="description" content="">
   <meta name="author" content="">
+  <link rel="icon" type="image/icon" href="library/inc/favicon.ico" />
   <style type="text/css">
 	.container{
 		width: 500px;
@@ -38,6 +39,17 @@
 		background: #FFBFBF;
 		padding: .5em 1em;
 	}
+	#logo{
+		font-weight: normal;
+		margin: 0px;
+	}
+	#logo img{
+		vertical-align: middle;
+	}
+	#logo .shift{
+		position: relative;
+		top: 3px;
+	}
   </style>
 
   <!--[if lt IE 9]>
@@ -46,7 +58,8 @@
 </head>
 <body>
 <div class="container">
-	<h1>IRIS API Registration</h1>
+	<h1 id="logo"><img width="50" src="library/inc/logo_eye.png" /> <span class="shift">IRIS</span></h1>
+	<h1>API Registration</h1>
 
 <?php
 

@@ -16,9 +16,8 @@ if(isset($_GET['pg'])){
 	}
 }
 /*
-requests should be made with the request type on the end of the url like so:
-<api url>/<request type>
-and the data should be passed through POST as the xmldata parameter
+
+The data should be passed through POST as the xmldata parameter
 
 request files are saved under $STORAGE/requests
 response files are saved under $STORAGE/responses
