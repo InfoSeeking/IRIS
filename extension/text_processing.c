@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <ctype.h>
 #include <mxml.h>
 #include <math.h>
 #include "extract.h"
@@ -41,11 +42,11 @@ void printHelp(){
 }
 
 char * getWord(char *data, int *index){
-    return getWordOfSentence(data, index, NULL);
+    return getWordOfSentence(data, index, NULL, 1);
 }
 
 //if endOfSentence is not null, it will be 1 when period reached
-char * getWordOfSentence(char * data, int *index, int *endOfSentence){
+char * getWordOfSentence(char * data, int *index, int *endOfSentence, int useNumbers){
     int data_len = strlen(data);
     int wordIndex = 0;
     int origWordSize = 10;
@@ -77,7 +78,7 @@ char * getWordOfSentence(char * data, int *index, int *endOfSentence){
             c = data[*index];
             (*index)++;
         }
-        if(c == ' ' || c == '\n' || c == ',' || c == '.' || c == ';' || c == ')' || c == '(' || c == '\r' || c == '\t'){
+        if(c == ' ' || c == '\n' || c == ',' || c == '.' || c == ';' || c == ')' || c == '(' || c == '\r' || c == '\t' || (useNumbers == 0 && isdigit(c))){
             if(wordIndex == 0){
                 //there is no beginning, keep waiting
                 continue;
@@ -115,13 +116,13 @@ char * getWordOfSentence(char * data, int *index, int *endOfSentence){
 
 char * getSentence(char * data, int *index){
     int endOfSentence = 0;
-    char * word = getWordOfSentence(data, index, &endOfSentence);
+    char * word = getWordOfSentence(data, index, &endOfSentence, 1);
     while(word != NULL){
         printf("%s ", word);
         if(endOfSentence){
             printf("\n");
         }
-        word = getWordOfSentence(data, index, &endOfSentence);
+        word = getWordOfSentence(data, index, &endOfSentence, 1);
     }
 }
 
@@ -274,6 +275,7 @@ int main(int argc, char **argv){
         char * stopwords_data = NULL;
         int i;
         int useStemming = 0;
+        int useNumbers = 1;//by default include numbers (unless filterNumbers = TRUE)
 
         mxml_node_t *node;
         //get parameters
@@ -296,6 +298,13 @@ int main(int argc, char **argv){
                 useStemming = 1;
             }
         }
+        node = mxmlFindElement(tree, tree, "filterNumbers", NULL, NULL, MXML_DESCEND);
+        if(node != NULL){
+            char * fn = (char *)mxmlGetOpaque(node);
+            if(strcmp(fn, "TRUE") == 0 || strcmp(fn, "true") == 0){
+                useNumbers = 0;
+            }
+        }
 
         //print words that are not in stopwords
         for(node = mxmlFindElement(tree, tree, "resource", NULL, NULL, MXML_DESCEND); node != NULL; node = mxmlFindElement(node, tree, "resource", NULL, NULL, MXML_DESCEND)){
@@ -309,7 +318,7 @@ int main(int argc, char **argv){
             int i;   
             printf("<resource>");
             printf("<id>%s</id>\n<content type=\"filtered\">\n", mxmlGetOpaque(id));
-            filter_words(data, stopwords_data, minlength, maxlength, useStemming);
+            filter_words(data, stopwords_data, minlength, maxlength, useStemming, useNumbers);
             printf("</content>\n");
             printf("</resource>\n");
         }

@@ -1,6 +1,8 @@
 <parameters>
-	<requestType>summarize_sentences</requestType>
+	<requestType>filter</requestType>
 	<numSentences>3</numSentences>
+	<wordList>is but a or of for it</wordList>
+	<filterNumbers>FALSE</filterNumbers>
 	<clientID>1</clientID>
 	<resourceList>
 		<resource>

@@ -9,7 +9,7 @@
     minlength - -1 if not checking
     maxlength - -1 if not checking
 */
-void filter_words(char *input_data, char *stopwords_data, int minlength, int maxlength, int useStemming){
+void filter_words(char *input_data, char *stopwords_data, int minlength, int maxlength, int useStemming, int useNumbers){
     int index = 0;
     pnode ptree = makePTree();
     int hasPTree = 0;
@@ -27,7 +27,7 @@ void filter_words(char *input_data, char *stopwords_data, int minlength, int max
     //go through words of input file, ignore words in table and print it out
     int first = 1;
     index = 0;
-    char * word = getWord(input_data, &index);
+    char * word = getWordOfSentence(input_data, &index, NULL, useNumbers);
     while(word != NULL){
 
         if((hasPTree == 0 || fetchFromPrefix(&ptree, word, useStemming) == NULL) && (minlength == -1 || strlen(word) >= minlength) && (maxlength == -1 || strlen(word) <= maxlength)){

@@ -9,7 +9,7 @@
 r_sent * getAndRankSentence(char *data, int *index, hashtable *rankedWords){
 	int endOfSentence = 0;
 	double rank = 0;
-    char * word = getWordOfSentence(data, index, &endOfSentence);
+    char * word = getWordOfSentence(data, index, &endOfSentence, 1);
     int sent_size = 10;
     char * sent; 
     int firstWord = 1;
@@ -45,7 +45,7 @@ r_sent * getAndRankSentence(char *data, int *index, hashtable *rankedWords){
             return tmp;
         }
         free(word);
-        word = getWordOfSentence(data, index, &endOfSentence);
+        word = getWordOfSentence(data, index, &endOfSentence, 1);
     }
     tmp->rank = rank;
     tmp->sent = sent;
