@@ -100,7 +100,17 @@ class Pipe extends Controller{
 					a little hacky, but cheaper than converting to another system. If I have a lot of extra time, 
 					I may consider changing from SimpleXML to something more flexible
 					*/
-					$nextXMLStr = substr($reqStr, 0, strlen($reqStr) - strlen("</parameters>"));
+					/* if xml input has existing <resourceList> add to before */
+					$firstHalf = substr($reqStr, 0, strlen($reqStr) - strlen("</parameters>"));
+					$secondHalf = "</parameters>";
+
+					$pos = strpos($reqStr, "<resourceList>");
+					if($pos !== false){
+						$firstHalf = substr($reqStr, 0, $pos);
+						$secondHalf = substr($reqStr, $pos);
+					}
+					
+					$nextXMLStr = $firstHalf;
 
 					foreach($resLists as $resList){
 						if(!$skipfirst){
@@ -118,7 +128,7 @@ class Pipe extends Controller{
 							$nextXMLStr .= "</resourceList>";
 						}
 					}
-					$nextXMLStr = $nextXMLStr . "</parameters>";
+					$nextXMLStr = $nextXMLStr . $secondHalf;
 					//echo $nextXMLStr;
 					try{
 						$cmdObj = new SimpleXMLElement($nextXMLStr);

@@ -343,6 +343,8 @@ function getPlainText($html){
 	$bodytxt = strip_cdata($bodytxt);
 	$bodytxt = trim(strip_tags($bodytxt));
 	$bodytxt = preg_replace("@[^ \w\.]@"," ", $bodytxt);
+	//decode html entities
+	//$bodytxt = htmlentities($bodytxt);
 	return $bodytxt;
 }
 
