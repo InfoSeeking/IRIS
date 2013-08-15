@@ -53,7 +53,7 @@ class Cluster extends Controller{
 			$cids;
 			if($line == ""){
 				//add a blank
-				$response .= "<cluster><clusterID>" . $i . "</clusterID><resource><id></id></resource></cluster>";
+				$response .= "<cluster><clusterID>" . $i . "</clusterID><resource><id>-1</id></resource></cluster>";
 				continue;
 			}
 			$cids = explode(" ", $line);//cids is cluster ids
