@@ -8,7 +8,7 @@ class Controller{
 		"pages" => "pageID",
 		"snippets" => "snippetID",
 		"annotations" => "noteID",
-		"snippets" => "snippetID"
+		//"snippets" => "snippetID" 
 		);
 	public function getIdField($table){
 		if(array_key_exists($table, $this->tableToId)){
