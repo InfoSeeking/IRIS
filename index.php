@@ -4,13 +4,13 @@ require_once("dbconfig.php");
 require_once($CONTROLLER . "controller.php");
 require_once($LIB . "magic_quotes.php");
 require_once($LIB . "shared_functions.php");
-
+ 
 header("Access-Control-Allow-Origin: *");
-
+ 
 if(isset($_GET['pg'])){
-	//load a page instead
+	//load a page instead 
 	switch($_GET['pg']){
-		case "register":
+		case "register": 
 			die(include($LIB . $_GET['pg'] . ".php"));
 		break;
 	}

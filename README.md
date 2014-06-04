@@ -55,6 +55,13 @@ Some considerations:
 - You should have roughly 300MB of storage space minimum. This covers approximately 1000 requests, responses, and pages as well as 100 indexes. This is a very rough estimate and if you intend on storing persistent requests as well as indexes more space would be advisable.
 - You may want to increase the PHP maximum execution time. If you are expecting requests with a lot of URLs (not content) fetching every document may take longer than the default maximum execution time of 30 seconds. 
 
+Once PHP and MySQL are installed on your local server you can continue setting up your MySQL database. Create a database (any name). Import the data table in the file sql\_structure.sql by using a command similar to:
+'''
+mysql -u<user> -p<pass> <dbname> < sql\_structure.sql
+'''
+
+Then edit the dbconfig.php.example file and update the $user, $pass, $db, (and $port if necessary) variables to match yours. Rename dbconfig.php.example to dbconfig.php.
+
 ##How the Requests are Handled
 The API endpoint is the index.php file. When a client makes a request to the API, the index.php file receives this request. The request is expected to contain a variable called <b>xmldata</b> which contains all of the request XML (formats of which are described later in this documentation). When index.php receives this, it will parse the <b>xmldata</b> variable as a SimpleXML object. Using the value of the "requestType" element, it loads an operator with that value (if one exists and is specified in config.php). So if the value of requestType is "extract" then it will load the file controllers/extract.php.
 

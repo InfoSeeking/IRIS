@@ -35,7 +35,8 @@ $VALID_REQUEST_TYPES = array(
 	"summarize_sentences",
 	"if_then",
 	"halt",
-	"cluster"
+	"cluster",
+	"example"
 	);
 
 if($_SERVER["HTTP_HOST"] == "localhost"){
