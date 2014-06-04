@@ -2,8 +2,4 @@ backup/*
 output/txt/*
 dbconfig.php
 bin/RedHat/*
-storage/requests/*
-storage/responses/*
-storage/pages_cache/*
-storage/indexes/*
 storage/*.txt
