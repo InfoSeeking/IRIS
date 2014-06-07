@@ -4,7 +4,10 @@ class Delete extends Controller{
 
 	function run($xml){
 		global $FILE_ROOT, $STORAGE, $REQ_ID, $cxn;
-		if(!pe($xml, "table")) die(err("Table element not found"));
+		if(!pe($xml, "table")) { 
+			die(err("Table element not found")); 
+			}
+		
 
 		$table = (string)$xml->table;
 		$statement = sprintf("DELETE FROM %s WHERE ", esc($table));
