@@ -108,7 +108,7 @@ Resources are a generalization of an entity of information. A resource can be a 
 
 For a resource, you must specify either the <b>url</b> (if it is a web page) or the <b>content</b> element with the plain text data.
 
-Furthermore, resources are stored for caching if the <b>persistence</b> element is specified. If persistence is specified, then the pages will be stored on our server for caching, which can reduce response time and allow for more complicated requests (involving Indri indices). However, this means that each resource must be uniquely identified. 
+<b>EDIT: Due to confusion, as of July 2nd caching has been turned off on the main hosted IRIS. A config flag has been added to turn it back on. We are discussing implications of caching and how to do it more elegantly</b>,Furthermore, resources are stored for caching if the <b>persistence</b> element is specified. If persistence is specified, then the pages will be stored on our server for caching, which can reduce response time and allow for more complicated requests (involving Indri indices). However, this means that each resource must be uniquely identified. 
 
 Identification of a resource happens on two or three levels. The client using the API will have a client id. Each resource the client sends must include a unique <b>id</b> element. Also there is an optional user id which can be used to differentiate between users on the client's system.
 

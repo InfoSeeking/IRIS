@@ -25,27 +25,6 @@ function cleanLogic($type){
 	}
 }
 
-function fetch_doc($id, $url){
-	//check if cached
-	//otherwise fetch now and add to cache
-	global $STORAGE;
-	//check if document id is in cache
-	$fname = $STORAGE."pages_cache/". $id . ".txt";
-	if(file_exists($fname)){
-		$HANDLE = fopen($fname, "r");
-		$html = fread($HANDLE, filesize($fname));
-		fclose($HANDLE);
-		return $html;
-	}
-	else{
-		//fetch the document and add to cache
-		$html = @file_get_contents($url);
-		$HANDLE = fopen($fname, "w");
-		fwrite($HANDLE, $html);
-		fclose($HANDLE);
-		return $html;
-	}
-}
 
 function cleanOp($op){
 	$op = trim(strtolower($op));
@@ -66,7 +45,7 @@ function cleanOp($op){
 	alters xml to provide and fill the content element, will cache if cache is set to true
 */
 function getResContent($xml){
-	global $STORAGE;
+	global $STORAGE, $CACHING;
 	$cache = FALSE;
 	$i = 0;
 
@@ -96,7 +75,7 @@ function getResContent($xml){
 			$fname = $client_id . (($user_id !== FALSE) ? "_" . $user_id : "") . "_" . $page_id . ".txt";
 			$fpath = $STORAGE . "pages_cache/" . $fname;
 			
-			if(file_exists($fpath)){
+			if($CACHING && file_exists($fpath)){
 				//in cache, fetch it
 				$HANDLE = fopen($fpath, "r");
 				$content = fread($HANDLE, filesize($fpath));
