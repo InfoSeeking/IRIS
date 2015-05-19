@@ -24,6 +24,7 @@ Here is a list of all of the current operators:
 - [if_then](#if-then) - perform an if-then form of control flow
 - [halt](#halt) - stop execution of a pipe
 - [cluster](#cluster) - do k-means clustering with Lemur
+- [summarize](#summarize_input) - (TO-DO Description)
 
 #Directory Structure
 - bin/ - Executable files (compiled on Linux Mint)
@@ -719,4 +720,24 @@ The cluster operator uses the OfflineCluster program provided with Lemur. This d
 		...
 	</clusterList>
 </parameters>
+```
+
+##<a id="summarize_input"></a>Summarize Input (TO-DO)
+
+```
+<parameters>
+	<requestType>summarize</requestType>
+	<maxSentences>number</maxSentences>
+	<individualSummaries>TRUE|FALSE</individualSummaries>
+	<resourceList>
+		<resource>
+			<resourceID>id</resourceID>
+		</resource>
+		...
+	</resourceList>
+</parameters>
+```
+###Response
+```
+TODO
 ```
