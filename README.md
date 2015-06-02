@@ -40,6 +40,7 @@ Here is a list of all of the current operators:
 #Issues and Disclaimers:
 - There is no user authentication implemented. As of now each request MUST HAVE the clientID element which I plan to replace with OAuth.
 - As the toolkit is now, persistent documents are never deleted. This may change in the future if I make a tool to delete old and unused cached pages/indexes but at the moment it 
+- If you have trouble with installation on Ubuntu Linux due to a missing "zlib.h" or other zlib file, try to run "sudo apt-get install zlib1g-dev libncurses5-dev". [See this link](http://ubuntuforums.org/showthread.php?t=1632027).
 
 #How to Alter and Host IRIS
 ##Server Prerequisites and Considerations
