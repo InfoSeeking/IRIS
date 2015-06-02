@@ -20,7 +20,7 @@ if(count($argv) > 1){
   exit();
 }
 
-$data = array('xmldata' => $_POST['xmldata']);
+$data = array('xmldata' => $data);
 
 // use key 'http' even if you send the request to https://...
 $options = array(
