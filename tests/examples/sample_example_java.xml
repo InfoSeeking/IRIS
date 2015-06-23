@@ -1,0 +1,9 @@
+<parameters>
+	<requestType>example_java</requestType>
+	<resourceList>
+		<resource>
+			<id>0</id>
+      <url>http://www.westegg.com/bacon/truth.html</url>
+		</resource>
+	</resourceList>
+</parameters>

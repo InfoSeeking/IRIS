@@ -19,7 +19,7 @@ In database:
 + client id < 1 (in operator_requests) means that it is a public request
 */
 $VALID_REQUEST_TYPES = array(
-	"merge", 
+	"merge",
 	"limit",
 	"sort",
 	"pipe",
@@ -37,7 +37,8 @@ $VALID_REQUEST_TYPES = array(
 	"if_then",
 	"halt",
 	"cluster",
-	"example"
+	"example",
+	"example_java"
 	);
 
 if($_SERVER["HTTP_HOST"] == "localhost"){
