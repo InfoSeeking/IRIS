@@ -1,11 +1,10 @@
 <parameters>
 	<requestType>extract</requestType>
-	<clientID>1</clientID>
 	<numWords>10</numWords>
 	<resourceList>
 		<resource>
 			<id>1</id>
 			<url>http://www.westegg.com/bacon/marriage.html</url>
-		</resource>
+		<resource>
 	</resourceList>
 </parameters>

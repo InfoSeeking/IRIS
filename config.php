@@ -38,7 +38,9 @@ $VALID_REQUEST_TYPES = array(
 	"halt",
 	"cluster",
 	"example",
-	"example_java"
+	"example2",
+	"example_java",
+	"helloworld"
 	);
 
 if($_SERVER["HTTP_HOST"] == "localhost"){

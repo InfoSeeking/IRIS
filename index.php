@@ -65,4 +65,8 @@ if($STORE_RESPONSES){
 }
 clean();
 mysqli_close($cxn);
+
+// ok
 ?>
+
+
