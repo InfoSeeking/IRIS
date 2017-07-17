@@ -4,7 +4,7 @@ You can test out the API yourself or use our [request sending tool](http://iris.
 
 You can see more about IRIS [here](http://iris.infoseeking.org)
 
-#Functionality
+# Functionality
 Here is a list of all of the current operators:
 - [merge](#merge) - merge multiple resourceList elements into one
 - [pipe](#pipe) - do a Unix like pipe by using the output of a request as input to the next
@@ -26,7 +26,7 @@ Here is a list of all of the current operators:
 - [cluster](#cluster) - do k-means clustering with Lemur
 - [summarize](#summarize_input) - (TO-DO Description)
 
-#Directory Structure
+# Directory Structure
 - bin/ - Executable files (compiled on Linux Mint)
 - extension/ - written in C to handle text processing, compiled version is called text_processing and is in bin folder
 - controllers/ - files which perform specific tasks (e.g. clustering, summarization, etc.)
@@ -37,13 +37,13 @@ Here is a list of all of the current operators:
 - config.php - configuration for debugging and file paths
 - dbconfig.php.example - configuration file for database (remove the trailing .example to use)
 
-#Issues and Disclaimers:
+# Issues and Disclaimers:
 - There is no user authentication implemented. As of now each request MUST HAVE the clientID element which I plan to replace with OAuth.
 - As the toolkit is now, persistent documents are never deleted. This may change in the future if I make a tool to delete old and unused cached pages/indexes but at the moment it 
 - If you have trouble with installation on Ubuntu Linux due to a missing "zlib.h" or other zlib file, try to run "sudo apt-get install zlib1g-dev libncurses5-dev". [See this link](http://ubuntuforums.org/showthread.php?t=1632027).
 
-#How to Alter and Host IRIS
-##Server Prerequisites and Considerations
+# How to Alter and Host IRIS
+## Server Prerequisites and Considerations
 To run IRIS, you need the following:
 - Indri (I used version 5.4) binaries of IndriBuildIndex and IndriRunQuery. There are versions compiled on Linux Mint in the bin folder, however if you are running a different operating system you may need to recompile. You can find the source for Indri [here](http://sourceforge.net/projects/lemur/)
 - The OfflineCluster binary from Lemur (only used for the cluster operator) also located [here](http://sourceforge.net/projects/lemur/)
@@ -64,10 +64,10 @@ mysql -u<user> -p<pass> <dbname> < sql\_structure.sql
 
 Then edit the dbconfig.php.example file and update the $user, $pass, $db, (and $port if necessary) variables to match yours. Rename dbconfig.php.example to dbconfig.php.
 
-##How the Requests are Handled
+## How the Requests are Handled
 The API endpoint is the index.php file. When a client makes a request to the API, the index.php file receives this request. The request is expected to contain a variable called <b>xmldata</b> which contains all of the request XML (formats of which are described later in this documentation). When index.php receives this, it will parse the <b>xmldata</b> variable as a SimpleXML object. Using the value of the "requestType" element, it loads an operator with that value (if one exists and is specified in config.php). So if the value of requestType is "extract" then it will load the file controllers/extract.php.
 
-##How to Add an Operator
+## How to Add an Operator
 In the file you created in the controllers directory, make a new class with the same name as the file (except with a capital letter first). This class needs to extend the Controller class. Now you can override the run method and write the code to process the request there and return the output. So going with our keywords example you should have the following:
 
 - A file named keywords.php in the controllers directory
@@ -76,10 +76,10 @@ In the file you created in the controllers directory, make a new class with the 
 
 Now if you try sending a request with requestType set to "keywords" IRIS will complain and say that keywords is not a valid type. So as a last step, in config.php, add 'keywords' to the VALID_REQUEST_TYPES array. Now IRIS will know that "keywords" is a valid operator.
 
-##How to Add a Text Processing extension
+## How to Add a Text Processing extension
 For heavy text processing, it is recommended that you write a program in C which your PHP operator can call since text processing would probably be less efficient in PHP. All of the text processing functions are contained within the "extension" directory. The text_processing.c file is the main file. To add a new 
 
-##Error Response
+## Error Response
 When IRIS encounters an error, this is what it will return:
 ```
 <parameters>
@@ -91,8 +91,8 @@ IRIS is an open API and therefore we wish to make it as easy to use as possible 
 
 However, registration is completely optional. If you do not wish to register, use any client id less than or equal to 10,000. These ids are completely open to the public and can be used on the fly. We do not suggest using this if you are planning on storing any data since the data safety is not guaranteed.
 
-#Request and Response Format
-##Some Extra Notes:
+# Request and Response Format
+## Some Extra Notes:
 
 If the clientID element is unspecified, we assume a client id of 1.
 
@@ -100,12 +100,12 @@ You can specify IRIS not to return the content element (as this can be very larg
 
 There is also the option of specifying a user id to add an extra layer of page specificity. That way pages are stored per user id, so two different users could have two different pages with the same id both stored on the server
 
-###Format of resource:
+### Format of resource:
 - id - unique number as specified by client, this must be unique for each page, we will use this to store in our indices and we will return the page id's
 - url - optional, if the page is a webpage, we can fetch the content from a URL
 - content - optional, you can specify the content (HTML or plain text) directly in the XML request
 
-###Notes about resources:
+### Notes about resources:
 Resources are a generalization of an entity of information. A resource can be a webpage or user specified content. A client wanting to send resources to our API will send them in a <b>resourceList</b> element with the required information described below.
 
 For a resource, you must specify either the <b>url</b> (if it is a web page) or the <b>content</b> element with the plain text data.
@@ -135,9 +135,9 @@ Example request:
 </resourceList>
 
 ```
-##Merge
+## Merge
 Merge requests combine multiple resourceList elements into one.
-###Request
+### Request
 ```
 <parameters>
 	<requestType>merge</requestType>
@@ -160,7 +160,7 @@ Merge requests combine multiple resourceList elements into one.
 	</resourceLists>
 </parameters>
 ```
-###Response
+### Response
 ```
 <parameters>
 	<requestID>number</requestID>
@@ -178,7 +178,7 @@ Merge requests combine multiple resourceList elements into one.
 	</resourceList>	
 </parameters>
 ```
-##<a id="Pipe"></a>Pipe
+## <a id="Pipe"></a>Pipe
 The pipe command allows you to do a unix-like pipe feeding the output of one command into the input of another. This allows multiple commands to be easily strung together and called repeatedly without much work of the client. See the tests folder to see some example pipe requests.
 
 Subtle Behavior:
@@ -197,12 +197,12 @@ If you pipe to rank/filter/query, and do not supply a wordlist element, it will 
 	...
 </parameters>
 ```
-###Response
+### Response
 The response will follow the format of the last executed command.
 
-##<a id="Limit"></a>Limit
+## <a id="Limit"></a>Limit
 The limit request allows you to select a subset of results. The offset is optional and defaults to 0. This is comparable to a SQL limit.
-###Request
+### Request
 ```
 <parameters>
 	<requestType>limit</requestType>
@@ -216,7 +216,7 @@ The limit request allows you to select a subset of results. The offset is option
 	</resourceList>
 </parameters>
 ```
-###Response
+### Response
 ```
 <parameters>
 	<requestID>number</requestID>
@@ -230,11 +230,11 @@ The limit request allows you to select a subset of results. The offset is option
 </parameters>
 ```
 
-##<a id="Sort"></a>Sort (deprecated)
+## <a id="Sort"></a>Sort (deprecated)
 Sort a resource list
 This operator uses an older format of resources (and will check for a field element). However, it will be updated to adhere to the new XML format. Until then, it is advised not to use this operator unless you wish to alter it.
 
-###Request
+### Request
 ```
 <parameters>
 	<requestType>sort</requestType>
@@ -249,7 +249,7 @@ This operator uses an older format of resources (and will check for a field elem
 	</resourceList>
 </parameters>
 ```
-###Response
+### Response
 ```
 <parameters>
 	<requestID>number</requestID>
@@ -262,9 +262,9 @@ This operator uses an older format of resources (and will check for a field elem
 	</resourceList>
 </parameters>
 ```
-##<a id="Extract"></a>Extract
+## <a id="Extract"></a>Extract
 Extract shows the most frequent words. It will return the number of keywords specified by <b>numWords</b>.
-###Request
+### Request
 ```
 <parameters>
 	<requestType>extract</requestType>
@@ -280,7 +280,7 @@ Extract shows the most frequent words. It will return the number of keywords spe
 	</resourceList>
 </parameters>
 ```
-###Response
+### Response
 ```
 <parameters>
 	<requestID>number</requestID>
@@ -303,8 +303,8 @@ Extract shows the most frequent words. It will return the number of keywords spe
 </parameters>
 ```
 
-##<a id="Filter"></a>Filter
-###Request
+## <a id="Filter"></a>Filter
+### Request
 The filter operator removes words from the resources provided.
 The wordList parameter contains the words you wish to remove from the content.
 
@@ -323,7 +323,7 @@ The wordList parameter contains the words you wish to remove from the content.
 	</resourceList>
 </parameters>
 ```
-###Response
+### Response
 ```
 <parameters>
 	<requestID>number</requestID>
@@ -338,7 +338,7 @@ The wordList parameter contains the words you wish to remove from the content.
 </parameters>
 ```
 
-##<a id="Query"></a>Query
+## <a id="Query"></a>Query
 As of now, you can query documents with a set of words in the wordList element. The query checks the number of occurences of each word. You can use the following checks:
 
 - eq - equal
@@ -350,7 +350,7 @@ The useStemming flag tells whether or not to match a word based on partial begin
 
 The query must be valid for each word in the wordList to return the document. (I may change this later as I feel this can be more useful)
 
-###Request
+### Request
 ```
 <parameters>
 	<requestType>query</requestType>
@@ -370,7 +370,7 @@ The query must be valid for each word in the wordList to return the document. (I
 </parameters>
 ```
 
-###Response
+### Response
 ```
 <parameters>
 	<requestType>query</requestType>
@@ -385,9 +385,9 @@ The query must be valid for each word in the wordList to return the document. (I
 </parameters>
 ```
 
-##<a id="Rank"></a>Rank
+## <a id="Rank"></a>Rank
 Ranks documents based on a supplied list of words. The ranking is based on total number of occurences of the words supplied.
-###Request
+### Request
 ```
 <parameters>
 	<requestType>rank</requestType>
@@ -402,9 +402,9 @@ Ranks documents based on a supplied list of words. The ranking is based on total
 </parameters>
 ```
 
-##<a id="vector_rank"></a>Vector Rank
+## <a id="vector_rank"></a>Vector Rank
 Ranks documents using a td-idf vector model of the wordList you supply and returns a rank based on the cosine similarity of the query and the document
-###Request
+### Request
 ```
 <parameters>
 	<requestType>vector_rank</requestType>
@@ -419,9 +419,9 @@ Ranks documents using a td-idf vector model of the wordList you supply and retur
 </parameters>
 ```
 
-##<a id="index_insert"></a>Index Insert
+## <a id="index_insert"></a>Index Insert
 Create or add documents to an Indri index.
-###Request
+### Request
 ```
 <parameters>
 	<requestType>index_insert</requestType>
@@ -448,7 +448,7 @@ Create or add documents to an Indri index.
 	</resourceList>
 </parameters>
 ```
-###Response
+### Response
 ```
 <parameters>
 	<requestID>number</requestID>
@@ -456,16 +456,16 @@ Create or add documents to an Indri index.
 	<requestType>index_insert</requestType>
 </parameters>
 ```
-##<a id="index_delete"></a>Index Delete
+## <a id="index_delete"></a>Index Delete
 Delete an Indri index.
-###Request
+### Request
 ```
 <parameters>
 	<requestType>index_delete</requestType>
 	<indexID>required</indexID>
 </parameters>
 ```
-###Response
+### Response
 ```
 <parameters>
 	<requestID>number</requestID>
@@ -474,8 +474,8 @@ Delete an Indri index.
 </parameters>
 ```
 
-##<a id="index_query"></a>Index Query
-###Request
+## <a id="index_query"></a>Index Query
+### Request
 The query element is mostly the same as the query element describe in the Indri documentation [here](http://sourceforge.net/p/lemur/wiki/IndriRunQuery/) however, you can only specify one query at the moment.
 ```
 <parameters>
@@ -486,7 +486,7 @@ The query element is mostly the same as the query element describe in the Indri 
 	</query>
 </parameters>
 ```
-###Response
+### Response
 The Indri resulting score is the logarithm of the probability, therefore the more negative the score is, the lower the rank, and vice-versa
 Index Query cannot return more than the id of the pages since Indri will only return document ids
 ```
@@ -507,7 +507,7 @@ Index Query cannot return more than the id of the pages since Indri will only re
 
 ##<a id="fetch"></a>Fetch
 Fetch gets the content of the passed url's. This operator is sort of a placeholder, since when a request is made (and only URLs are specified) IRIS will automatically fetch them anyway. You do not need to use a fetch before piping to another operator as it is unnecessary. However, this can be useful for fetching documents for your own use.
-###Request
+### Request
 ```
 <parameters>
 	<requestType>fetch</requestType>
@@ -520,7 +520,7 @@ Fetch gets the content of the passed url's. This operator is sort of a placehold
 	</resourceList>
 </parameters>
 ```
-###Response
+### Response
 ```
 <parameters>
 	<requestType>fetch</requestType>
@@ -536,10 +536,10 @@ Fetch gets the content of the passed url's. This operator is sort of a placehold
 </parameters>
 ```
 
-##<a id="extract_blocks"></a>Extract Blocks
+## <a id="extract_blocks"></a>Extract Blocks
 Extract blocks allows you to search for words within a specific <b>searchWindow</b> and will return the words within the <b>resultWindow</b>. For example, if you set the <b>wordList</b> to "hello goodbye" and the <b>searchWindow</b> to 5 and the <b>resultWindow</b> to 10, it will search for the the occurrences of hello and goodbye within 5 words of each other and return the surrounding 10 words.
 
-###Request
+### Request
 ```
 <parameters>
 	<requestType>extract_blocks</requestType>
@@ -557,7 +557,7 @@ Extract blocks allows you to search for words within a specific <b>searchWindow<
 </parameters>
 ```
 
-###Response
+### Response
 ```
 <parameters>
 	<requestType>extract_blocks</requestType>
@@ -578,7 +578,7 @@ Extract blocks allows you to search for words within a specific <b>searchWindow<
 </parameters>
 ```
 
-##<a id="summarize_sentences"></a>Summarize Sentences
+## <a id="summarize_sentences"></a>Summarize Sentences
 This simple summarization operator will use the words in the wordList passed and deem the most important sentences of a document by which those words appear the most.
 
 At the moment, the word list can have repeated words (which will weight those words higher). This will most likely be removed for consistency.
@@ -596,7 +596,7 @@ At the moment, the word list can have repeated words (which will weight those wo
 	</resourceList>
 </parameters>
 ```
-###Response
+### Response
 ```
 <parameters>
 	<requestID>number</requestID>
@@ -612,7 +612,7 @@ At the moment, the word list can have repeated words (which will weight those wo
 ```
 
 
-##If Then
+## If Then
 Perform a basic if-then control statement. 
 
 The val element can be in [xpath](http://www.php.net/manual/en/simplexmlelement.xpath.php) format to access XML nodes or a literal number/string.
@@ -621,7 +621,7 @@ You can test the number of nodes returned by setting fxn to "length". You can al
 
 The motivation behind this is for the if-then control to be used in conjunction with pipe requests to reduce total number of requests. This can be seen under examples.
 
-###Request
+### Request
 ```
 <parameters>
 	<requestType>if_then</requestType>
@@ -659,7 +659,7 @@ The motivation behind this is for the if-then control to be used in conjunction 
 	</resourceList>
 </parameters>
 ```
-###Response
+### Response
 The response will be the response of the command executed from the structure OR if no command is executed (e.g. if statement is false and no else is specified) it will return the following:
 ```
 <parameters>
@@ -669,15 +669,15 @@ The response will be the response of the command executed from the structure OR 
 </parameters>
 ```
 
-##Halt
+## Halt
 The halt operator stops execution and is supposed to be used in conjunction with pipe requests and if_then requests to stop piping if certain conditions are met.
-###Request
+### Request
 ```
 <parameters>
 	<requestType>halt</requestType>
 </parameters>
 ```
-###Response
+### Response
 ```
 <parameters>
 	<requestType>halt</requestType>
@@ -685,10 +685,10 @@ The halt operator stops execution and is supposed to be used in conjunction with
 </parameters>
 ```
 
-##Cluster
+## Cluster
 The cluster operator uses the OfflineCluster program provided with Lemur. This does k-means clustering. As of now, the response will only give the id's of the documents regardless of the returnType specified. This may change in the future.
 
-###Request
+### Request
 ```
 <parameters>
 	<requestType>cluster</requestType>
@@ -699,7 +699,7 @@ The cluster operator uses the OfflineCluster program provided with Lemur. This d
 </parameters>
 ```
 
-###Response
+### Response
 ```
 <?xml version="1.0"?>
 <parameters>
@@ -723,7 +723,7 @@ The cluster operator uses the OfflineCluster program provided with Lemur. This d
 </parameters>
 ```
 
-##<a id="summarize_input"></a>Summarize Input (TO-DO)
+## <a id="summarize_input"></a>Summarize Input (TO-DO)
 
 ```
 <parameters>
@@ -738,7 +738,7 @@ The cluster operator uses the OfflineCluster program provided with Lemur. This d
 	</resourceList>
 </parameters>
 ```
-###Response
+### Response
 ```
 TODO
 ```
