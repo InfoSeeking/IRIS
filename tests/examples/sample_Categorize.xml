@@ -1,0 +1,15 @@
+<parameters>
+    <requestType>Categorize</requestType>
+    <clientID>1</clientID>
+    <numCategories>1</numCategories>
+    <resourceList1>
+          <resource1>
+              <id>1</id>
+              <content>Document1</content>
+          </resource1>     
+          <resource1>
+              <id>2</id>
+              
+
+
+</parameters>
