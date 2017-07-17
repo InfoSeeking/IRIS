@@ -40,7 +40,8 @@ $VALID_REQUEST_TYPES = array(
 	"example",
 	"example2",
 	"example_java",
-	"helloworld"
+	"helloworld",
+	"Categorize"
 	);
 
 if($_SERVER["HTTP_HOST"] == "localhost"){
