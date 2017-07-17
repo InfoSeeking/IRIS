@@ -9,7 +9,15 @@
           </resource1>     
           <resource1>
               <id>2</id>
-              
-
-
+              <content>Document2</content>
+          </resource1>    
+    </resourceList1>
+    <nameCat>"Chemistry"</nameCat>
+    <numDoc>1</numDoc>
+    <resourceList2>
+        <resource2>
+            <id>1</id>
+            <content>Document1</content>
+        </resource2>
+    </resourceList2>
 </parameters>
