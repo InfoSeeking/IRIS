@@ -1,5 +1,5 @@
 <parameters>
-    <requestType>return</requestType>
+    <requestType>return_files</requestType>
     <clientID>1</clientID>
     <nameCat>"Chemistry"</nameCat>
 </parameters>    
