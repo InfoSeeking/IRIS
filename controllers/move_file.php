@@ -12,9 +12,9 @@ class moveFile extends Controller{
       for($i = 0; $i < $arrlength; $i++){
         if($arr[$i][0] == $nameCat){
         $lengthcolumn = count($arr[$i]);
-          for($j = 0; $j < $lengthcolumn; $j++){
-            $arr[$i].add($fileName);
-          }
+          
+            $arr[$i][$lengthcolumn] = $fileName;
+          
         
         }
       
