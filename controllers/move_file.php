@@ -20,4 +20,6 @@ class moveFile extends Controller{
       
       }
     }
+    $response = "<parameters><requestType>move_file</requestType>". "Done!";
+    return $response;
 }    
