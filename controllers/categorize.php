@@ -6,6 +6,7 @@ class categorize extends Controller{
                   
                   $numCategories = intval($xml->numCategories);
                   publics static $arr = array();
+                  self::lang;
                   
                   for($i=0;$i < numCategories; $i++){
                       $name = intval($xml->nameCat);
