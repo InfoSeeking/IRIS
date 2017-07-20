@@ -6,7 +6,9 @@ class moveFile extends Controller{
     
     $fileName = $xml->fileName;
     $nameCat = $xml->nameCat;
+    category::$arr;
     $arrlength = count($arr);
+    
       for($i = 0; $i < $arrlength; $i++){
         if($arr[i][0] == $nameCat){
         $lengthcolumn = count($arr[i]);
