@@ -25,7 +25,7 @@ class returnFiles extends Controller{
       
       
      
-      $response = "<parameters><requestType>filter</requestType>". $newarray. "</parameters>";
+      $response = "<parameters><requestType>returnFiles</requestType>". $newarray. "</parameters>";
       return $response;
 
 
