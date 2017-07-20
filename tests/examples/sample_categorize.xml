@@ -1,23 +1,20 @@
 <parameters>
+    
     <requestType>Categorize</requestType>
     <clientID>1</clientID>
     <numCategories>1</numCategories>
-    <resourceList1>
-          <resource1>
+    <resourceList>
+          <resource>
               <id>1</id>
-              <content>Document1</content>
-          </resource1>     
-          <resource1>
+              <content>http://www.westegg.com/bacon/death.html</content>
+          </resource>     
+          <resource>
               <id>2</id>
-              <content>Document2</content>
-          </resource1>    
-    </resourceList1>
+              <content>http://www.westegg.com/bacon/riches.html</content>
+          </resource>    
+    </resourceList>
     <nameCat>"Chemistry"</nameCat>
-    <numDoc>1</numDoc>
-    <resourceList2>
-        <resource2>
-            <id>1</id>
-            <content>Document1</content>
-        </resource2>
-    </resourceList2>
+    <numDoc>2</numDoc>
+    
 </parameters>
+    
