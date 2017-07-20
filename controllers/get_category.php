@@ -4,6 +4,7 @@
              global $FILE_ROOT, $STORAGE, $REQ_ID, $CMD_EXTRA, $LIB, $BIN;
              
              $file = $xml->filename;
+             category::$arr;
              $arrlength = count($arr);
              
              for($i = 0; $i < $arrlength; $i++){
