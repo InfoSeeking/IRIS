@@ -29,5 +29,7 @@ class categorize extends Controller{
                   }
                   
                  $response = "<parameters><requestType>categorize</requestType><requestID>" . "Done!";
+     
                  return $response;
-}                      
+           }
+}
