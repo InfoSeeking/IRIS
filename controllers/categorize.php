@@ -25,8 +25,9 @@ class categorize extends Controller{
                                       $arr[i][k] = $res;
                                       $k++;
                            }
-                                 
+                       $i++;         
                   }
-                  $i++;
-                      
+                  
+                 $response = "<parameters><requestType>categorize</requestType><requestID>" . "Done!";
+                 return $response;
 }                      
