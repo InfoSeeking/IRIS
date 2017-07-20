@@ -1,5 +1,4 @@
 <parameters>
-    
     <requestType>Categorize</requestType>
     <clientID>1</clientID>
     <numCategories>1</numCategories>
@@ -14,7 +13,6 @@
           </resource>    
     </resourceList>
     <nameCat>"Chemistry"</nameCat>
-    <numDoc>2</numDoc>
-    
+    <numDoc>2</numDoc>  
 </parameters>
     
