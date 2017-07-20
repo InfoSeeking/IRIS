@@ -5,14 +5,14 @@ class categorize extends Controller{
                   if(!pe($xml, "resourceList")) die(err("No resources found"));
                   
                   $numCategories = intval($xml->numCategories);
-                  $arr = array();
+                  publics static $arr = array();
                   
                   for($i=0;$i < numCategories; $i++){
                       $name = intval($xml->nameCat);
                              if($i=0){
                                 $arr[0] = $name;
                              }else{
-                                 $arr.add($name);
+                                $arr.add($name);
                              }
                              
                   }
