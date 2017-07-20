@@ -20,12 +20,12 @@
              }
              
              
-             
+            $response = "<parameters><requestType>getCategory</requestType>". $arr[i][j]. "</parameters>";
+            return $response; 
              
              
              
              }
-    
     
     
     
