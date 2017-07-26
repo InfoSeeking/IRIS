@@ -1,5 +1,5 @@
 <?php
-class categorize extends Controller{
+class Categorize extends Controller{
            function run($xml){
                   global $FILE_ROOT, $STORAGE, $REQ_ID, $CMD_EXTRA, $LIB, $BIN;
                   if(!pe($xml, "resourceList")) die(err("No resources found"));
