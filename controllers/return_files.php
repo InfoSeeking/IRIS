@@ -1,5 +1,5 @@
 <?php
-class returnFiles extends Controller{
+class ReturnFiles extends Controller{
       function run($xml){
           global $FILE_ROOT, $STORAGE, $REQ_ID, $CMD_EXTRA, $LIB, $BIN;
           
