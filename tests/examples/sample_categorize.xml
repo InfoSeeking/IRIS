@@ -1,5 +1,5 @@
 <parameters>
-    <requestType>Categorize</requestType>
+    <requestType>categorize</requestType>
     <clientID>1</clientID>
     <numCategories>1</numCategories>
     <resourceList>
