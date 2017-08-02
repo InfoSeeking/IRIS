@@ -5,7 +5,7 @@ class Categorize extends Controller{
                   if(!pe($xml, "resourceList")) die(err("No resources found"));
                   
                   $numCategories = intval($xml->numCategories);
-                  public static $arr = array();
+                  static $arr = array();
                   self::lang;
                   
                   for($i=0;$i < numCategories; $i++){
