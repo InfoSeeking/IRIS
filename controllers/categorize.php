@@ -27,8 +27,8 @@ class Categorize extends Controller{
                            }
                        $i++;         
                   }
-                  
-                 $response = "<parameters><requestType>categorize</requestType></parameters>" . "Done!";
+                 $output = "Done!";
+                 $response = "<parameters><requestType>categorize</requestType><requestID>". $REQ_ID . "</requestID><resourceList>". $output . "</resourceList></parameters>";
      
                  return $response;
            }
