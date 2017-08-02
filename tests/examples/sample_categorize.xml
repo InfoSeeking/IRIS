@@ -2,6 +2,8 @@
     <requestType>categorize</requestType>
     <clientID>1</clientID>
     <numCategories>1</numCategories>
+    <nameCat>"Chemistry"</nameCat>
+    <numDoc>2</numDoc> 
     <resourceList>
           <resource>
               <id>1</id>
@@ -11,8 +13,6 @@
               <id>2</id>
               <content>http://www.westegg.com/bacon/riches.html</content>
           </resource>    
-    </resourceList>
-    <nameCat>"Chemistry"</nameCat>
-    <numDoc>2</numDoc>  
+    </resourceList> 
 </parameters>
     
