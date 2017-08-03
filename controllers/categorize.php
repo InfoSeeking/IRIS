@@ -15,19 +15,19 @@ class Categorize extends Controller{
                              if($i=0){
                                 $arr[0] = $name;
                              }else{
-                                $arr[i] = $name;
+                                $arr[$i] = $name;
                              }
                              
                   }
-                  $i = 0;
+                  $j = 0;
                   while($i < $numCategories){
                       $numDoc = intval($xml->numDoc);
                            $k = 0;
-                           foreach($xml->resourceList2->resource2 as $res){
-                                      $arr[i][k] = $res;
+                           foreach($xml->resourceList->resource as $res){
+                                      $arr[$j][k] = $res;
                                       $k++;
                            }
-                       $i++;         
+                       $j++;         
                   }
                  $output = "Done!";
                  $response = "<parameters><requestType>categorize</requestType><requestID>". $REQ_ID . "</requestID><resourceList>". $output . "</resourceList></parameters>";
