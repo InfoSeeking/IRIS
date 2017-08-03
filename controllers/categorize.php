@@ -10,7 +10,7 @@ class Categorize extends Controller{
                       
                   if(!pe($xml, "resourceList")) die(err("No resources found"));
                       
-                  for($i=0;$i < numCategories; $i++){
+                  for($i=0;$i < $numCategories; $i++){
                       $name = intval($xml->nameCat);
                              if($i=0){
                                 $arr[0] = $name;
@@ -20,7 +20,7 @@ class Categorize extends Controller{
                              
                   }
                   $i = 0;
-                  while($i < numCategories){
+                  while($i < $numCategories){
                       $numDoc = intval($xml->numDoc);
                            $k = 0;
                            foreach($xml->resourceList2->resource2 as $res){
