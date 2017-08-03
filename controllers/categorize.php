@@ -15,7 +15,7 @@ class Categorize extends Controller{
                              if($i=0){
                                 $arr[0] = $name;
                              }else{
-                                $arr.add($name);
+                                $arr[i] = $name;
                              }
                              
                   }
