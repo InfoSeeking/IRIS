@@ -13,9 +13,9 @@ class Categorize extends Controller{
                   for($i=0;$i < $numCategories; $i++){
                       $name = intval($xml->nameCat);
                              if($i=0){
-                                $arr[0] = $name;
+                                $arr[0][0] = $name;
                              }else{
-                                $arr[$i] = $name;
+                                $arr[$i][0] = $name;
                              }
                              
                   }
