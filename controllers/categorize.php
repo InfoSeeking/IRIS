@@ -20,11 +20,11 @@ class Categorize extends Controller{
                              
                   }
                   $j = 0;
-                  while($i < $numCategories){
+                  while($j < $numCategories){
                       $numDoc = intval($xml->numDoc);
                            $k = 0;
                            foreach($xml->resourceList->resource as $res){
-                                      $arr[$j][k] = $res;
+                                      $arr[$j][$k] = $res;
                                       $k++;
                            }
                        $j++;         
