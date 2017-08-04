@@ -1,5 +1,5 @@
 <?php
-    class GetCategory extends Controller{
+    class get_category extends Controller{
              function run($xml){
              global $FILE_ROOT, $STORAGE, $REQ_ID, $CMD_EXTRA, $LIB, $BIN;
              
