@@ -12,7 +12,7 @@
                 for($j = 0; $j < $lengthcolumn; $j++){
                     if($arr[$i][$j] == $file){
                     echo $arr[$i][$j];
-                    
+                    $response = "<parameters><requestType>getCategory</requestType>". $arr[$i][$j]. "</parameters>";
                     }
                 
                 }
@@ -20,7 +20,8 @@
              }
              
              
-            $response = "<parameters><requestType>getCategory</requestType>". $arr[i][j]. "</parameters>";
+            
+             
             return $response; 
              
              
