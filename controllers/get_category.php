@@ -8,10 +8,10 @@
              $arrlength = count($arr);
              
              for($i = 0; $i < $arrlength; $i++){
-             $lengthcolumn = count($arr[i]);
+             $lengthcolumn = count($arr[$i]);
                 for($j = 0; $j < $lengthcolumn; $j++){
-                    if($arr[i][j] == file){
-                    echo $arr[i][j];
+                    if($arr[$i][$j] == $file){
+                    echo $arr[$i][$j];
                     
                     }
                 
