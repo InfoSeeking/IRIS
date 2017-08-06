@@ -4,8 +4,9 @@
              global $FILE_ROOT, $STORAGE, $REQ_ID, $CMD_EXTRA, $LIB, $BIN;
              
              $file = $xml->filename;
-             Categorize::$arr;
+             /*Categorize::$arr;*/
              $arrlength = count($arr);
+             
              
              for($i = 0; $i < $arrlength; $i++){
              $lengthcolumn = count($arr[$i]);
