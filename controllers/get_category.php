@@ -5,6 +5,8 @@
              
              $file = $xml->filename;
              /*Categorize::$arr;*/
+             $Categorize = new Categorize();
+             echo $Categorize->arr;
              $arrlength = count($arr);
              
              
