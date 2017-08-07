@@ -16,7 +16,7 @@
                     if($arr[$i][$j] == $file){
                     echo $arr[$i][$j];
                     $response .= "<resource><id>" . $arr[$i][$j] . "</id>";
-		          	$response .= "</resource>";
+		    $response .= "</resource>";
                     }
                 
                 }
