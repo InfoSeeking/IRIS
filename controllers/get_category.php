@@ -8,7 +8,7 @@
              /*$Categorize = new Categorize();
              echo $Categorize->arr;*/
              $arrlength = count($arr);
-             
+             $response;
              
              for($i = 0; $i < $arrlength; $i++){
              $lengthcolumn = count($arr[$i]);
