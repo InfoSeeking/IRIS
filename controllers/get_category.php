@@ -8,14 +8,15 @@
              /*$Categorize = new Categorize();
              echo $Categorize->arr;*/
              $arrlength = count($arr);
-             $response;
+             $response = "<parameters>\n<requestID>" . $REQ_ID ."</requestID>\n<requestType>getCategory</requestType>";
              
              for($i = 0; $i < $arrlength; $i++){
              $lengthcolumn = count($arr[$i]);
                 for($j = 0; $j < $lengthcolumn; $j++){
                     if($arr[$i][$j] == $file){
                     echo $arr[$i][$j];
-                    $response = "<parameters><requestType>getCategory</requestType>". $arr[$i][$j]. "</parameters>";
+                    $response .= "<resource><id>" . $arr[$i][$j] . "</id>";
+		          	$response .= "</resource>";
                     }
                 
                 }
