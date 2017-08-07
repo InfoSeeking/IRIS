@@ -1,5 +1,5 @@
 <?php
-    class get_category extends Categorize{
+    class get_category extends categorize{
              function run($xml){
              global $FILE_ROOT, $STORAGE, $REQ_ID, $CMD_EXTRA, $LIB, $BIN;
              
