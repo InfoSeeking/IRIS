@@ -5,17 +5,17 @@
              
              $file = $xml->filename;
              /*Categorize::$arr;*/
-             $Categorize = new Categorize();
-             echo $Categorize->arr;
-             $arrlength = count(arr);
+             /*$Categorize = new Categorize();
+             echo $Categorize->arr;*/
+             $arrlength = count($arr);
              
              
              for($i = 0; $i < $arrlength; $i++){
-             $lengthcolumn = count(arr[$i]);
+             $lengthcolumn = count($arr[$i]);
                 for($j = 0; $j < $lengthcolumn; $j++){
-                    if(arr[$i][$j] == $file){
-                    echo arr[$i][$j];
-                    $response = "<parameters><requestType>getCategory</requestType>". arr[$i][$j]. "</parameters>";
+                    if($arr[$i][$j] == $file){
+                    echo $arr[$i][$j];
+                    $response = "<parameters><requestType>getCategory</requestType>". $arr[$i][$j]. "</parameters>";
                     }
                 
                 }
