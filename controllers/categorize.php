@@ -1,11 +1,11 @@
 <?php
 class Categorize extends Controller{
            function run($xml){
-                  global $FILE_ROOT, $STORAGE, $REQ_ID, $CMD_EXTRA, $LIB, $BIN;
+                  global $FILE_ROOT, $STORAGE, $REQ_ID, $CMD_EXTRA, $LIB, $BIN, $arr;
                   
                   
                   $numCategories = intval($xml->numCategories);
-                  static $arr = array();
+                  /*static $arr = array();*/
                   /*self::$arr = array();*/
                       
                   /*if(!pe($xml, "resourceList")) die(err("No resources found"));*/
