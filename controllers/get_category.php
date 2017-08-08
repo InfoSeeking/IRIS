@@ -1,10 +1,10 @@
 <?php
     class Get_category extends Controller{
              function run($xml){
-             global $FILE_ROOT, $STORAGE, $REQ_ID, $CMD_EXTRA, $LIB, $BIN;
+             global $FILE_ROOT, $STORAGE, $REQ_ID, $CMD_EXTRA, $LIB, $BIN,$arr;
              
              $file = $xml->filename;
-             Categorize::$arr;
+             /*Categorize::$arr;*/
              $arrlength = count($arr);
              $response = "<parameters>\n<requestID>" . $REQ_ID ."</requestID>\n<requestType>get_category</requestType>";
              
