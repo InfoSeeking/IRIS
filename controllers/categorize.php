@@ -1,9 +1,8 @@
 <?php
 class Categorize extends Controller{
-           public static $arr = array();
            function run($xml){
                   global $FILE_ROOT, $STORAGE, $REQ_ID, $CMD_EXTRA, $LIB, $BIN;
-                  
+                  public static $arr = array();
                   $numCategories = intval($xml->numCategories);
                   
                   /*self::$arr = array();*/
