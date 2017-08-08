@@ -13,6 +13,7 @@ $CACHING=false;
 $STORE_REQUESTS = true; //if this is true then each request made will be stored in storage/requests
 $STORE_RESPONSES = true;
 $PUBLICLY_RESERVED = 10000; //number of client ids that can be used for the public
+$arr = array();
 /*
 In database:
 + client id starts at 1 and goes up
