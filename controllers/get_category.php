@@ -1,5 +1,6 @@
 <?php
     class Get_category extends Controller{
+	    include_once __DIR__.'/categorize.php';
              function run($xml){
              global $FILE_ROOT, $STORAGE, $REQ_ID, $CMD_EXTRA, $LIB, $BIN;
              
