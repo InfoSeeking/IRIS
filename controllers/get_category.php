@@ -1,9 +1,8 @@
 <?php
-include_once __DIR__.'/categorize.php';
     class Get_category extends Controller{
              function run($xml){
              global $FILE_ROOT, $STORAGE, $REQ_ID, $CMD_EXTRA, $LIB, $BIN;
-             
+             include_once __DIR__.'/categorize.php';
              $file = $xml->filename;
              Categorize::$arr;
              $arrlength = count($arr);
