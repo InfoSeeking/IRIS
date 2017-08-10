@@ -5,7 +5,8 @@
              include_once __DIR__.'/categorize.php';
              $file = $xml->filename;
              Categorize::$arr;
-             $arrlength = count($arr);
+             /*$arrlength = count($arr);*/
+	     $arrlength = max(array_map('count', $arr));
              $response = "<parameters>\n<requestID>" . $REQ_ID ."</requestID>\n<requestType>get_category</requestType>";
              
              for($i = 0; $i < $arrlength; $i++){
