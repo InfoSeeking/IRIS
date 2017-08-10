@@ -6,15 +6,15 @@
              $file = $xml->filename;
              $arr = Categorize::$arr;
              /*$arrlength = count($arr);*/
-	     $arrlength = max(array_map('count', $arr));
+	     $arrlength = max(array_map('count',self::$arr));
              $response = "<parameters>\n<requestID>" . $REQ_ID ."</requestID>\n<requestType>get_category</requestType>";
              
              for($i = 0; $i < $arrlength; $i++){
-             $lengthcolumn = count($arr[$i]);
+             $lengthcolumn = count(self::$arr[$i]);
                 for($j = 0; $j < $lengthcolumn; $j++){
-                    if($arr[$i][$j] == $file){
-                    echo $arr[$i][$j];
-                    $response .= "<resource><id>" . $arr[$i][$j] . "</id>";
+                    if(self::$arr[$i][$j] == $file){
+                    echo self::$arr[$i][$j];
+                    $response .= "<resource><id>" . self::$arr[$i][$j] . "</id>";
 		    $response .= "</resource>";
                     }
                 
