@@ -24,18 +24,8 @@
              
             $response .= "</parameters>";
             
-             
             return $response; 
              
-             
-             
              }
-    
-    
-    
-    
-    
-    
-    
     
     }
