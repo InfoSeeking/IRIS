@@ -13,9 +13,9 @@ class Categorize extends Controller{
                   for($i=0;$i < $numCategories; $i++){
                       $name = intval($xml->nameCat);
                              if($i=0){
-                                $arr[0][0] = $name;
+                                self::$arr[0][0] = $name;
                              }else{
-                                $arr[$i][0] = $name;
+                                self::$arr[$i][0] = $name;
                              }
                              
                   }
@@ -24,7 +24,7 @@ class Categorize extends Controller{
                       $numDoc = intval($xml->numDoc);
                            $k = 0;
                            foreach($xml->resourceList->resource as $res){
-                                      $arr[$j][$k] = $res;
+                                      self::$arr[$j][$k] = $res;
                                       $k++;
                            }
                        $j++;         
