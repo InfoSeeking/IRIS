@@ -4,12 +4,12 @@
              global $FILE_ROOT, $STORAGE, $REQ_ID, $CMD_EXTRA, $LIB, $BIN;
              include_once __DIR__.'/categorize.php';
              $file = $xml->filename;
-             $arr = Categorize::$arr;
+             /*$arr = Categorize::$arr;*/
              /*$arrlength = count($arr);*/
 	     $arrlength = max(array_map('count',self::$arr));
              $response = "<parameters>\n<requestID>" . $REQ_ID ."</requestID>\n<requestType>get_category</requestType>";
              
-             for($i = 0; $i < $arrlength; $i++){
+             for($i = 0; $i < self::$arrlength; $i++){
              $lengthcolumn = count(self::$arr[$i]);
                 for($j = 0; $j < $lengthcolumn; $j++){
                     if(self::$arr[$i][$j] == $file){
