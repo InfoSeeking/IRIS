@@ -4,7 +4,7 @@
              global $FILE_ROOT, $STORAGE, $REQ_ID, $CMD_EXTRA, $LIB, $BIN;
              include_once __DIR__.'/categorize.php';
              $file = $xml->filename;
-             /*$arr = Categorize::$arr;*/
+             $arr = Categorize::$arr;
              /*$arrlength = count($arr);*/
 	     $arrlength = max(array_map('count',self::$arr));
              $response = "<parameters>\n<requestID>" . $REQ_ID ."</requestID>\n<requestType>get_category</requestType>";
