@@ -1,9 +1,10 @@
 <?php
     class Get_category extends Controller{
-	    include_once __DIR__.'/categorize.php';
+	    
 	     function __construct(){     
 	     }
 	     function callCategorize(){
+		 include_once __DIR__.'/categorize.php';
 		 $categorize = new Categorize();
 		 $runcategorize = $categorize->run($xml);
 	     }
