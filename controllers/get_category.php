@@ -6,8 +6,6 @@
 		 $categorize = new Categorize();
 		 $runcategorize = $categorize->run($xml);
 	     }
-	    
-	    
 		    
              function run($xml){
              global $FILE_ROOT, $STORAGE, $REQ_ID, $CMD_EXTRA, $LIB, $BIN;
