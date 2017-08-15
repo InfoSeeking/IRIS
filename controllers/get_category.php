@@ -1,5 +1,12 @@
 <?php
     class Get_category extends Controller{
+	     function __construct(){     
+	     }
+	     function callCategorize(){
+		 $categorize = new Categorize();
+		 $runcategorize = $categorize->run($xml);
+	     }
+	    
              function run($xml){
              global $FILE_ROOT, $STORAGE, $REQ_ID, $CMD_EXTRA, $LIB, $BIN;
              include_once __DIR__.'/categorize.php';
@@ -29,3 +36,5 @@
              }
     
     }
+	$getCategory = new Get_category();
+	$getCategory->callCategorize();
