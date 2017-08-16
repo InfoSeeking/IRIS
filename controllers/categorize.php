@@ -13,11 +13,11 @@ class Categorize extends Controller{
                   for($i=0;$i < $numCategories; $i++){
                       $name = intval($xml->nameCat);
                              if($i=0){
-                                self::$arr[0][0] = $name;
+                                self::$arr[$i][0] = $name;
                              }else{
                                 self::$arr[$i][0] = $name;
                              }
-                             
+                         $response = "<parameters><requestType>categorize</requestType><requestID>". $REQ_ID . "</requestID><resourceList>" . $arr[$i][0] . "</resourceList>"; 
                   }
                   $j = 0;
                   while($j < $numCategories){
@@ -26,11 +26,13 @@ class Categorize extends Controller{
                            foreach($xml->resourceList->resource as $res){
                                       self::$arr[$j][$k] = $res;
                                       $k++;
+                           $response .= "<resourceList> . $arr[$j][$k] . </resourceList>";
                            }
                        $j++;         
                   }
                  $output = "Done!";
-                 $response = "<parameters><requestType>categorize</requestType><requestID>". $REQ_ID . "</requestID><resourceList>". $output . "</resourceList></parameters>";
+                 /*$response = "<parameters><requestType>categorize</requestType><requestID>". $REQ_ID . "</requestID><resourceList>". $output . "</resourceList></parameters>";*/
+                 $response .= "</parameters>"; 
      
                  return $response;
            }
