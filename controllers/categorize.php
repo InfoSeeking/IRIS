@@ -25,8 +25,8 @@ class Categorize extends Controller{
                            $k = 0;
                            foreach($xml->resourceList->resource as $res){
                                       self::$arr[$j][$k] = $res->url;
+                                      $response .= "<resource>" . self::$arr[$j][$k] . "</resource>";
                                       $k++;
-                           $response .= "<resource>" . self::$arr[$j][$k] . "</resource>";
                            }
                        $j++;         
                   }
