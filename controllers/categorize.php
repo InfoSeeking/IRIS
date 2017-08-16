@@ -17,7 +17,7 @@ class Categorize extends Controller{
                              }else{
                                 self::$arr[$i][0] = $name;
                              }
-                         $response = "<parameters><requestType>categorize</requestType><requestID>". $REQ_ID . "</requestID><resourceList>" . $arr[$i][0] . "</resourceList>"; 
+                         $response = "<parameters><requestType>categorize</requestType><requestID>". $REQ_ID . "</requestID><resourceList>" . self::$arr[$i][0] . "</resourceList>"; 
                   }
                   $j = 0;
                   while($j < $numCategories){
@@ -26,7 +26,7 @@ class Categorize extends Controller{
                            foreach($xml->resourceList->resource as $res){
                                       self::$arr[$j][$k] = $res;
                                       $k++;
-                           $response .= "<resourceList> . $arr[$j][$k] . </resourceList>";
+                           $response .= "<resourceList>" . self::$arr[$j][$k] . "</resourceList>";
                            }
                        $j++;         
                   }
