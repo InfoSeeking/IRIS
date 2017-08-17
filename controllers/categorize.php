@@ -11,7 +11,7 @@ class Categorize extends Controller{
                   /*if(!pe($xml, "resourceList")) die(err("No resources found"));*/
                       
                   for($i=0;$i < $numCategories; $i++){
-                      $name = readline($xml->nameCat);
+                      $name = libedit($xml->nameCat);
                              if($i=0){
                                 self::$arr[$i][0] = $name;
                              }else{
