@@ -17,7 +17,7 @@ class Categorize extends Controller{
                              }else{
                                 self::$arr[$i][0] = $name;
                              }
-                         $response = "<parameters><requestType>categorize</requestType><requestID>". $REQ_ID . "</requestID><resourceList>" . self::$arr[$i][0] . "</resourceList>"; 
+                         $response = "<parameters><requestType>categorize</requestType><requestID>". $REQ_ID . "</requestID><nameCat>" . self::$arr[$i][0] . "</nameCat>"; 
                   }
                   $j = 0;
                   while($j < $numCategories){
