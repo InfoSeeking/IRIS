@@ -2,7 +2,7 @@
     <requestType>categorize</requestType>
     <clientID>1</clientID>
     <numCategories>1</numCategories>
-    <nameCat>"Chemistry"</nameCat>
+    <nameCat>Chemistry</nameCat>
     <numDoc>2</numDoc> 
     <resourceList>
           <resource>
