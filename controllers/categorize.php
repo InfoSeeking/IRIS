@@ -19,7 +19,7 @@ class Categorize extends Controller{
                              }
                          $response = "<parameters><requestType>categorize</requestType><requestID>". $REQ_ID . "</requestID><resourceList>" . self::$arr[$i][0] . "</resourceList>"; 
                   }
-                  $j = 1;
+                  $j = 0;
                   while($j <= $numCategories){
                       $numDoc = intval($xml->numDoc);
                            $k = 1;
