@@ -40,7 +40,11 @@ $VALID_REQUEST_TYPES = array(
 	"example",
 	"example2",
 	"example_java",
-	"helloworld"
+	"helloworld",
+	"categorize",
+	"get_category",
+	"move_file",
+	"return_files"
 	);
 
 if($_SERVER["HTTP_HOST"] == "localhost"){

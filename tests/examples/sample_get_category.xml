@@ -1,0 +1,5 @@
+<parameters>
+    <requestType>get_category</requestType>
+    <clientID>1</clientID>
+    <filename>http://www.westegg.com/bacon/death.html</filename>
+</parameters>    

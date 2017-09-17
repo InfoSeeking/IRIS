@@ -1,0 +1,18 @@
+<parameters>
+    <requestType>categorize</requestType>
+    <clientID>1</clientID>
+    <numCategories>1</numCategories>
+    <nameCat>Chemistry</nameCat>
+    <numDoc>2</numDoc> 
+    <resourceList>
+          <resource>
+              <id>1</id>
+              <url>http://www.westegg.com/bacon/death.html</url>
+          </resource>     
+          <resource>
+              <id>2</id>
+              <url>http://www.westegg.com/bacon/riches.html</url>
+          </resource>    
+    </resourceList> 
+</parameters>
+    
