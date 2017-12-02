@@ -24,7 +24,7 @@
 class Index_query extends Controller{
 
 	function run($xml){
-		global $FILE_ROOT, $STORAGE, $REQ_ID, $PERSISTENCE, $CMD_EXTRA, $cxn;
+		global $FILE_ROOT, $STORAGE, $REQ_ID, $PERSISTENCE, $CMD_EXTRA, $cxn, $BIN;
 		if(!pe($xml, "indexID")) die(err("IndexID element not found"));
 		if(!pe($xml, "query")) die(err("Query element not found"));
 

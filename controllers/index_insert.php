@@ -1,7 +1,7 @@
 <?php
 class Index_insert extends Controller{
 	function run($xml){
-		global $FILE_ROOT, $STORAGE, $REQ_ID, $CMD_EXTRA, $cxn, $LIB;
+		global $FILE_ROOT, $STORAGE, $REQ_ID, $CMD_EXTRA, $cxn, $LIB, $BIN;
 		if(!pe($xml, "resourceList")) die(err("resourceList element not found"));
 
 		
